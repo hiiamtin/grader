@@ -83,3 +83,44 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+/* 
+ | 
+ | Use for Auth system
+ |
+ |
+*/
+defined('ERR_NONE')					OR define('ERR_NONE', 0);
+defined('ERR_INVALID_USERNAME')		OR define('ERR_INVALID_USERNAME', 1);
+defined('ERR_INVALID_PASSWORD')		OR define('ERR_INVALID_PASSWORD', 2);
+defined('ERR_REPEAT_LOGIN')			OR define('ERR_REPEAT_LOGIN', 3);
+defined('ERR_UNMATCH_SESSION')		OR define('ERR_UNMATCH_SESSION', 4);
+defined('ERR_CLASS_LOGIN_NOT_ALLOW')		OR define('ERR_CLASS_LOGIN_NOT_ALLOW', 5);
+
+/* 
+ | 
+ | Use for PLMS system
+ |
+ |
+*/
+defined('STUDENT_AVATAR_FOLDER')	OR define('STUDENT_AVATAR_FOLDER', 'student_data/avatar/');
+defined('STUDENT_CFILES_FOLDER')	OR define('STUDENT_CFILES_FOLDER', 'student_data/c_files/');
+defined('STUDENT_EXE_FOLDER')		OR define('STUDENT_EXE_FOLDER', 'student_data/exe_files/');
+defined('STU_SUBMIT_OUTPUT_FOLDER')		OR define('STU_SUBMIT_OUTPUT_FOLDER', 'student_data/submission_output/');
+//defined('STUDENT_LOGFILES_FOLDER')	OR define('STUDENT_LOGFILES_FOLDER', 'logfilesstudent_data/c_files');
+defined('SUPERVISOR_AVATAR_FOLDER')	OR define('SUPERVISOR_AVATAR_FOLDER', 'supervisor_data/avatar/');
+defined('SUPERVISOR_CFILES_FOLDER')	OR define('SUPERVISOR_CFILES_FOLDER', 'supervisor_data/c_files/');
+defined('SUPERVISOR_EXE_FOLDER')	OR define('SUPERVISOR_EXE_FOLDER', 'supervisor_data/exe_files/');
+
+
+defined('ADMIN_DATA_FOLDER')		OR define('ADMIN_DATA_FOLDER', 'admin_data/');
+defined('COMPILER')					OR define('COMPILER', 'C:\TinyC\tiny_c/');
+
+defined('TAB')						OR define('TAB',chr(9));
+defined('NEWLINE')					OR define('NEWLINE',chr(10));
+
+//time limit = 1 second
+defined('TIME_LIMIT_IN_MINUTE')		OR define('TIME_LIMIT_IN_MINUTE',120);
+defined('MAX_RUN_TIME_IN_SECOND')	OR define('MAX_RUN_TIME_IN_SECOND',1);
+defined('MAX_OUTPUT_SIZE')			OR define('MAX_OUTPUT_SIZE',4096);
+defined('MIN_INTERVAL_SUBMISSION_TIME')		OR define('MIN_INTERVAL_SUBMISSION_TIME',60);	// in seconds
