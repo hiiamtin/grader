@@ -41,7 +41,7 @@ class Auth extends MY_Controller {
 	public function index()
 	{	
 		#$this->logout_after_time_limit();
-		$this->logout();
+		
 
 		$this->logged_in_check();
 		
@@ -131,7 +131,7 @@ class Auth extends MY_Controller {
 		
 		$this->load->model('auth_model');
 		$this->auth_model->update_user_logout($_SESSION['id']);
-		$this->createLogFile("log out");
+		#$this->createLogFile("log out");
 		
 
 		$this->session->unset_userdata("logged_in");
