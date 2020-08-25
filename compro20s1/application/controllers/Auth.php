@@ -41,7 +41,7 @@ class Auth extends MY_Controller {
 	public function index()
 	{	
 		#$this->logout_after_time_limit();
-
+		$this->logout();
 
 		$this->logged_in_check();
 		
