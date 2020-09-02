@@ -1,34 +1,26 @@
-
-<div class="navbar navbar-fixed-top navbar-default">
-  	<div class="container-fulid" >
-			
-		<a href="<?php echo site_url()?>" class="navbar-left"><img height="80px" width="80px" src="<?php echo base_url('assets/images/logo1.png')?>" style="padding-top:5px;padding-bottom:5px;"></a>
-
-		<div class="navbar-text" style="margin-top:0px;margin-bottom:0px;padding-top:0px;padding-bottom:5px;">
-		<h3>Programming Lab Management System</h3>
-		<h5>King Mongkut's Institute of Technolygy Ladkrabang</h5>
+<div id="supervisor-navbar">
+	<nav class="navbar navbar-expand-lg  navbar-dark bg-dark navbar-fixed-top">
+		<a class="navbar-brand" href="<?php echo site_url()?>">
+			<img src="<?php echo base_url('assets/images/logo1.png')?>" width="50" height="50" alt="" loading="lazy">
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarColor01">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+			<a class="nav-link" href="<?php echo site_url()?>">Programming Lab Management System, KMITL<span class="sr-only">(current)</span></a>
+			</li>
+		</ul>
+		<form class="form-inline">
+			<a href="<?php echo site_url($_SESSION['role'].'/group_management'); ?>" class="btn btn-sm btn-info">Group Management</a>&nbsp;
+			<a href="#" class="btn btn-sm btn-info">Exam Room</a>&nbsp;
+			<a href="<?php echo site_url($_SESSION['role'].'/edit_profile_form'); ?>" class="btn btn-sm btn-info">Edit Profile</a>&nbsp;
+			<a href="<?php echo site_url("auth/logout") ?>" class="btn btn-sm btn-danger">Log Out</a>&nbsp;
+		</form>
 		</div>
-		<div class="nav navbar-nav navbar-right" style="margin-top:15px;margin-right:15px;" >
-			<li><a href="<?php echo site_url('supervisor/index'); ?>">Home</a></li>
-			<?php if (substr($_SESSION['id'],0,2) =='90') 
-					echo '<li><a href="'.site_url($_SESSION['role'].'/exercise_show').'"title="Exercise Management">Exercise</a></li>';
-			?>
-			<li><a href="<?php echo site_url($_SESSION['role'].'/group_management'); ?>" title="Group Mangement"> Group Management </a></li>
-			<li><a href="<?php echo site_url($_SESSION['role'].'/edit_profile_form'); ?>">Edit profile</a></li>
-			<li><a href="#" title="Under Construction . . .">Help</a></li>
-			<li><a href="#" title="Under Construction . . .">About</a></li>			
-			<li><a href="<?php echo site_url("auth/logout") ?>" class="btn btn-default btn-lg"> Log out. <span class="glyphicon glyphicon-log-out"></span> </a></li> 
-		</div>
-      
-        <!--/.navbar-collapse -->
-    </div>
+	</nav>
 </div>
-<div class="container-fluid"  style="background-color:HoneyDew;">	
-	<div class="panel panel-default">
-		<div class="panel-body">A Basic Panel</div>
-	</div>
-</div>
-<div class="clear-fix"></div> 
 <!-- Page Contents -->
 <div class="container-fluid"  style="background-color:HoneyDew ;margin-top:10px;">	
 	<!-- row content -->
