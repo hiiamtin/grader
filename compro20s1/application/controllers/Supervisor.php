@@ -2236,6 +2236,19 @@ class Supervisor extends MY_Controller {
 		$this->load->view('supervisor/footer');
 	}
 
+	public function exam_room() {
+		$this->load->model('supervisor_model');
+		$data = array(
+					'supervisor_data'	=> $this->supervisor_model->get_supervisor_data()
+					);
+
+		$this->load->view('supervisor/head');
+		$this->load->view('supervisor/nav_fixtop');
+		$this->load->view('supervisor/nav_sideleft',$data);
+		$this->load->view('supervisor/exam_room');
+		$this->load->view('supervisor/footer');
+	}
+
 
 
 }//class Supervisor
