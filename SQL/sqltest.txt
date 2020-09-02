@@ -1,0 +1,13 @@
+CREATE TABLE user_staff LIKE user_supervisor;
+ALTER TABLE `user_staff` CHANGE `supervisor_id` `staff_id` INT(11) NOT NULL;
+ALTER TABLE `user_staff` CHANGE `supervisor_firstname` `staff_firstname` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `user_staff` CHANGE `supervisor_lastname` `staff_lastname` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `user_staff` CHANGE `supervisor_nickname` `staff_nickname` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `user_staff` CHANGE `supervisor_gender` `staff_gender` ENUM('male','female','other') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `user_staff` CHANGE `supervisor_dob` `staff_dob` DATE NULL DEFAULT NULL;
+ALTER TABLE `user_staff` CHANGE `supervisor_avatar` `staff_avatar` VARCHAR(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `user_staff` CHANGE `supervisor_email` `staff_email` VARCHAR(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `user_staff` CHANGE `supervisor_tel` `staff_tel` VARCHAR(12) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `user_staff` CHANGE `supervisor_department` `staff_department` VARCHAR(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+INSERT INTO `user` (`id`, `username`, `password`, `role`, `added`, `last_login`, `last_seen`, `status`, `active`, `added_by`, `ci_session`, `session_id`) VALUES ('1000', 'staff00', '9a1c2297c137126ea89b3296ac0da0f2', 'staff', '2020-09-02 12:42:39', '2020-09-02 10:04:16', '2020-09-02 12:14:28', 'offline', 'yes', NULL, '0', NULL);
+INSERT INTO `user_staff` (`staff_id`, `staff_firstname`, `staff_lastname`, `staff_nickname`, `staff_gender`, `staff_dob`, `staff_avatar`, `staff_email`, `staff_tel`, `staff_department`) VALUES ('1000', 'test', 'test', 'test', 'other', '2020-09-01', NULL, NULL, NULL, NULL);
