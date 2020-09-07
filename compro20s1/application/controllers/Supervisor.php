@@ -21,6 +21,7 @@ class Supervisor extends MY_Controller {
 		//update supervisor information as necessary
 		$this->load->model('supervisor_model');
 		$this->load->model('lab_model');
+		$this->load->model('examroom_model');
 		$this->supervisor_model->update_supervisor_profile();
 		//$this->show_constants();
 
@@ -2236,11 +2237,27 @@ class Supervisor extends MY_Controller {
 		$this->load->view('supervisor/footer');
 	}
 
+	public function exam_room_panel() {
+		$this->load->model('supervisor_model');
+		$this->load->model('examroom_model');
+		$data = array(
+						'supervisor_data'	=> $this->supervisor_model->get_supervisor_data(),
+						'exam_rooms' => $this->examroom_model->getAllExamRoom()
+					);
+		$this->load->view('supervisor/head');
+		$this->load->view('supervisor/nav_fixtop');
+		$this->load->view('supervisor/nav_sideleft',$data);
+		$this->load->view('supervisor/exam_room_panel',$data);
+		$this->load->view('supervisor/footer');
+	}
+
 	public function exam_room() {
 		$this->load->model('supervisor_model');
 		$data = array(
 					'supervisor_data'	=> $this->supervisor_model->get_supervisor_data()
 					);
+					
+		//need room data
 
 		$this->load->view('supervisor/head');
 		$this->load->view('supervisor/nav_fixtop');
@@ -2248,8 +2265,6 @@ class Supervisor extends MY_Controller {
 		$this->load->view('supervisor/exam_room');
 		$this->load->view('supervisor/footer');
 	}
-
-
 
 }//class Supervisor
 ?>

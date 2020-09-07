@@ -38,7 +38,7 @@
 						echo "<div class='grid-way'></div>";
 						break;
 					default:
-						echo "<div class='grid-seat'>".$pc."</div>";
+						echo "<div class='grid-seat' seatnum='".$pc."'></div>";
 						break;
 				}
 				$pc++;

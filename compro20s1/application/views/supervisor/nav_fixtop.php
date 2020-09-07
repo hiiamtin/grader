@@ -14,7 +14,7 @@
 					echo '<li><a href="'.site_url($_SESSION['role'].'/exercise_show').'"title="Exercise Management">Exercise</a></li>';
 			?>
 			<li><a href="<?php echo site_url($_SESSION['role'].'/group_management'); ?>" title="Group Mangement"> Group Management </a></li>
-			<li><a href="<?php echo site_url($_SESSION['role'].'/exam_room'); ?>">Exam Room</a></li>		
+			<li><a href="<?php echo site_url($_SESSION['role'].'/exam_room_panel'); ?>">Exam Room</a></li>		
 			<li><a href="<?php echo site_url($_SESSION['role'].'/edit_profile_form'); ?>">Edit profile</a></li>	
 			<li><a href="<?php echo site_url("auth/logout") ?>" class="btn btn-default btn-lg"> Log out. <span class="glyphicon glyphicon-log-out"></span> </a></li> 
 		</div>
