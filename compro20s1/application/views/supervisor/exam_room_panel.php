@@ -99,10 +99,7 @@
 			let roomNumber = id.substr(0,3);
 			if(toogleSwitch.checked){
 				if (confirm(roomNumber+" : Allow Students to Check in?")) {
-					let phpStatement =
-						<?php
-
-						?>
+					// Do sth
 				} else {
 					toogleSwitch.checked = false;
 				}
@@ -125,38 +122,22 @@
 				//Allow Students to Access
 				echo '<li class="list-group-item d-flex justify-content-between align-items-center">Allow Students to Access';
 				echo '<label class="badge switch">';
-				echo '<input type="checkbox" id="'.$room['room_number'].'-checkin" onclick="allowAccess("'.$room['room_number'].'-checkin")" checked='.$room['allow_access'].'>';
-				/* WRONG !!!!! idk how 2 do */
+				echo '<input type="checkbox" id="'.$room['room_number'].'-access" onclick="allowAccess(this.id)" '.$room['allow_access'].'>';
 				echo '<span class="slider round">';
 				echo '</span></label></li>';
-
+				//Allow Students to Check in
+				echo '<li class="list-group-item d-flex justify-content-between align-items-center">Allow Students to Check in';
+				echo '<label class="badge switch">';
+				echo '<input type="checkbox" id="'.$room['room_number'].'-checkin" onclick="allowCheckin(this.id)" '.$room['allow_check_in'].'>';
+				echo '<span class="slider round">';
+				echo '</span></label></li>';
 				echo '</ul>';
+				$siteUrl = site_url($_SESSION["role"]."/exam_room");
+				echo '<a href="'.$siteUrl.'" class="btn btn-primary">View Seating Chart</a>';
 				echo '</div>';
 
 			}
 		}
 	?>
-		<!--ul class="list-group list-group-flush">
-			<li class="list-group-item d-flex justify-content-between align-items-center">
-				Allow Students to Check-in
-				<label class="badge switch">
-					<input type="checkbox" id="704-checkin" onclick="allowAccess('704-checkin')">
-					<span class="slider round"></span>
-				</label>
-			</li>
-			<li class="list-group-item d-flex justify-content-between align-items-center">
-				Start the Exam
-				<label class="badge switch">
-					<input type="checkbox">
-					<span class="slider round"></span>
-				</label>
-			</li>
-		</ul--->
-
-		<div class="list-group list-group-flush">
-			<a href="<?php echo site_url($_SESSION['role'].'/exam_room'); ?>" class="btn btn-primary">View Seating Chart</a>
-		</div>
 
 </div>
-
-
