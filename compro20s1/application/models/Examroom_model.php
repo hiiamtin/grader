@@ -20,5 +20,18 @@ class Examroom_model extends CI_Model {
 		return $examRoom;
     }
 
+    public function setAllowAccess($needToAllow, $roomNumber){
+        $data = array('allow_access' => $needToAllow);
+        $this->db->where('room_number',$roomNumber);
+        $this->db->set($data);
+        $query = $this->db->update('exam_room');
+    }
+
+    public function setAllowCheckIn($needToAllow, $roomNumber){
+        $data = array('allow_check_in' => $needToAllow);
+        $this->db->where('room_number',$roomNumber);
+        $this->db->set($data);
+        $query = $this->db->update('exam_room');
+    }
 	
 }//class Examroom_model

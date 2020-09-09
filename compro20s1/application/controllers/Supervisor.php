@@ -2237,6 +2237,8 @@ class Supervisor extends MY_Controller {
 		$this->load->view('supervisor/footer');
 	}
 
+	/* EXAM ROOM FEATURE */
+
 	public function exam_room_panel() {
 		$this->load->model('supervisor_model');
 		$this->load->model('examroom_model');
@@ -2252,19 +2254,32 @@ class Supervisor extends MY_Controller {
 	}
 
 	public function exam_room() {
+		// sakda: WIP JA
 		$this->load->model('supervisor_model');
 		$data = array(
 					'supervisor_data'	=> $this->supervisor_model->get_supervisor_data()
 					);
-					
-		//need room data
-
 		$this->load->view('supervisor/head');
 		$this->load->view('supervisor/nav_fixtop');
 		$this->load->view('supervisor/nav_sideleft',$data);
 		$this->load->view('supervisor/exam_room');
 		$this->load->view('supervisor/footer');
 	}
+
+	public function exam_room_allow_access() {
+		$roomNumber = intval($_POST['roomNumber']);
+		$needToAllow = $_POST['needToAllow'];
+		$this->load->model('examroom_model');
+		$this->examroom_model->setAllowAccess($needToAllow,$roomNumber);
+	}
+
+	public function exam_room_allow_check_in() {
+		$roomNumber = intval($_POST['roomNumber']);
+		$needToAllow = $_POST['needToAllow'];
+		$this->load->model('examroom_model');
+		$this->examroom_model->setAllowCheckIn($needToAllow,$roomNumber);
+	}
+
 
 }//class Supervisor
 ?>
