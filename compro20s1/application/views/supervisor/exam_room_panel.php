@@ -88,68 +88,74 @@
         transform: translateX(26px);
     }
 
+    .room-controller .btn {
+        width: 100%;
+        font-size: x-large;
+    }
+
 </style>
 
+<script>
+    function ajaxSetAllowAccess(needToAllow, roomNumber) {
+        jQuery.post("<?php echo site_url('supervisor/exam_room_allow_access'); ?>",
+            {
+                roomNumber: roomNumber,
+                needToAllow: needToAllow
+            },
+            setTimeout(function(){window.location = window.location}, 500)
+        );
+    }
+
+    function ajaxSetAllowCheckIn(needToAllow, roomNumber) {
+        jQuery.post("<?php echo site_url('supervisor/exam_room_allow_check_in'); ?>",
+            {
+                roomNumber: roomNumber,
+                needToAllow: needToAllow
+            },
+            setTimeout(function(){window.location = window.location}, 500)
+        );
+    }
+
+    function toggleAllowAccess(id) {
+        let toggleSwitch = document.getElementById(id);
+        let roomNumber = id.substr(0, 3);
+        if (toggleSwitch.checked) {
+            if (confirm(roomNumber + " : Allow Students to Access?")) {
+                ajaxSetAllowAccess("checked", roomNumber);
+            } else {
+                toggleSwitch.checked = false;
+            }
+        } else {
+            if (confirm(roomNumber + " : Prevent Students to Access?")) {
+                ajaxSetAllowAccess("", roomNumber);
+            } else {
+                toggleSwitch.checked = true;
+            }
+        }
+    }
+
+    function toggleAllowCheckIn(id) {
+        let toggleSwitch = document.getElementById(id);
+        let roomNumber = id.substr(0, 3);
+        if (toggleSwitch.checked) {
+            if (confirm(roomNumber + " : Allow Students to Check in?")) {
+                ajaxSetAllowCheckIn("checked", roomNumber);
+            } else {
+                toggleSwitch.checked = false;
+            }
+        } else {
+            if (confirm(roomNumber + " : Prevent Students to Check in?")) {
+                ajaxSetAllowCheckIn("", roomNumber);
+            } else {
+                toggleSwitch.checked = true;
+            }
+        }
+    }
+
+</script>
+
 <div id="control-panel">
-    <script>
-        function ajaxSetAllowAccess(needToAllow, roomNumber) {
-            jQuery.post("<?php echo site_url('supervisor/exam_room_allow_access'); ?>",
-                {
-                    roomNumber: roomNumber,
-                    needToAllow: needToAllow
-                },
-                setTimeout(function(){window.location = window.location}, 500)
-            );
-        }
 
-        function ajaxSetAllowCheckIn(needToAllow, roomNumber) {
-            jQuery.post("<?php echo site_url('supervisor/exam_room_allow_check_in'); ?>",
-                {
-                    roomNumber: roomNumber,
-                    needToAllow: needToAllow
-                },
-                setTimeout(function(){window.location = window.location}, 500)
-            );
-        }
-
-        function toggleAllowAccess(id) {
-            let toggleSwitch = document.getElementById(id);
-            let roomNumber = id.substr(0, 3);
-            if (toggleSwitch.checked) {
-                if (confirm(roomNumber + " : Allow Students to Access?")) {
-                    ajaxSetAllowAccess("checked", roomNumber);
-                } else {
-                    toggleSwitch.checked = false;
-                }
-            } else {
-                if (confirm(roomNumber + " : Prevent Students to Access?")) {
-                    ajaxSetAllowAccess("", roomNumber);
-                } else {
-                    toggleSwitch.checked = true;
-                }
-            }
-        }
-
-        function toggleAllowCheckIn(id) {
-            let toggleSwitch = document.getElementById(id);
-            let roomNumber = id.substr(0, 3);
-            if (toggleSwitch.checked) {
-                if (confirm(roomNumber + " : Allow Students to Check in?")) {
-                    ajaxSetAllowCheckIn("checked", roomNumber);
-                } else {
-                    toggleSwitch.checked = false;
-                }
-            } else {
-                if (confirm(roomNumber + " : Prevent Students to Check in?")) {
-                    ajaxSetAllowCheckIn("", roomNumber);
-                } else {
-                    toggleSwitch.checked = true;
-                }
-            }
-        }
-
-
-    </script>
     <?php
     if (!empty($exam_rooms)) {
         foreach ($exam_rooms as $room) {
@@ -158,7 +164,7 @@
                 . $room['room_number']
                 . '</h2>';
             echo '<ul class="list-group list-group-flush">';
-            //Allow Students to Access
+            // Allow Students to Access
             echo '<li class="list-group-item d-flex justify-content-between align-items-center">Allow Students to Access';
             echo '<label class="badge switch">';
             echo '<input type="checkbox" id="'
@@ -168,7 +174,7 @@
                 . '>';
             echo '<span class="slider round">';
             echo '</span></label></li>';
-            //Allow Students to Check in
+            // Allow Students to Check in
             echo '<li class="list-group-item d-flex justify-content-between align-items-center">Allow Students to Check in';
             echo '<label class="badge switch">';
             echo '<input type="checkbox" id="'
@@ -179,10 +185,11 @@
             echo '<span class="slider round">';
             echo '</span></label></li>';
             echo '</ul>';
+            // Go to Seating Chart Page
             $siteUrl = site_url($_SESSION["role"] . "/exam_room");
             echo '<a href="'
                 . $siteUrl
-                . '" class="btn btn-primary">View Seating Chart</a>';
+                . '" class="btn btn-success">View Seating Chart</a>';
             echo '</div>';
         }
     }
