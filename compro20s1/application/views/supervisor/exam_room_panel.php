@@ -1,5 +1,5 @@
 <style>
-    #control-panel {
+    #exam-room-panel {
         margin-left: 300px;
         margin-top: 30px;
         width: 70vw;
@@ -7,48 +7,48 @@
         flex-wrap: wrap;
     }
 
-    .room-controller {
+    #exam-room-panel .room-controller {
         background-color: #ffc373;
         width: 500px;
-        height: 500px;
+        height: 300px;
         margin: 10px;
         padding: 10px;
     }
 
-    h2 {
+    #exam-room-panel h2 {
         width: 500px;
         text-align: center;
         font-weight: bold;
         padding-bottom: 5px;
     }
 
-    .list-group * {
+    #exam-room-panel .list-group * {
         font-size: x-large;
     }
 
-    .list-group .badge {
+    #exam-room-panel .list-group .badge {
         background-color: white;
     }
 
-    .list-group a {
+    #exam-room-panel .list-group a {
         width: 100%;
         display: block;
     }
 
-    .switch {
+    #exam-room-panel .switch {
         position: relative;
         display: inline-block;
         width: 60px;
         height: 34px;
     }
 
-    .switch input {
+    #exam-room-panel .switch input {
         opacity: 0;
         width: 0;
         height: 0;
     }
 
-    .slider {
+    #exam-room-panel .slider {
         position: absolute;
         cursor: pointer;
         top: 0;
@@ -61,7 +61,7 @@
         border-radius: 34px;
     }
 
-    .slider:before {
+    #exam-room-panel .slider:before {
         position: absolute;
         content: "";
         height: 26px;
@@ -74,21 +74,21 @@
         border-radius: 50%;
     }
 
-    input:checked + .slider {
+    #exam-room-panel input:checked + .slider {
         background-color: #1bc30f;
     }
 
-    input:focus + .slider {
+    #exam-room-panel input:focus + .slider {
         box-shadow: 0 0 1px #1bc30f;
     }
 
-    input:checked + .slider:before {
+    #exam-room-panel input:checked + .slider:before {
         -webkit-transform: translateX(26px);
         -ms-transform: translateX(26px);
         transform: translateX(26px);
     }
 
-    .room-controller .btn {
+    #exam-room-panel .room-controller .btn {
         width: 100%;
         font-size: x-large;
     }
@@ -127,7 +127,7 @@
             }
         } else {
             if (confirm(roomNumber + " : Prevent Students to Access?")) {
-                ajaxSetAllowAccess("", roomNumber);
+                ajaxSetAllowAccess("unchecked", roomNumber);
             } else {
                 toggleSwitch.checked = true;
             }
@@ -145,7 +145,7 @@
             }
         } else {
             if (confirm(roomNumber + " : Prevent Students to Check in?")) {
-                ajaxSetAllowCheckIn("", roomNumber);
+                ajaxSetAllowCheckIn("unchecked", roomNumber);
             } else {
                 toggleSwitch.checked = true;
             }
@@ -154,7 +154,7 @@
 
 </script>
 
-<div id="control-panel">
+<div id="exam-room-panel">
 
     <?php
     if (!empty($exam_rooms)) {
