@@ -40,18 +40,18 @@ class Auth extends MY_Controller {
 */
 	public function index()
 	{	
-		#$this->logout_after_time_limit();
+		$this->logout_after_time_limit();
 		
 
 		$this->logged_in_check();
 		
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules("username", "Username", "trim|required");
-		$this->form_validation->set_rules("password", "Password", "trim|required");
+		$this->form_validation->set_rules("password", "Password", "trim|required",
+			array('required' => 'You must provide a %s.'));
 		$this->load->model('auth_model', 'auth');
 		if ($this->form_validation->run() == true) 
-		{
-				
+		{		
 			// check the username & password of user
 			$status = $this->auth->validate();
 			if ($status == ERR_INVALID_USERNAME) {
@@ -97,9 +97,9 @@ class Auth extends MY_Controller {
 
 				$this->session->set_flashdata("error", "Login not allow by Instructor.");
 			
-			} elseif ($status == ERR_UNMATCH_SESSION) {
-				$this->session->set_flashdata("error", "Unmatch session");
-			}
+			} //elseif ($status == ERR_UNMATCH_SESSION) {
+				//$this->session->set_flashdata("error", "Unmatch session");
+			//}
 			else {
 				// success
 				// store the user data to session

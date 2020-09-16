@@ -41,7 +41,7 @@ class Auth_model extends CI_Model {
 		
 
 		if ($row['ci_session'] != 0) {
-			// user didnot logout correctly			
+			// user did not logout correctly			
 			return ERR_UNMATCH_SESSION;
 		}
 
@@ -133,9 +133,9 @@ class Auth_model extends CI_Model {
 			$this->db->where('id', $user_id);
 			$this->db->update($this->table);
 		}	
-    else {
-      echo "User : ".$user_id." not log out.<br>";
-    }			
+    	else {
+      		echo "User : ".$user_id." not log out.<br>";
+    	}			
 	}
 
 	public function get_password() {
