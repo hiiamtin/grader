@@ -1616,6 +1616,10 @@ class Student extends MY_Controller {
         $this->load->view('student/stu_footer');
     }
 
+    public function exam_room_check_in() {
+	    echo 'ห้องยังไม่เปิดง่ะ';
+    }
+
 
 
 

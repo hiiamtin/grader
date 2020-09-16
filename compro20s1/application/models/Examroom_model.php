@@ -2,8 +2,7 @@
 
 class Examroom_model extends CI_Model
 {
-    private $_table = '';
-    private $_data = '';
+    private $TABLE_EXAM_ROOM = 'exam_room';
 
     public function __construct()
     {
@@ -13,8 +12,9 @@ class Examroom_model extends CI_Model
     public function getAllExamRoom()
     {
         $this->db->select('*')
-            ->from('exam_room');
+            ->from($this->TABLE_EXAM_ROOM);
         $query = $this->db->get();
+
         $query = $query->result_array();
         $examRoom = array();
         foreach ($query as $row) {
@@ -28,7 +28,7 @@ class Examroom_model extends CI_Model
         $data = array('allow_access' => $needToAllow);
         $this->db->where('room_number', $roomNumber);
         $this->db->set($data);
-        return $this->db->update('exam_room');
+        return $this->db->update($this->TABLE_EXAM_ROOM);
     }
 
     public function setAllowCheckIn($needToAllow, $roomNumber)
@@ -36,7 +36,7 @@ class Examroom_model extends CI_Model
         $data = array('allow_check_in' => $needToAllow);
         $this->db->where('room_number', $roomNumber);
         $this->db->set($data);
-        return $this->db->update('exam_room');
+        return $this->db->update($this->TABLE_EXAM_ROOM);
     }
 
 }//class Examroom_model
