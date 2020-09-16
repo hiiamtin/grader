@@ -1,1 +1,0 @@
-CREATE TABLE user_staff LIKE user_supervisor;
