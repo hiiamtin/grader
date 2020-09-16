@@ -111,6 +111,9 @@ defined('STU_SUBMIT_OUTPUT_FOLDER')		OR define('STU_SUBMIT_OUTPUT_FOLDER', 'stud
 defined('SUPERVISOR_AVATAR_FOLDER')	OR define('SUPERVISOR_AVATAR_FOLDER', 'supervisor_data/avatar/');
 defined('SUPERVISOR_CFILES_FOLDER')	OR define('SUPERVISOR_CFILES_FOLDER', 'supervisor_data/c_files/');
 defined('SUPERVISOR_EXE_FOLDER')	OR define('SUPERVISOR_EXE_FOLDER', 'supervisor_data/exe_files/');
+//TA
+defined('STAFF_AVATAR_FOLDER')	    OR define('STAFF_AVATAR_FOLDER', 'staff_data/avatar/');
+defined('STAFF_CFILES_FOLDER')	    OR define('STAFF_CFILES_FOLDER', 'staff_data/files/');
 
 
 defined('ADMIN_DATA_FOLDER')		OR define('ADMIN_DATA_FOLDER', 'admin_data/');
