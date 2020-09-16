@@ -24,12 +24,18 @@ class Examroom_model extends CI_Model
         return $examRoom;
     }
 
-    public function setAllowAccess($needToAllow, $roomNumber)
+    public function setAllowAccess($needToAllow, $roomNumber, $classId)
     {
-        $data = array('allow_access' => $needToAllow);
+        $data = array('allow_access' => $needToAllow,
+            'class_id' => $classId);
         $this->db->where('room_number', $roomNumber);
         $this->db->set($data);
-        return $this->db->update($this->TABLE_EXAM_ROOM);
+        $this->db->update($this->TABLE_EXAM_ROOM);
+
+        if($needToAllow == 'unchecked') {
+            $this->db->where('room_number',$roomNumber);
+            $this->db->delete($this->TABLE_EXAM_SEAT);
+        }
     }
 
     public function setAllowCheckIn($needToAllow, $roomNumber)

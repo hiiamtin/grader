@@ -2269,8 +2269,9 @@ class Supervisor extends MY_Controller {
 	public function exam_room_allow_access() {
 		$roomNumber = intval($_POST['roomNumber']);
 		$needToAllow = $_POST['needToAllow'];
+		$classId = $_POST['classId'];
 		$this->load->model('examroom_model');
-		$this->examroom_model->setAllowAccess($needToAllow,$roomNumber);
+		$this->examroom_model->setAllowAccess($needToAllow,$roomNumber,$classId);
 	}
 
 	public function exam_room_allow_check_in() {
