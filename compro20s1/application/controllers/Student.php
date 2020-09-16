@@ -1601,6 +1601,25 @@ class Student extends MY_Controller {
 
 	}
 
+    public function exam_room_gate() {
+        $this->load->model('examroom_model');
+
+        $data = array(
+            'exam_rooms' => $this->examroom_model->getAllExamRoom()
+        );
+        $this->update_student_data();
+
+        $this->load->view('student/stu_head');
+        $this->load->view('student/nav_fixtop');
+        $this->nav_sideleft();
+        $this->load->view('student/exam_room/gate',$data);
+        $this->load->view('student/stu_footer');
+    }
+
+    public function exam_room_check_in() {
+	    echo 'ห้องยังไม่เปิดง่ะ';
+    }
+
 
 
 

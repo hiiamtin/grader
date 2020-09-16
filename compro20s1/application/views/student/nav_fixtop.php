@@ -28,6 +28,7 @@
 				<li class="active"><a href="<?php echo site_url('student/index'); ?>">Home</a></li>
 				<li><a href="<?php echo site_url($_SESSION['role'].'/exercise_home'); ?>">Exercise</a></li>
 				<!-- <li><a href="#">Layout</a></li> -->
+                <li><a href="<?php echo site_url('student/exam_room_gate'); ?>">Exam Room</a></li>
 				<li><a href="<?php echo site_url('student/edit_profile_form'); ?>">Edit profile</a></li>
 
 				<li class="dropdown">
