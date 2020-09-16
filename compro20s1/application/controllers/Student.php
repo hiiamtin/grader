@@ -1617,7 +1617,21 @@ class Student extends MY_Controller {
     }
 
     public function exam_room_check_in() {
-	    echo 'ห้องยังไม่เปิดง่ะ';
+        $this->update_student_data();
+
+        $this->load->helper('url');
+        $this->load->model('examroom_model');
+
+        $isReady = $this->examroom_model->checkIn($_POST['room_number'], $_POST['seat_number'], $_SESSION['stu_id'], $_SESSION['stu_group']);
+
+        if ($isReady)
+        {
+            echo 'เวลคัมจ้า';
+            //redirect('student/exam_room/main'.$_SESSION['stu_id'], 'refresh');
+        }
+        else {
+            echo 'ห้องยังไม่เปิดง่ะ';
+        }
     }
 
 
