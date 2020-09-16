@@ -119,10 +119,10 @@ class Auth extends MY_Controller {
 			}
 		}
 
-		$this->load->view("auth_header");		
-		$this->load->view("auth_topbar");
-		$this->load->view("auth");
-		$this->load->view("auth_footer");
+		$this->load->view("auth/auth_header");		
+		$this->load->view("auth/auth_topbar");
+		$this->load->view("auth/auth");
+		$this->load->view("auth/auth_footer");
 	
 	}
 
