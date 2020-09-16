@@ -2249,7 +2249,7 @@ class Supervisor extends MY_Controller {
 		$this->load->view('supervisor/head');
 		$this->load->view('supervisor/nav_fixtop');
 		$this->load->view('supervisor/nav_sideleft',$data);
-		$this->load->view('supervisor/exam_room_panel',$data);
+		$this->load->view('supervisor/exam_room/panel',$data);
 		$this->load->view('supervisor/footer');
 	}
 
@@ -2262,7 +2262,7 @@ class Supervisor extends MY_Controller {
 		$this->load->view('supervisor/head');
 		$this->load->view('supervisor/nav_fixtop');
 		$this->load->view('supervisor/nav_sideleft',$data);
-		$this->load->view('supervisor/exam_room');
+		$this->load->view('supervisor/exam_room/seating_chart');
 		$this->load->view('supervisor/footer');
 	}
 
