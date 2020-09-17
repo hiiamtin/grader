@@ -72,4 +72,19 @@ class Examroom_model extends CI_Model
 
     }
 
+    public function hasAlreadyCheckIn($stuId) {
+        $this->db->select('room_number')
+            ->from($this->TABLE_EXAM_SEAT)
+            ->where('stu_id', $stuId);
+        $query = $this->db->get();
+        $query = $query->result_array();
+        if (empty($query)) {
+            return null;
+        }
+        else {
+            return $query[0];
+        }
+    }
+
+
 }//class Examroom_model
