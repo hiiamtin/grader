@@ -10,7 +10,7 @@
     #exam-room-panel .room-controller {
         background-color: #ffc373;
         width: 500px;
-        height: 300px;
+        height: 400px;
         margin: 10px;
         padding: 10px;
     }
@@ -93,14 +93,25 @@
         font-size: x-large;
     }
 
+    #exam-room-panel .status {
+        font-size: large;
+        margin: 15px;
+        font-family: Consolas, Monaco, Courier New, Courier, monospace;
+    }
+
+    #exam-room-panel .status a {
+        font-weight: bold;
+    }
+
 </style>
 
 <script>
-    function ajaxSetAllowAccess(needToAllow, roomNumber) {
+    function ajaxSetAllowAccess(needToAllow, roomNumber, classId) {
         jQuery.post("<?php echo site_url('supervisor/exam_room_allow_access'); ?>",
             {
                 roomNumber: roomNumber,
-                needToAllow: needToAllow
+                needToAllow: needToAllow,
+                classId: classId
             },
             setTimeout(function(){window.location = window.location}, 500)
         );
@@ -120,14 +131,15 @@
         let toggleSwitch = document.getElementById(id);
         let roomNumber = id.substr(0, 3);
         if (toggleSwitch.checked) {
-            if (confirm(roomNumber + " : Allow Students to Access?")) {
-                ajaxSetAllowAccess("checked", roomNumber);
-            } else {
+            let classId = prompt(roomNumber + " : Please Insert Student Group:", "");
+            if (classId == null || classId == "") {
                 toggleSwitch.checked = false;
+            } else {
+                ajaxSetAllowAccess("checked", roomNumber, classId);
             }
         } else {
             if (confirm(roomNumber + " : Prevent Students to Access?")) {
-                ajaxSetAllowAccess("unchecked", roomNumber);
+                ajaxSetAllowAccess("unchecked", roomNumber, "");
             } else {
                 toggleSwitch.checked = true;
             }
@@ -190,6 +202,10 @@
             echo '<a href="'
                 . $siteUrl
                 . '" class="btn btn-success">View Seating Chart</a>';
+            echo '<div class="status">';
+            echo '<p>Student Group: <a>'.$room['class_id'].'</a></p>';
+            echo '<p>Is in Exam: <a>'.$room['is_active'].'</a></p>';
+            echo '</div>';
             echo '</div>';
         }
     }
