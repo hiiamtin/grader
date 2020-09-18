@@ -7,78 +7,7 @@
 		$class_id =  $class_schedule['group_id'];
 		// $lab_no , $group_id passed from controller
 	?>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-4"> <!-- Left panel -->
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h1>กลุ่มที่ : <?php echo $class_schedule['group_no']; ?><h1>
-						<h3>ภาควิชา : <?php echo $class_schedule['dept_name']; ?><h3>
-						<h3><?php echo $class_schedule['day_of_week'].' เวลา : '.$class_schedule['time_start'].' - '.$class_schedule['time_end']; ?><h3>
-						
-					</div>
-				</div>
-			</div> <!-- Left panel -->
 
-			<div class="col-sm-4"> <!-- middle panel -->
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<h3>ผู้สอน : <?php echo $class_schedule['supervisor_firstname']." ".$class_schedule['supervisor_lastname']; ?><h3>
-						<h3>จำนวนนักศึกษา : <?php echo sizeof($students_data); ?> คน<h3>
-						<h3>Online : <?php 
-										$student_online = 0;
-										foreach($students_data as $student) {
-											if($student['status']=='online')
-												$student_online ++;
-										}
-										echo $student_online; ?> คน<h3>
-					</div>
-				</div>
-			</div><!-- middle panel -->
-
-			<div class="col-sm-4"><!-- right panel -->
-				<div class="panel panel-default">
-					<div class="panel-footer" style="text-align:center;">
-						<form action="<?php echo site_url('supervisor/allow_class_login'); ?>" id="toggle_allow_login" method="post" >
-							<input type="text" name="group_id" value="<?php echo $class_schedule['group_id']; ?>" hidden >
-							<input type="text" name="lecturer" value="<?php echo $class_schedule['lecturer']; ?>" hidden >
-							<?php
-								if ($class_schedule['allow_login']=='yes') {
-									echo '<button class="btn btn-success" style="text-align:center;" type="submit">Allow student to log in.</button>';
-									echo '<input type="text" name="allow_login" value="no" hidden>';
-								} else {
-									echo '<button class="btn btn-danger" style="text-align:center;" type="submit">Student CANNOT  log in.</button>';
-									echo '<input type="text" name="allow_login" value="yes" hidden>';
-								}
-							?>
-						</form>
-
-						<br />
-
-						<span><form action="<?php echo site_url('supervisor/allow_upload_pic'); ?>" id="toggle_allow_upload_pic" method="post" >
-							<input type="text" name="group_id" value="<?php echo $class_schedule['group_id']; ?>" hidden >
-							<input type="text" name="lecturer" value="<?php echo $class_schedule['lecturer']; ?>" hidden >
-							<?php
-								if ($class_schedule['allow_upload_pic']=='yes') {
-									echo '<button class="btn btn-success" style="text-align:center;" type="submit">UPLOAD Picture -> OK</button>';
-									echo '<input type="text" name="allow_upload_pic" value="no" hidden>';
-								} else {
-									echo '<button class="btn btn-danger" style="text-align:center;" type="submit">UPLOAD Picture -> Not allow.</button>';
-									echo '<input type="text" name="allow_upload_pic" value="yes" hidden>';
-								}
-							?>
-						</form></span>
-						
-
-						 
-					</div>
-				</div>
-			</div><!-- right panel -->
-		</div>
-	</div>
-		
-
-	
 	<div class="container-fulid" style="background-color:#ffb366;">
 	
 		<div class="row" style="color:Blue;text-align:center;background-color:Khaki ;font-size: 200%;padding-top:20px;padding-bottom:20px;"><div class="container">

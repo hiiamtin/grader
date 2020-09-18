@@ -954,6 +954,14 @@ class Supervisor extends MY_Controller {
 		
 
 	}
+	public function open_calendar() {
+		foreach ($_POST as $key => $value){
+  			echo "{$key} = {$value}\r\n";
+		}
+		$time_start = explode("T",$_POST['time_start']);
+		$time_start = $time_start[0]." ".$time_start[1];
+		echo $time_start;
+	}
 
 	public function allow_access_class_chapter() {
 		

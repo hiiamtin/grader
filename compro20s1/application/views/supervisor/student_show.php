@@ -1,90 +1,39 @@
+<script>
+function set_time_counter(a,b,c) { 
+	var x = setInterval(function() {
+		// Get today's date and time
+		var now = new Date().getTime();
+		// Find the distance between now and the count down date
+		var distance = b*1000 - now;
+		
+		// Time calculations for days, hours, minutes and seconds
+		var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+		var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+			
+		// Output the result in an element with id="demo"
+		document.getElementById(c).innerHTML = days + "d " + hours + "h "
+		+ minutes + "m " + seconds + "s ";
+			
+		// If the count down is over, write some text 
+		if (distance < 0) {
+			clearInterval(x);
+			document.getElementById(b).innerHTML = "EXPIRED";
+		}
+	}, 1000);            
+} 
+function test(){
+	alert("I am an alert box!");
+}
+</script>
 <!-- nav_body -->
 <div class="col-lg-10 col-md-10 col-sm-10" style="margin-top:10px;">
 	<?php
 		$number_of_chapters = sizeof($lab_info);
 		echo '<!-- '.'<pre>';print_r($students_data);echo '</pre> -->';
 	?>
-	<!--
-	<div class="row">
-		<div class="col-sm-6">.col-sm-4
-			<div class="panel panel-default">
-				<div class="panel-heading">Panel Heading</div>
-				<div class="panel-body">A Basic Panel</div>
-			</div>
-		</div>
-		<div class="col-sm-3">
-			<div class="panel panel-default">
-				<div class="panel-heading">อนุญาติ ดูโจทย์</div>
-				<div class="panel-body">
-					<table class="table table-bordered">
-						<thead>
-							<tr>
-								<th style="text-align:center;">lab</th>
-								<th style="text-align:center;">การดูโจทย์</th>
-								<th style="text-align:center;">Action</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php for($no=1;$no<=$number_of_chapters;$no++) { ?>
-							<form action="<?php echo site_url('supervisor/browse_exercise'); ?>" method="post" id="browse_exercise">
-							<tr>
-								<td style="text-align:center;"><?php echo $no; ?></td>
-								<td style="text-align:center;">
-									<input type="radio" name="browse_exercise" value="yes" 
-										<?php if ($group_permission[$no]['allow_access']=='yes') echo 'checked';  ?> > Yes 
-									<input type="radio" name="browse_exercise" value="no" 
-										<?php if ($group_permission[$no]['allow_access']=='no') echo 'checked';  ?>> NO
-									<input type="hidden" name="chapter_id" value="<?php echo $no; ?>"></input>
-									<input type="hidden" name="group_id" value="<?php echo $class_schedule['group_id']; ?>"></input>
-								<td style="text-align:center;"><input type="submit"></td>
-							</tr>
-							</form> 
-							<?php } ?>
-						<tr>
-						
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>		
-		<div class="col-sm-3">
-			<div class="panel panel-default">
-				<div class="panel-heading">อนุญาติ การส่งงาน</div>
-				<div class="panel-body">
-					<table class="table table-bordered">
-						<thead>
-							<tr>
-								<th style="text-align:center;">lab</th>
-								<th style="text-align:center;">การส่งงาน</th>
-								<th style="text-align:center;">Action</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php for($no=1;$no<=$number_of_chapters;$no++) { ?>
-							<form action="<?php echo site_url('supervisor/allow_submit_class_chapter'); ?>" method="post" id="allow_submit_class_chapter">
-							<tr>
-								<td style="text-align:center;"><?php echo $no; ?></td>
-								<td style="text-align:center;">
-									<input type="radio" name="allow_submit" value="yes" 
-										<?php if ($group_permission[$no]['allow_submit']=='yes') echo 'checked';  ?> > Yes 
-									<input type="radio" name="allow_submit" value="no" 
-										<?php if ($group_permission[$no]['allow_submit']=='no') echo 'checked';  ?>> NO
-									<input type="hidden" name="chapter_id" value="<?php echo $no; ?>"></input>
-									<input type="hidden" name="group_id" value="<?php echo $class_schedule['group_id']; ?>"></input>
-								<td style="text-align:center;"><input type="submit"></td>
-							</tr>
-							</form> 
-							<?php } ?>
-						<tr>
-						
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-	-->
-
+	
 	<div class="row">
 		<div class="col-sm-4">
 			<div class="panel panel-default">
@@ -142,31 +91,6 @@
 
 		<div class="col-sm-8">
 			<div class="panel panel-default">
-				<!--<div class="panel-heading">
-					<div><?php 
-						echo $class_schedule['year']." / ".$class_schedule['semester']." "; 
-						echo 'กลุ่มที่ : '.$class_schedule['group_no']." ".$class_schedule['dept_name']." "; 
-						echo $class_schedule['day_of_week']." ".$class_schedule['time_start'].' - '.$class_schedule['time_end']; 
-						
-						echo 'Allow submit : '.$class_schedule['allow_submit'].' '; 
-						echo 'Allow login : '.$class_schedule['allow_login'].' '; 
-						echo 'Upload picture : '.$class_schedule['allow_upload_pic'].' '; 
-						echo 'Browse exercise : '.$class_schedule['allow_exercise'].' '; 
-						echo '<br />ผู้สอน : '.$class_schedule['supervisor_firstname']." ".$class_schedule['supervisor_lastname'];
-						echo ' staff : ';
-						foreach ($class_schedule['lab_staff'] as $staff) {
-							echo $staff['supervisor_firstname'].' ';
-						}
-						echo date('l dS \o\f F Y h:i:s A', strtotime("now"));
-
-
-						?>
-					</div>
-					<!--<?php echo " class_schedule <pre>"; print_r($class_schedule); echo "</pre>"; ?>
-				</div>-->
-				<!--<?php echo "assigned_group_item<pre>"; print_r($assigned_group_item); echo "</pre>"; ?> -->
-				
-				
 				<div class="panel-body">
 					<table class="table table-bordered">
 						<thead>
@@ -191,8 +115,12 @@
 								
 								foreach ($group_permission as $row) {
 									$count++;
+									/*$time_start = date("H:i:s d-m-Y", strtotime($row['time_start']));*/
+									$time_start = strtotime($row['time_start']);
+									$time_start_str = date('Y-m-d', $time_start)."T".date('H:i', $time_start);
+									$time_end = strtotime($row['time_end']);
+									$time_end_str = date('Y-m-d', $time_end)."T".date('H:i', $time_end);
 									echo '<tr>';
-									 
 									echo '<td align="center">';
 										echo '<form action='.site_url('supervisor/select_exercise_for_group');
 										echo ' id="select_exercise_for_group" method="post" id="set_group_status">';
@@ -201,8 +129,22 @@
 										echo '<button type="button submit" class="btn btn-primary">'.$row['chapter_id'].'</button>';
 										echo '</form>';
 									echo '</td>';
-								
-									echo '<td style="text-align:center">'.$row['chapter_name'].'</td>';
+									echo '<td style="text-align:center">';
+									echo '<p>'.$row['chapter_name'].'</p>';
+										echo '<form action='.site_url('supervisor/open_calendar');
+										echo ' id="open_calendar" method="post" id="set_open_calendar">';
+										echo '<label for="time_start">เวลาเปิด</label>';
+										echo '<input type="datetime-local" id="time_start" name="time_start" value="'.$time_start_str.'">';
+										echo '<br><label for="time_end">เวลาปิด</label>';
+										echo '<input type="datetime-local" id="time_end" name="time_end" value="'.$time_end_str.'">';
+										echo '<input type="text" name="chapter_id" value="'.$row['chapter_id'].'" hidden>';
+										echo '<input type="text" name="class_id" value="'.$row['class_id'].'" hidden>';
+										echo '<p id=time_chapter_'.$count.'></p>';
+										echo '<button type="button submit" class="btn btn-primary">update time</button>';
+										echo '<script>
+												set_time_counter('.$time_start.','.$time_end.',"time_chapter_'.$count.'")
+											  </script>';
+										echo '</form></td>';
 									echo '<td style="text-align:center">'.$row['chapter_fullmark'].'</td>';
 									echo '<td style="text-align:center">'.$row['no_items'].'</td>';
 									echo '<form action="'.site_url('supervisor/allow_access_class_chapter').'" id="toggle_allow_access" method="post" >';
