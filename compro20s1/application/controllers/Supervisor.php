@@ -2242,14 +2242,14 @@ class Supervisor extends MY_Controller {
 	public function exam_room_panel() {
 		$this->load->model('supervisor_model');
 		$this->load->model('examroom_model');
-		$data = array(
-						'supervisor_data'	=> $this->supervisor_model->get_supervisor_data(),
-						'exam_rooms' => $this->examroom_model->getAllExamRoom()
-					);
+		$data = array('supervisor_data'	=> $this->supervisor_model->get_supervisor_data());
+		$exam_data = array(
+			'exam_rooms' => $this->examroom_model->getAllExamRoom()
+		);
 		$this->load->view('supervisor/head');
 		$this->load->view('supervisor/nav_fixtop');
 		$this->load->view('supervisor/nav_sideleft',$data);
-		$this->load->view('supervisor/exam_room/panel',$data);
+		$this->load->view('supervisor/exam_room/panel',$exam_data);
 		$this->load->view('supervisor/footer');
 	}
 
