@@ -131,14 +131,14 @@
         let toggleSwitch = document.getElementById(id);
         let roomNumber = id.substr(0, 3);
         if (toggleSwitch.checked) {
-            let classId = prompt(roomNumber + " : Please Insert Student Group:", "");
+            let classId = prompt(roomNumber + " : ใส่เลขกลุ่มที่ต้องการให้เข้าถึง (สองหลัก เช่น 08, 41)", "");
             if (classId == null || classId == "") {
                 toggleSwitch.checked = false;
             } else {
-                ajaxSetAllowAccess("checked", roomNumber, classId);
+                ajaxSetAllowAccess("checked", roomNumber, '200100'+classId);
             }
         } else {
-            if (confirm(roomNumber + " : Prevent Students to Access?")) {
+            if (confirm(roomNumber + " : ห้ามนักศึกษาเข้าถึง ใช่หรือไม่?")) {
                 ajaxSetAllowAccess("unchecked", roomNumber, "");
             } else {
                 toggleSwitch.checked = true;
@@ -150,13 +150,13 @@
         let toggleSwitch = document.getElementById(id);
         let roomNumber = id.substr(0, 3);
         if (toggleSwitch.checked) {
-            if (confirm(roomNumber + " : Allow Students to Check in?")) {
+            if (confirm(roomNumber + " : อนุญาตให้นักศึกษา Check in ใช่หรือไม่?")) {
                 ajaxSetAllowCheckIn("checked", roomNumber);
             } else {
                 toggleSwitch.checked = false;
             }
         } else {
-            if (confirm(roomNumber + " : Prevent Students to Check in?")) {
+            if (confirm(roomNumber + " : ห้ามนักศึกษา Check in ใช่หรือไม่?")) {
                 ajaxSetAllowCheckIn("unchecked", roomNumber);
             } else {
                 toggleSwitch.checked = true;
