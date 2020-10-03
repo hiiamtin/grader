@@ -2253,17 +2253,26 @@ class Supervisor extends MY_Controller {
 		$this->load->view('supervisor/footer');
 	}
 
-	public function exam_room() {
-		// sakda: WIP JA
+	public function exam_room_seating_chart() {
+
 		$this->load->model('supervisor_model');
 		$data = array(
 					'supervisor_data'	=> $this->supervisor_model->get_supervisor_data()
 					);
+		$this->load->model('examroom_model');
+		$this->load->helper('url');
+		$seatData = array(
+			'seat_data' => $this->examroom_model->getSeatData($this->uri->segment(3)),
+			'in_social_distancing' => true,
+			'accessible_room' => $this->uri->segment(3)
+		);
+
 		$this->load->view('supervisor/head');
 		$this->load->view('supervisor/nav_fixtop');
 		$this->load->view('supervisor/nav_sideleft',$data);
-		$this->load->view('supervisor/exam_room/seating_chart');
+		$this->load->view('supervisor/exam_room/seating_chart',$seatData);
 		$this->load->view('supervisor/footer');
+
 	}
 
 	public function exam_room_allow_access() {
