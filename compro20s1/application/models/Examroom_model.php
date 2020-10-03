@@ -86,5 +86,14 @@ class Examroom_model extends CI_Model
         }
     }
 
+    public function getSeatData($roomNumber) {
+        $this->db->select('*')
+            ->from($this->TABLE_EXAM_SEAT)
+            ->where('room_number', $roomNumber)
+            ->order_by("seat_number");
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
 
 }//class Examroom_model

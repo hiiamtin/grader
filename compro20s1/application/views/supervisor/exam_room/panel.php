@@ -198,7 +198,7 @@
             echo '</span></label></li>';
             echo '</ul>';
             // Go to Seating Chart Page
-            $siteUrl = site_url($_SESSION["role"] . "/exam_room");
+            $siteUrl = site_url($_SESSION["role"] . "/exam_room_seating_chart/").$room['room_number'];
             echo '<a href="'
                 . $siteUrl
                 . '" class="btn btn-success">View Seating Chart</a>';
