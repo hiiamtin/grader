@@ -4,18 +4,18 @@
 		margin-top: 30px;
 		width: 70vw;
 	}
-	.grid-room {
+    #component-exam-room .grid-room {
 		display: grid;
 		grid-template-columns: auto auto auto auto auto auto auto auto auto;
   		padding: 4px;
 	}
-	.grid-seat {
+    #component-exam-room .grid-seat {
 		background-color: grey;
 		margin: 2px;
 		height: 48px;
 		text-align: center;
 	}
-	.white-board {
+    #component-exam-room .white-board {
 		background-color: #7398c7;
 		height: 20px;
 		text-align: center;
@@ -44,7 +44,6 @@
 				$pc++;
 			}
 		?>
-
 	</div>
 </div>
 
