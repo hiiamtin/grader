@@ -56,7 +56,7 @@
                             echo "<input disabled type='submit' class='grid-seat btn btn-default' value='-'></button>";
                             break;
                         default:
-                            if($seat_data[0]['seat_number']==$pcNumber) {
+                            if(!empty($seat_data) && $seat_data[0]['seat_number']==$pcNumber) {
                                 $here = array_shift($seat_data);
                                 echo "<form name='check_in' method='post' accept-charset='utf-8' action='"
                                     ."#"."'>"
@@ -78,7 +78,7 @@
                             echo "<div class='grid-way'></div>";
                             break;
                         default:
-                            if($seat_data[0]['seat_number']==$pcNumber) {
+                            if(!empty($seat_data) && $$seat_data[0]['seat_number']==$pcNumber) {
                                 $here = array_shift($seat_data);
                                 echo "<form name='check_in' method='post' accept-charset='utf-8' action='"
                                     ."#"."'>"
