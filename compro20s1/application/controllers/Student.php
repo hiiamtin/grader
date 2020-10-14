@@ -1642,10 +1642,10 @@ class Student extends MY_Controller {
         $this->load->model('examroom_model');
         $canCheckIn = $this->examroom_model->checkIn($_POST['room_number'], $_POST['seat_number'], $_SESSION['stu_id'], $_SESSION['stu_group']);
         if ($canCheckIn) {
-            redirect('student/exam_room_main', 'refresh');
+            redirect('student/exam_room_student_main', 'refresh');
         }
         else {
-            echo 'ห้องยังไม่เปิดง่ะ';
+            echo 'มีไรบางอย่างแปลกๆ น้า';
         }
     }
 
