@@ -1,0 +1,16 @@
+CREATE TABLE `exam_room` (
+  `room_number` int(3) NOT NULL,
+  `class_id` int(11) DEFAULT NULL,
+  `allow_access` enum('checked','unchecked') CHARACTER SET utf8 NOT NULL,
+  `allow_check_in` enum('checked','unchecked') CHARACTER SET utf8 NOT NULL,
+  `is_active` enum('yes','no') CHARACTER SET utf8 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- -- -- -- --
+
+CREATE TABLE `exam_seat` (
+  `room_number` int(3) NOT NULL,
+  `seat_number` int(2) NOT NULL,
+  `stu_id` int(8) DEFAULT NULL,
+  `progress` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

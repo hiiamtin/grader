@@ -1621,13 +1621,14 @@ class Student extends MY_Controller {
         $this->load->view('student/stu_footer');
     }
 
-    public function exam_room_main() {
+    public function exam_room_student_main() {
         $this->update_student_data();
         $this->load->model('examroom_model');
 
         $enteredRoomNumber = $this->examroom_model->hasAlreadyCheckIn($_SESSION['stu_id']);
         if ($enteredRoomNumber == null) {
             redirect('student/exam_room_gate','refresh');
+            return;
         }
         else {
             echo 'Welcome Jaa';
