@@ -99,6 +99,18 @@ defined('ERR_CLASS_LOGIN_NOT_ALLOW')		OR define('ERR_CLASS_LOGIN_NOT_ALLOW', 5);
 
 /* 
  | 
+ | Use for Set Time system
+ |
+ |
+*/
+defined('ERR_TIME_NONE')					OR define('ERR_TIME_NONE', 0);
+defined('ERR_INVALID_TIME_START')	OR define('ERR_INVALID_TIME_START', 1);
+defined('ERR_INVALID_TIME_END')		OR define('ERR_INVALID_TIME_END', 2);
+defined('ERR_CANNOT_UPDATE_TIME')		OR define('ERR_CANNOT_UPDATE_TIME', 3);
+
+
+/* 
+ | 
  | Use for PLMS system
  |
  |
@@ -127,3 +139,8 @@ defined('TIME_LIMIT_IN_MINUTE')		OR define('TIME_LIMIT_IN_MINUTE',120);
 defined('MAX_RUN_TIME_IN_SECOND')	OR define('MAX_RUN_TIME_IN_SECOND',1);
 defined('MAX_OUTPUT_SIZE')			OR define('MAX_OUTPUT_SIZE',4096);
 defined('MIN_INTERVAL_SUBMISSION_TIME')		OR define('MIN_INTERVAL_SUBMISSION_TIME',60);	// in seconds
+
+//code check keyword limit for student
+defined('IF_LIMIT')                  OR define('IF_LIMIT',10);
+defined('SWITCH_LIMIT')              OR define('SWITCH_LIMIT',1);
+defined('CASE_LIMIT')                OR define('CASE_LIMIT',5);

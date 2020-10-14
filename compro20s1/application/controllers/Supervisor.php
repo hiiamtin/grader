@@ -855,6 +855,7 @@ class Supervisor extends MY_Controller {
 		//echo "_POST:<br /><pre>"; print_r($_POST); echo "</pre>";
 		echo "stu_group : $stu_group_id";
 		*/
+		
 		$this->set_default_for_group_permission($stu_group_id);
 
 		$this->load->model('student_model');
@@ -954,18 +955,62 @@ class Supervisor extends MY_Controller {
 		
 
 	}
-	public function open_calendar() {
-		foreach ($_POST as $key => $value){
+	public function time_open_and_close() {
+		/*foreach ($_POST as $key => $value){
   			echo "{$key} = {$value}\r\n";
 		}
 		$time_start = explode("T",$_POST['time_start']);
 		$time_start = $time_start[0]." ".$time_start[1];
 		echo $time_start;
+		echo "\n";
+		$time_start = strtotime($time_start);
+		echo $time_start;
+		echo "\n";
+		$current_date = date('d/m/Y == H:i:s');
+		echo $current_date;
+		*/
+		$class_id = $_POST['class_id'];
+		$chapter_id = $_POST['chapter_id'];
+		$time_start = explode("T",$_POST['time_start']);
+		$time_start = $time_start[0]." ".$time_start[1]."";
+		$time_end = explode("T",$_POST['time_end']);
+		$time_end = $time_end[0]." ".$time_end[1]."";
+		
+		#echo "".strtotime($time_start)."\r\n";
+		#echo strtotime($time_end);
+		$this->load->model('lab_model');	
+		$status = $this->lab_model->set_time_open_close($class_id,$chapter_id,$time_start,$time_end);
+		if($status == ERR_INVALID_TIME_START){
+			$this->session->set_flashdata("error_time".$chapter_id, "Open time is more than close time.");
+		}else if($status == ERR_CANNOT_UPDATE_TIME){
+			$this->session->set_flashdata("error_time".$chapter_id, "Network ERROR! Please try again.");
+		}else if($status == ERR_TIME_NONE){
+			$this->session->set_flashdata("error_time".$chapter_id, "Update Complete.");
+			date_default_timezone_set("Asia/Bangkok");
+			$current_date = date('Y-m-d H:i');
+			echo $current_date," ",strtotime($current_date)	,"<br>",$time_start,
+			" ",strtotime($time_start),"<br>",$time_end," ",strtotime($time_end);
+			if(strtotime($current_date)<strtotime($time_start)){
+				$allow_access = FALSE;
+				$allow_submit = FALSE;
+			}else if(strtotime($current_date)>=strtotime($time_start) && strtotime($current_date)<strtotime($time_end)){
+				$allow_access = TRUE;
+				$allow_submit = TRUE;
+			}else if(strtotime($current_date)>=strtotime($time_end)){
+				$allow_access = TRUE;
+				$allow_submit = FALSE;
+			}
+			$this->lab_model->set_allow_access($class_id,$chapter_id,$allow_access);
+			$this->lab_model->set_allow_submit_class_chapter($class_id,$chapter_id,$allow_submit);
+		}
+				
+		$this->student_show($class_id);
 	}
 
 	public function allow_access_class_chapter() {
 		
 		$allow_access = $_POST['allow_access'];
+		echo $allow_access;
 		$chapter_id = $_POST['chapter_id'];
 		$class_id = $_POST['class_id'];
 		$this->load->model('lab_model');
