@@ -918,7 +918,7 @@ class Supervisor extends MY_Controller {
 						'assigned_group_item'	=>	$assigned_group_item,
 						'group_permission'	=> $group_permission
 					);
-
+		
 		$this->load->view('supervisor/head');
 		$this->load->view('supervisor/nav_fixtop');
 		$this->load->view('supervisor/nav_sideleft');
@@ -978,8 +978,9 @@ class Supervisor extends MY_Controller {
 		
 		#echo "".strtotime($time_start)."\r\n";
 		#echo strtotime($time_end);
-		$this->load->model('lab_model');	
-		$status = $this->lab_model->set_time_open_close($class_id,$chapter_id,$time_start,$time_end);
+		$this->load->model('lab_model');
+		$this->load->model('time_model');	
+		$status = $this->time_model->set_time_open_close($class_id,$chapter_id,$time_start,$time_end);
 		if($status == ERR_INVALID_TIME_START){
 			$this->session->set_flashdata("error_time".$chapter_id, "Open time is more than close time.");
 		}else if($status == ERR_CANNOT_UPDATE_TIME){
@@ -1003,8 +1004,7 @@ class Supervisor extends MY_Controller {
 			$this->lab_model->set_allow_access($class_id,$chapter_id,$allow_access);
 			$this->lab_model->set_allow_submit_class_chapter($class_id,$chapter_id,$allow_submit);
 		}
-				
-		$this->student_show($class_id);
+		redirect(site_url($_SESSION['role']).'/student_show/'.$class_id);
 	}
 
 	public function allow_access_class_chapter() {
@@ -2314,16 +2314,35 @@ class Supervisor extends MY_Controller {
 					);
 		$this->load->model('examroom_model');
 		$this->load->helper('url');
+		$this->load->model('lab_model');
+		$room_number = $this->uri->segment(3);
+		$roomData = $this->examroom_model->getRoomData($room_number);
+		$class_id = $roomData["class_id"];
+		$chapter_id = $roomData["chapter_id"];
+		$group_permission = $this->lab_model->get_group_permission($class_id);
+		if($chapter_id!=NULL){
+			$chapter_data = $group_permission[$chapter_id];
+		}else{
+			$chapter_data = NULL;
+		}
 		$seatData = array(
-			'seat_data' => $this->examroom_model->getSeatData($this->uri->segment(3)),
+			'seat_data' => $this->examroom_model->getSeatData($room_number),
 			'in_social_distancing' => true,
-			'accessible_room' => $this->uri->segment(3)
+			'accessible_room' => $room_number,
+			'chapter_data' => $chapter_data
 		);
+		
 
+		$roomData = array(
+			'chapter_id' => $chapter_id,
+			'group_permission' => $group_permission
+		);
+		
 		$this->load->view('supervisor/head');
 		$this->load->view('supervisor/nav_fixtop');
 		$this->load->view('supervisor/nav_sideleft',$data);
 		$this->load->view('supervisor/exam_room/seating_chart',$seatData);
+		$this->load->view('supervisor/exam_room/popup_setting1',$roomData);
 		$this->load->view('supervisor/footer');
 
 	}

@@ -21,6 +21,14 @@
 		text-align: center;
 		width: parent;
 	}
+    #btn-set-chapter {
+        
+    }
+    span.emoji{
+        font-size: 30px;
+        vertical-align: middle;
+        line-height: 0;
+    }
 
 </style>
 
@@ -40,6 +48,15 @@
 		White Board
 	</div>
     <button class="btn btn-danger" id="btn-rotate" value="180deg" onclick="rotateScreen(this.value)">Click here to rotate!</button>
+    <input type="text" id="chapter_id" 
+    <?php
+        if ($chapter_data != NULL){
+            echo 'placeholder="'.$chapter_data["chapter_id"].') '.$chapter_data["chapter_name"].'" disabled>';
+        }else{
+            echo 'placeholder="Please select chapter" disabled>';
+        }
+    ?>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#centralModalInfo"><span class="emoji">&#9881;</span></button>
 	<div class="grid-room">
 		<?php
             $pcNumber = 1;

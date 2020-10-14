@@ -14,3 +14,8 @@ CREATE TABLE `exam_seat` (
   `stu_id` int(8) DEFAULT NULL,
   `progress` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--------------
+
+ALTER TABLE exam_room
+ADD chapter_id int(11);

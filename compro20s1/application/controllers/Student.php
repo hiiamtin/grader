@@ -1629,10 +1629,25 @@ class Student extends MY_Controller {
         if ($enteredRoomNumber == null) {
             redirect('student/exam_room_gate','refresh');
             return;
-        }
-        else {
-            echo 'Welcome Jaa';
-        }
+		}
+		
+		$this->checkForInfiniteLoop();
+		$this->update_student_data();
+
+		$stu_id = $_SESSION['stu_id'];
+		$this->load->model('lab_model');
+		$lab_classinfo = $this->lab_model->get_lab_info(); //return array
+		$data = array (	'lab_classinfo'		=>	$lab_classinfo,
+						'class_info'		=>	$this->_class_info,
+						'group_permission'	=>	$this->_group_permission,
+						'lab_data'			=>	$this->_lab_data,
+						'student_data'		=>	$this->_student_data
+					);
+        $this->load->view('student/stu_head');
+        $this->load->view('student/nav_fixtop');
+        $this->nav_sideleft();
+        $this->load->view('student/exam_room/main',$data);
+        $this->load->view('student/stu_footer');
 
     }
 
@@ -1642,7 +1657,7 @@ class Student extends MY_Controller {
         $this->load->model('examroom_model');
         $canCheckIn = $this->examroom_model->checkIn($_POST['room_number'], $_POST['seat_number'], $_SESSION['stu_id'], $_SESSION['stu_group']);
         if ($canCheckIn) {
-            redirect('student/exam_room_main', 'refresh');
+            redirect('student/exam_room_student_main', 'refresh');
         }
         else {
             echo 'ห้องยังไม่เปิดง่ะ';

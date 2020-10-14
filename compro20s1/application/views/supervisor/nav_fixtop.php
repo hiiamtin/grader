@@ -24,7 +24,7 @@
 </div>
 <div class="container-fluid"  style="background-color:HoneyDew;">	
 	<div class="panel panel-default">
-		<div class="panel-body">A Basic Panel</div>
+		<div class="panel-body"></div>
 	</div>
 </div>
 <div class="clear-fix"></div> 
