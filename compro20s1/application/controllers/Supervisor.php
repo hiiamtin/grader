@@ -2327,7 +2327,7 @@ class Supervisor extends MY_Controller {
 		}
 		$seatData = array(
 			'seat_data' => $this->examroom_model->getSeatData($room_number),
-			'in_social_distancing' => true,
+			'in_social_distancing' => false,
 			'accessible_room' => $room_number,
 			'chapter_data' => $chapter_data
 		);
