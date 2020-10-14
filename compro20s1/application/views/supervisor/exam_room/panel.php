@@ -10,7 +10,7 @@
     #exam-room-panel .room-controller {
         background-color: #ffc373;
         width: 500px;
-        height: 300px;
+        height: 400px;
         margin: 10px;
         padding: 10px;
     }
@@ -93,14 +93,25 @@
         font-size: x-large;
     }
 
+    #exam-room-panel .status {
+        font-size: large;
+        margin: 15px;
+        font-family: Consolas, Monaco, Courier New, Courier, monospace;
+    }
+
+    #exam-room-panel .status a {
+        font-weight: bold;
+    }
+
 </style>
 
 <script>
-    function ajaxSetAllowAccess(needToAllow, roomNumber) {
+    function ajaxSetAllowAccess(needToAllow, roomNumber, classId) {
         jQuery.post("<?php echo site_url('supervisor/exam_room_allow_access'); ?>",
             {
                 roomNumber: roomNumber,
-                needToAllow: needToAllow
+                needToAllow: needToAllow,
+                classId: classId
             },
             setTimeout(function(){window.location = window.location}, 500)
         );
@@ -120,14 +131,15 @@
         let toggleSwitch = document.getElementById(id);
         let roomNumber = id.substr(0, 3);
         if (toggleSwitch.checked) {
-            if (confirm(roomNumber + " : Allow Students to Access?")) {
-                ajaxSetAllowAccess("checked", roomNumber);
-            } else {
+            let classId = prompt(roomNumber + " : ใส่เลขกลุ่มที่ต้องการให้เข้าถึง (สองหลัก เช่น 08, 41)", "");
+            if (classId == null || classId == "") {
                 toggleSwitch.checked = false;
+            } else {
+                ajaxSetAllowAccess("checked", roomNumber, '200100'+classId);
             }
         } else {
-            if (confirm(roomNumber + " : Prevent Students to Access?")) {
-                ajaxSetAllowAccess("unchecked", roomNumber);
+            if (confirm(roomNumber + " : ห้ามนักศึกษาเข้าถึง ใช่หรือไม่?")) {
+                ajaxSetAllowAccess("unchecked", roomNumber, "");
             } else {
                 toggleSwitch.checked = true;
             }
@@ -138,13 +150,13 @@
         let toggleSwitch = document.getElementById(id);
         let roomNumber = id.substr(0, 3);
         if (toggleSwitch.checked) {
-            if (confirm(roomNumber + " : Allow Students to Check in?")) {
+            if (confirm(roomNumber + " : อนุญาตให้นักศึกษา Check in ใช่หรือไม่?")) {
                 ajaxSetAllowCheckIn("checked", roomNumber);
             } else {
                 toggleSwitch.checked = false;
             }
         } else {
-            if (confirm(roomNumber + " : Prevent Students to Check in?")) {
+            if (confirm(roomNumber + " : ห้ามนักศึกษา Check in ใช่หรือไม่?")) {
                 ajaxSetAllowCheckIn("unchecked", roomNumber);
             } else {
                 toggleSwitch.checked = true;
@@ -186,10 +198,14 @@
             echo '</span></label></li>';
             echo '</ul>';
             // Go to Seating Chart Page
-            $siteUrl = site_url($_SESSION["role"] . "/exam_room");
+            $siteUrl = site_url($_SESSION["role"] . "/exam_room_seating_chart/").$room['room_number'];
             echo '<a href="'
                 . $siteUrl
                 . '" class="btn btn-success">View Seating Chart</a>';
+            echo '<div class="status">';
+            echo '<p>Student Group: <a>'.$room['class_id'].'</a></p>';
+            echo '<p>Is in Exam: <a>'.$room['is_active'].'</a></p>';
+            echo '</div>';
             echo '</div>';
         }
     }

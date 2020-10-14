@@ -2295,35 +2295,45 @@ class Supervisor extends MY_Controller {
 	public function exam_room_panel() {
 		$this->load->model('supervisor_model');
 		$this->load->model('examroom_model');
-		$data = array(
-						'supervisor_data'	=> $this->supervisor_model->get_supervisor_data(),
-						'exam_rooms' => $this->examroom_model->getAllExamRoom()
-					);
+		$data = array('supervisor_data'	=> $this->supervisor_model->get_supervisor_data());
+		$exam_data = array(
+			'exam_rooms' => $this->examroom_model->getAllExamRoom()
+		);
 		$this->load->view('supervisor/head');
 		$this->load->view('supervisor/nav_fixtop');
 		$this->load->view('supervisor/nav_sideleft',$data);
-		$this->load->view('supervisor/exam_room/panel',$data);
+		$this->load->view('supervisor/exam_room/panel',$exam_data);
 		$this->load->view('supervisor/footer');
 	}
 
-	public function exam_room() {
-		// sakda: WIP JA
+	public function exam_room_seating_chart() {
+
 		$this->load->model('supervisor_model');
 		$data = array(
 					'supervisor_data'	=> $this->supervisor_model->get_supervisor_data()
 					);
+		$this->load->model('examroom_model');
+		$this->load->helper('url');
+		$seatData = array(
+			'seat_data' => $this->examroom_model->getSeatData($this->uri->segment(3)),
+			'in_social_distancing' => true,
+			'accessible_room' => $this->uri->segment(3)
+		);
+
 		$this->load->view('supervisor/head');
 		$this->load->view('supervisor/nav_fixtop');
 		$this->load->view('supervisor/nav_sideleft',$data);
-		$this->load->view('supervisor/exam_room/seating_chart');
+		$this->load->view('supervisor/exam_room/seating_chart',$seatData);
 		$this->load->view('supervisor/footer');
+
 	}
 
 	public function exam_room_allow_access() {
 		$roomNumber = intval($_POST['roomNumber']);
 		$needToAllow = $_POST['needToAllow'];
+		$classId = $_POST['classId'];
 		$this->load->model('examroom_model');
-		$this->examroom_model->setAllowAccess($needToAllow,$roomNumber);
+		$this->examroom_model->setAllowAccess($needToAllow,$roomNumber,$classId);
 	}
 
 	public function exam_room_allow_check_in() {
