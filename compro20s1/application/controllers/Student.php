@@ -1660,7 +1660,7 @@ class Student extends MY_Controller {
             redirect('student/exam_room_student_main', 'refresh');
         }
         else {
-            echo 'ห้องยังไม่เปิดง่ะ';
+            echo 'มีไรบางอย่างแปลกๆ น้า';
         }
     }
 
