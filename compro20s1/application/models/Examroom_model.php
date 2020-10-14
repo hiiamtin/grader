@@ -58,7 +58,8 @@ class Examroom_model extends CI_Model
     public function checkIn($roomNumber, $seatNumber, $stuId, $stuGroup)
     {
         $roomData = $this->getRoomData($roomNumber);
-        if($roomData['allow_check_in']=='checked' and $roomData['class_id']==$stuGroup) {
+
+        if($roomData['allow_check_in']=='checked' and $this->isSeatAvailable($roomNumber, $seatNumber) and !$this->hasAlreadyCheckIn($stuId)) {
             $data = array('room_number' => $roomNumber,
                 'seat_number' => $seatNumber,
                 'stu_id' => $stuId,
@@ -102,5 +103,15 @@ class Examroom_model extends CI_Model
         $this->db->set($data);
         $this->db->update($this->TABLE_EXAM_ROOM);
     }
+    public function isSeatAvailable($roomNumber, $seatNumber) {
+        $this->db->select('*')
+            ->from($this->TABLE_EXAM_SEAT)
+            ->where('room_number', $roomNumber)
+            ->where('seat_number', $seatNumber)
+            ->order_by("seat_number");
+        $query = $this->db->get();
+        return empty($query->result_array());
+    }
+
 
 }//class Examroom_model
