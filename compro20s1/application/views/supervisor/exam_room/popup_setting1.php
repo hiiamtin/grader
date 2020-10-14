@@ -8,38 +8,41 @@
        <!--Header-->
        <div class="modal-header">
          <p class="heading lead">Setting</p>
-
          </button>
        </div>
-
+       
+       <form action="<?php echo site_url('supervisor/exam_room_setting'); ?>" id="setting" method="post">
        <!--Body-->
        <div class="modal-body">
          <div class="text-center">
            <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
-            <form>
                 <div class="form-group">
                     <label for="sel1">Select Chapter (select one):</label>
-                    <select class="form-control" id="sel1">
+                    <select class="form-control" name="chapter_id">
                     <?php
+                        $count = 1;
 						foreach ($group_permission as $row) {
-                            echo '<option';
+                            echo '<option value="'.$count.'"';
                             if($chapter_id==$row["chapter_id"]){
                                 echo ' selected';
                             }
                             echo '>'.$row['chapter_id'].') '.$row['chapter_name']."</option>";
+                            $count+=1;
                         }
                     ?>
                     </select>
+                    <input type="text" name="room_number" value="<?php echo $room_number; ?>" hidden>
                 </div>
-            </form>
          </div>
        </div>
 
        <!--Footer-->
        <div class="modal-footer justify-content-center">
-         <a type="button" class="btn btn-primary">Save<i class="far fa-gem ml-1 text-white"></i></a>
+         <input type="submit" class="btn btn-primary" value="Save">
          <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancle</a>
        </div>
+       </form>
+
      </div>
      <!--/.Content-->
    </div>

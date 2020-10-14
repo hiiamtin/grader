@@ -95,5 +95,12 @@ class Examroom_model extends CI_Model
         return $query->result_array();
     }
 
+    public function save_Setting($room_number,$chapter_id)
+    {
+        $data = array('chapter_id' => $chapter_id);
+        $this->db->where('room_number', $room_number);
+        $this->db->set($data);
+        $this->db->update($this->TABLE_EXAM_ROOM);
+    }
 
 }//class Examroom_model

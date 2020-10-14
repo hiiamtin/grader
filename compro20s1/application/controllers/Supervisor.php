@@ -2334,6 +2334,7 @@ class Supervisor extends MY_Controller {
 		
 
 		$roomData = array(
+			'room_number' => $room_number,
 			'chapter_id' => $chapter_id,
 			'group_permission' => $group_permission
 		);
@@ -2347,12 +2348,22 @@ class Supervisor extends MY_Controller {
 
 	}
 
+	public function exam_room_setting() {
+		$room_number = $_POST['room_number'];
+		$chapter_id = $_POST['chapter_id'];
+		$this->load->model("examroom_model");
+		$this->examroom_model->save_Setting($room_number,$chapter_id);
+
+		redirect(site_url($_SESSION['role']).'/exam_room_seating_chart/'.$room_number);
+	}
+
 	public function exam_room_allow_access() {
 		$roomNumber = intval($_POST['roomNumber']);
 		$needToAllow = $_POST['needToAllow'];
 		$classId = $_POST['classId'];
 		$this->load->model('examroom_model');
 		$this->examroom_model->setAllowAccess($needToAllow,$roomNumber,$classId);
+
 	}
 
 	public function exam_room_allow_check_in() {
