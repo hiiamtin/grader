@@ -39,7 +39,7 @@
        <!--Footer-->
        <div class="modal-footer justify-content-center">
          <input type="submit" class="btn btn-primary" value="Save">
-         <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancle</a>
+         <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancel</a>
        </div>
        </form>
 
