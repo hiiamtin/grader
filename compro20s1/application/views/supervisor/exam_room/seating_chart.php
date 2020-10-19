@@ -83,13 +83,9 @@
                         default:
                             if(!empty($seat_data) && $seat_data[0]['seat_number']==$seatNum) {
                                 $here = array_shift($seat_data);
-                                echo "<form name='check_in' method='post' accept-charset='utf-8' action='"
-                                    ."#"."'>"
-                                    ."<input id='input-room-num' type='text' name='room_number' value='".$accessible_room."' hidden=''>"
-                                    ."<input type='text' name='seat_number' value='".$seatNum."' hidden='' >";
-                                echo "<input type='submit' class='grid-seat btn btn-warning' value='".$seatNum."'></button></form>";
+                                echo "<input type='submit' class='grid-seat btn btn-warning' value='".$seatNum."' data-toggle='modal' data-target='#modalStuPreview' >";
                             } else {
-                                echo "<input type='submit' class='grid-seat btn btn-info' disabled value='".$seatNum."'></button>";
+                                echo "<input type='submit' class='grid-seat btn btn-info' disabled value='".$seatNum."'>";
 
                             }
                             $pcNumber++;
@@ -107,13 +103,9 @@
                         default:
                             if(!empty($seat_data) && $seat_data[0]['seat_number']==$seatNum) {
                                 $here = array_shift($seat_data);
-                                echo "<form name='check_in' method='post' accept-charset='utf-8' action='"
-                                    ."#"."'>"
-                                    ."<input id='input-room-num' type='text' name='room_number' value='".$accessible_room."' hidden=''>"
-                                    ."<input type='text' name='seat_number' value='".$seatNum."' hidden='' >";
-                                echo "<input type='submit' class='grid-seat btn btn-warning' value='".$seatNum."'></button></form>";
+                                echo "<input type='submit' class='grid-seat btn btn-warning' value='".$seatNum."' data-toggle='modal' data-target='#modalStuPreview' onclick='studentPreview(this.value)'>";
                             } else {
-                                echo "<input type='submit' class='grid-seat btn btn-info' disabled value='".$seatNum."'></button>";
+                                echo "<input type='submit' class='grid-seat btn btn-info' disabled value='".$seatNum."'>";
                             }
                             $pcNumber++;
                             break;
