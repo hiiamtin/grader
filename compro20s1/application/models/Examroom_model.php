@@ -73,6 +73,11 @@ class Examroom_model extends CI_Model
 
     }
 
+    public function checkOut($stu_id){
+        $this->db->where('stu_id', $stu_id);
+        $this->db->delete($this->TABLE_EXAM_SEAT);
+    }
+
     public function hasAlreadyCheckIn($stuId) {
         $this->db->select('room_number')
             ->from($this->TABLE_EXAM_SEAT)
@@ -94,6 +99,14 @@ class Examroom_model extends CI_Model
             ->order_by("seat_number");
         $query = $this->db->get();
         return $query->result_array();
+    }
+
+    public function getStudentData_exam_seat($stu_id) {
+        $this->db->select('*')
+            ->from($this->TABLE_EXAM_SEAT)
+            ->where('stu_id', $stu_id);
+        $query = $this->db->get();
+        return $query->result_array()[0];
     }
 
     public function save_Setting($room_number,$chapter_id)

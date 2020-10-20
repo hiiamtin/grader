@@ -1622,34 +1622,54 @@ class Student extends MY_Controller {
     }
 
     public function exam_room_student_main() {
-        $this->update_student_data();
-        $this->load->model('examroom_model');
-
-        $enteredRoomNumber = $this->examroom_model->hasAlreadyCheckIn($_SESSION['stu_id']);
+		$this->checkForInfiniteLoop();
+		$this->update_student_data();
+		$this->load->model('examroom_model');
+		$stu_id = $_SESSION['stu_id']; 
+        $enteredRoomNumber = $this->examroom_model->hasAlreadyCheckIn($stu_id);
         if ($enteredRoomNumber == null) {
             redirect('student/exam_room_gate','refresh');
             return;
 		}
 		
-		$this->checkForInfiniteLoop();
-		$this->update_student_data();
-
-		$stu_id = $_SESSION['stu_id'];
+		$seat_data = $this->examroom_model->getStudentData_exam_seat($stu_id);
+		$roomNumber = $seat_data['room_number'];
+		$room_data = $this->examroom_model->getRoomData($roomNumber);
 		$this->load->model('lab_model');
-		$lab_classinfo = $this->lab_model->get_lab_info(); //return array
-		$data = array (	'lab_classinfo'		=>	$lab_classinfo,
+		#$lab_classinfo = $this->lab_model->get_lab_info(); //return array
+		/*$data = array (	'lab_classinfo'		=>	$lab_classinfo,
 						'class_info'		=>	$this->_class_info,
 						'group_permission'	=>	$this->_group_permission,
 						'lab_data'			=>	$this->_lab_data,
-						'student_data'		=>	$this->_student_data
-					);
+						'student_data'		=>	$this->_student_data,
+						'room_data'			=>	$room_data,
+						'seat_data'			=> 	$seat_data
+					);*/
+		if($room_data['chapter_id']==NULL){
+			$chapter_data = NULL;
+		}else{
+			$chapter_data = $this->_group_permission[$room_data['chapter_id']];
+		}
+		$data = array ('lab_data'		=>	$this->_lab_data,
+					'chapter_data'		=>	$chapter_data,
+					'student_data'		=>	$this->_student_data,
+					'room_data'			=>	$room_data,
+					'seat_data'			=> 	$seat_data
+				);
+		#print_r($data);
         $this->load->view('student/stu_head');
         $this->load->view('student/nav_fixtop');
         $this->nav_sideleft();
         $this->load->view('student/exam_room/main',$data);
         $this->load->view('student/stu_footer');
 
-    }
+	}
+	
+	public function exam_room_check_out() {
+		$this->load->model('examroom_model');
+		$this->examroom_model->checkOut(63010001);
+		redirect('student/exam_room_student_main');
+	}
 
     public function exam_room_check_in() {
         $this->update_student_data();
