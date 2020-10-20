@@ -84,9 +84,10 @@
                 <div class="modal-body">
                     <div class="grid-room">
                         <?php
-                        $pcNumber = 1;
+                        $pcNumber = 0;
                         if($in_social_distancing) {
                             for($i=0; $i<90; $i++) {
+                                $seatNum = ($pcNumber%4)*10+ceil(($pcNumber+1)/4);
                                 switch($i%9){
                                     case 2:
                                     case 6:
@@ -101,14 +102,15 @@
                                         echo "<form name='check_in' method='post' accept-charset='utf-8' action='"
                                             .site_url('student/exam_room_check_in')."'>"
                                             ."<input id='input-room-num' type='text' name='room_number' value='".$accessibleRoom['room_number']."' hidden=''>"
-                                            ."<input type='text' name='seat_number' value='".$pcNumber."' hidden='' >";
-                                        echo "<input type='submit' class='grid-seat btn btn-success' value='".$pcNumber."'></button></form>";
+                                            ."<input type='text' name='seat_number' value='".$seatNum."' hidden='' >";
+                                        echo "<input type='submit' class='grid-seat btn btn-success' value='".$seatNum."'></button></form>";
                                         $pcNumber++;
                                         break;
                                 }
                             }
                         } else {
                             for($i=0; $i<90; $i++) {
+                                $seatNum = ($pcNumber%7)*10+ceil(($pcNumber+1)/7);
                                 switch($i%9){
                                     case 2:
                                     case 6:
@@ -118,8 +120,8 @@
                                         echo "<form name='check_in' method='post' accept-charset='utf-8' action='"
                                             .site_url('student/exam_room_check_in')."'>"
                                             ."<input id='input-room-num' type='text' name='room_number' value='".$accessibleRoom['room_number']."' hidden=''>"
-                                            ."<input type='text' name='seat_number' value='".$pcNumber."' hidden='' >";
-                                        echo "<input type='submit' class='grid-seat btn btn-success' value='".$pcNumber."'></button></form>";
+                                            ."<input type='text' name='seat_number' value='".$seatNum."' hidden='' >";
+                                        echo "<input type='submit' class='grid-seat btn btn-success' value='".$seatNum."'></button></form>";
                                         $pcNumber++;
                                         break;
                                 }

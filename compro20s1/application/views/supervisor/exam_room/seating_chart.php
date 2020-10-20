@@ -1,23 +1,24 @@
 <style>
-	#component-exam-room {
+	#seating-chart {
 		margin-left: 300px;
 		margin-top: 30px;
 		width: 70vw;
 	}
-    #component-exam-room .grid-room {
+    #seating-chart .grid-room {
 		display: grid;
 		grid-template-columns: auto auto auto auto auto auto auto auto auto;
   		padding: 4px;
 	}
-    #component-exam-room .grid-seat {
+    #seating-chart .grid-seat {
         width: 96%;
 		margin: 2px;
 		height: 48px;
 		text-align: center;
 	}
-    #component-exam-room .white-board {
-		background-color: #7398c7;
-		height: 20px;
+    #seating-chart .white-board {
+        border-style: double;
+		background-color: #ffffff;
+		height: 24px;
 		text-align: center;
 		width: parent;
 	}
@@ -34,7 +35,11 @@
 
 <script>
     function rotateScreen(angle) {
-        document.getElementById("component-exam-room").style.transform = "rotate("+angle+")"
+        document.getElementById("room-container").style.transform = "rotate("+angle+")";
+        document.getElementById("white-board").style.transform = "rotate("+angle+")";
+        for (let desk of document.getElementsByClassName("grid-seat")) {
+            desk.style.transform = "rotate("+angle+")";
+        }
         if(angle=="0deg") {
             document.getElementById("btn-rotate").setAttribute("value","180deg");
         } else {
@@ -43,10 +48,8 @@
     }
 </script>
 
-<div id="component-exam-room">
-	<div class="white-board">
-		White Board
-	</div>
+<div id="seating-chart">
+
     <button class="btn btn-danger" id="btn-rotate" value="180deg" onclick="rotateScreen(this.value)">Click here to rotate!</button>
     <input type="text" id="chapter_id" 
     <?php
@@ -57,11 +60,16 @@
         }
     ?>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#centralModalInfo"><span class="emoji">&#9881;</span></button>
-	<div class="grid-room">
-		<?php
-            $pcNumber = 1;
+    <div id="room-container">
+        <div id="white-board" class="white-board">
+            White Board
+        </div>
+        <div class="grid-room">
+            <?php
+            $pcNumber = 0;
             if($in_social_distancing) {
                 for($i=0; $i<90; $i++) {
+                    $seatNum = ($pcNumber%4)*10+ceil(($pcNumber+1)/4);
                     switch($i%9){
                         case 2:
                         case 6:
@@ -73,15 +81,16 @@
                             echo "<input disabled type='submit' class='grid-seat btn btn-default' value='-'></button>";
                             break;
                         default:
-                            if(!empty($seat_data) && $seat_data[0]['seat_number']==$pcNumber) {
+                            if(!empty($seat_data) && $seat_data[0]['seat_number']==$seatNum) {
                                 $here = array_shift($seat_data);
                                 echo "<form name='check_in' method='post' accept-charset='utf-8' action='"
                                     ."#"."'>"
                                     ."<input id='input-room-num' type='text' name='room_number' value='".$accessible_room."' hidden=''>"
-                                    ."<input type='text' name='seat_number' value='".$pcNumber."' hidden='' >";
-                                echo "<input type='submit' class='grid-seat btn btn-info' value='".$pcNumber."'></button></form>";
+                                    ."<input type='text' name='seat_number' value='".$seatNum."' hidden='' >";
+                                echo "<input type='submit' class='grid-seat btn btn-warning' value='".$seatNum."'></button></form>";
                             } else {
-                                echo "<input type='submit' class='grid-seat btn btn-warning' value='".$pcNumber."'></button>";
+                                echo "<input type='submit' class='grid-seat btn btn-info' disabled value='".$seatNum."'></button>";
+
                             }
                             $pcNumber++;
                             break;
@@ -89,29 +98,31 @@
                 }
             } else {
                 for($i=0; $i<90; $i++) {
+                    $seatNum = ($pcNumber%7)*10+ceil(($pcNumber+1)/7);
                     switch($i%9){
                         case 2:
                         case 6:
                             echo "<div class='grid-way'></div>";
                             break;
                         default:
-                            if(!empty($seat_data) && $$seat_data[0]['seat_number']==$pcNumber) {
+                            if(!empty($seat_data) && $seat_data[0]['seat_number']==$seatNum) {
                                 $here = array_shift($seat_data);
                                 echo "<form name='check_in' method='post' accept-charset='utf-8' action='"
                                     ."#"."'>"
                                     ."<input id='input-room-num' type='text' name='room_number' value='".$accessible_room."' hidden=''>"
-                                    ."<input type='text' name='seat_number' value='".$pcNumber."' hidden='' >";
-                                echo "<input type='submit' class='grid-seat btn btn-info' value='".$pcNumber."'></button></form>";
+                                    ."<input type='text' name='seat_number' value='".$seatNum."' hidden='' >";
+                                echo "<input type='submit' class='grid-seat btn btn-warning' value='".$seatNum."'></button></form>";
                             } else {
-                                echo "<input type='submit' class='grid-seat btn btn-warning' value='".$pcNumber."'></button>";
+                                echo "<input type='submit' class='grid-seat btn btn-info' disabled value='".$seatNum."'></button>";
                             }
                             $pcNumber++;
                             break;
                     }
                 }
             }
-		?>
-	</div>
+            ?>
+        </div>
+    </div>
 </div>
 
 
