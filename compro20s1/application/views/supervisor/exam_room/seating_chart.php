@@ -163,13 +163,17 @@
 <?php date_default_timezone_set("Asia/Bangkok"); ?>
 <div id="seating-chart">
     <label id="timer"></label><br>
-    <button class="btn btn-danger" id="btn-rotate" value="180deg" onclick="rotateScreen(this.value)">Click here to rotate!</button>
-    <input type="text" id="chapter_id" 
+    <button class="btn btn-danger" id="btn-rotate" value="180deg" onclick="rotateScreen(this.value)">Click here to rotate!</button> 
     <?php
         if ($chapter_data != NULL){
-            echo 'placeholder="'.$chapter_data["chapter_id"].') '.$chapter_data["chapter_name"].'" disabled>';
+            echo '<form action="'.site_url('supervisor/exam_room_set_level_allow_access').'" id="toggle_allow_access" method="post" style="display:inline">';
+                echo '<input type="submit" class="btn btn-primary" value="ตั้งค่าโจทย์">';
+                echo '<input type="text" name="class_id" value="'.$chapter_data["class_id"].'" hidden>';
+                echo '<input type="text" name="chapter_id" value="'.$chapter_data["chapter_id"].'" hidden>';
+            echo '</form>';
+            echo '<input type="text" id="chapter_id" placeholder="'.$chapter_data["chapter_id"].') '.$chapter_data["chapter_name"].'" disabled>';
         }else{
-            echo 'placeholder="Please select chapter" disabled>';
+            echo '<input type="text" id="chapter_id" placeholder="Please select chapter" disabled>';
         }
     ?>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#centralModalInfo"><span class="emoji">&#9881;</span></button>

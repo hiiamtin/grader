@@ -1233,6 +1233,7 @@ class Supervisor extends MY_Controller {
 		
 		$this->load->model('lab_model');
 		$group_exercise_chapter = $this->lab_model->get_group_exercise_chapter($group_id,$chapter_id);
+		//echo "<h3>". __METHOD__ ." : _POST :</h3><pre>"; print_r($group_exercise_chapter); echo "</pre>";
 		$class_schedule = $this->lab_model->get_class_schedule_by_group_id($group_id);
 		$students_data = $this->lab_model->get_students_by_group_id($group_id); // array
 		$group_lab_list = array();
@@ -1265,6 +1266,11 @@ class Supervisor extends MY_Controller {
 		//echo '<h4>$lab_exercise <pre>'; print_r($lab_exercise); echo "</pre>";
 		$chapter_permission = $this->lab_model->get_group_permission($group_id);
 		$chapter_permission = $chapter_permission[$chapter_id];
+		$this->load->model('time_model');
+		$chapter_data = $chapter_permission;
+		$result = $this->time_model->check_allow_access_and_submit($chapter_data['time_start'],$chapter_data['time_end']);
+		$chapter_data["allow_access"] = $result[0];
+		$chapter_data["allow_submit"] = $result[1];
 
 
 
@@ -1275,7 +1281,7 @@ class Supervisor extends MY_Controller {
 					'group_lab_list'			=>	$group_lab_list,
 					'lab_list'					=>	$lab_list,
 					'class_schedule'			=>	$class_schedule,
-					'chapter_permission'		=>	$chapter_permission,
+					'chapter_permission'		=>	$chapter_data,
 					'students_data'				=>	$students_data
 					
 				);
@@ -2365,6 +2371,77 @@ class Supervisor extends MY_Controller {
 		}
 
 		redirect(site_url($_SESSION['role']).'/exam_room_seating_chart/'.$room_number);
+	}
+
+	public function exam_room_set_level_allow_access() {
+		$this->load->model('supervisor_model');
+		$supervisor_data = array(
+					'supervisor_data'	=> $this->supervisor_model->get_supervisor_data()
+					);
+		$class_id = $_POST["class_id"];
+		$chapter_id = $_POST["chapter_id"];
+		$this->load->model('examroom_model');
+		$this->load->model('lab_model');
+		//echo "<h3>". __METHOD__ ." : _POST :</h3><pre>"; print_r($_POST); echo "</pre>";
+		$group_permission = $this->lab_model->get_group_permission($class_id);
+		//echo "<h3>". __METHOD__ ." : group_permission :</h3><pre>"; print_r($group_permission); echo "</pre>";
+		$group_id = $class_id;
+		$group_exercise_chapter = $this->lab_model->get_group_exercise_chapter($group_id,$chapter_id);
+		//echo "<h3>". __METHOD__ ." : _POST :</h3><pre>"; print_r($group_exercise_chapter); echo "</pre>";
+		$class_schedule = $this->lab_model->get_class_schedule_by_group_id($group_id);
+		$group_lab_list = array();
+		foreach($group_exercise_chapter as $row) {
+			$item = $row['item_id'];
+			$exercises = unserialize($row['exercise_id_list']);
+			for($i=1; $i<=sizeof($exercises); $i++) {
+				$group_lab_list[$item][$i]=$exercises[$i-1];
+			}
+		}
+
+		$lab_exercise = $this->lab_model->get_lab_exercise_by_chapter($chapter_id);
+		//echo '<h4>$lab_exercise <pre>'; print_r($lab_exercise); echo "</pre>";
+
+		$lab_list = array();
+		for ($i=0,$count=1; $i<sizeof($lab_exercise); $i++,$count++) {
+			$level = $lab_exercise[$i]['lab_level'];			;
+			$lab_list[$level][$count] = $lab_exercise[$i];
+			if (!empty($lab_exercise[$i+1]) && $level < $lab_exercise[$i+1]['lab_level'])
+				$count = 0;
+			
+		}
+		//echo '<h4>$lab_list <pre>'; print_r($lab_list); echo "</pre>";
+
+		
+
+
+
+		//echo '<h4>$group_exercise_chapter <pre>'; print_r($group_exercise_chapter); echo "</pre>";
+		//echo '<h4>$lab_exercise <pre>'; print_r($lab_exercise); echo "</pre>";
+		$chapter_permission = $this->lab_model->get_group_permission($group_id);
+		$chapter_permission = $chapter_permission[$chapter_id];
+		$this->load->model('time_model');
+		$chapter_data = $chapter_permission;
+		$result = $this->time_model->check_allow_access_and_submit($chapter_data['time_start'],$chapter_data['time_end']);
+		$chapter_data["allow_access"] = $result[0];
+		$chapter_data["allow_submit"] = $result[1];
+
+
+
+		$data = array(	
+					'group_exercise_chapter'	=>	$group_exercise_chapter,
+					'group_id'					=>	$group_id,
+					'lab_no'					=>	$chapter_id,
+					'group_lab_list'			=>	$group_lab_list,
+					'lab_list'					=>	$lab_list,
+					'class_schedule'			=>	$class_schedule,
+					'chapter_permission'		=>	$chapter_data,
+					
+				);
+		$this->load->view('supervisor/head');
+		$this->load->view('supervisor/nav_fixtop');
+		$this->load->view('supervisor/nav_sideleft',$supervisor_data);
+		$this->load->view('supervisor/exam_room/exam_select_for_group',$data);
+		$this->load->view('supervisor/footer');
 	}
 
 	public function exam_room_ajax_allow_access() {

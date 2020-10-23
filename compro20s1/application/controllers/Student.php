@@ -448,6 +448,7 @@ class Student extends MY_Controller {
 		$chapter_data = $this->_group_permission[$chapter_id];
 		$result = $this->time_model->check_allow_access_and_submit($chapter_data['time_start'],$chapter_data['time_end']);
 		$allow_access = $result[0];
+		
 		//$allow_submit = $result[1];
 		if ($stu_id == '99123456') {
 			//echo "<h2> $stu_id chapter=$chapter_id,$item_id </h2>"; exit();
@@ -709,8 +710,12 @@ class Student extends MY_Controller {
 			
 
 		}
-
-
+		$this->load->model('time_model');
+		$chapter_data = $this->_group_permission[$chapter_id];
+		$result = $this->time_model->check_allow_access_and_submit($chapter_data['time_start'],$chapter_data['time_end']);
+		$chapter_data = $this->_group_permission;
+		$chapter_data[$chapter_id]["allow_access"] = $result[0];
+		$chapter_data[$chapter_id]["allow_submit"] = $result[1];
 
 		$data= array(	
 					"lab_content"	=> $lab_content,
@@ -723,7 +728,7 @@ class Student extends MY_Controller {
 					'marking'		=> $this->lab_model->get_max_marking_from_exercise_submission($stu_id,$exercise_id),
 					'submitted_count'	=> $submitted_count,
 					'sourcecode_content' => $sourcecode_content,
-					'group_permission'	=> $this->_group_permission
+					'group_permission'	=> $chapter_data
 					//'infinite_loop_check' => $infinite_loop_check
 				);
 
@@ -1166,6 +1171,11 @@ class Student extends MY_Controller {
 		$exercise_id = $_POST['exercise_id'];
 		$saved_filename = '';
 
+		$this->load->model('time_model');
+		$chapter_data = $this->_group_permission[$chapter_id];
+		$result = $this->time_model->check_allow_access_and_submit($chapter_data['time_start'],$chapter_data['time_end']);
+		$allow_submit = $result[1];
+
 
 
 		if ( $this->check_for_time_interval($stu_id,$chapter_id, $item_id, $exercise_id) )
@@ -1175,7 +1185,7 @@ class Student extends MY_Controller {
 			return $this->show_message("You cannot submit identical file.");
 
 
-		if ($this->_group_permission[$chapter_id]['allow_submit']=='no')
+		if ($allow_submit=='no')
 			return $this->show_message("You are not allowed to submit exercise.");
 
 		
@@ -1688,12 +1698,12 @@ class Student extends MY_Controller {
 	
 	public function exam_room_check_out() {
 		$this->load->model('examroom_model');
-		$this->examroom_model->checkOut(63010001);
+		$this->examroom_model->checkOut($_SESSION['stu_id']);
 		redirect('student/exam_room_student_main');
 	}
 
     public function exam_room_check_in() {
-        $this->update_student_data();
+        $this->update_student_data();	
         $this->load->helper('url');
         $this->load->model('examroom_model');
         $canCheckIn = $this->examroom_model->checkIn($_POST['room_number'], $_POST['seat_number'], $_SESSION['stu_id'], $_SESSION['stu_group']);
