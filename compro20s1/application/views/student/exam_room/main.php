@@ -90,6 +90,7 @@
 		//console.log(x.split(" (Last sync : ")[0].split("Server time is : ")[1]);
 		return Date.parse(x.split(" (Last sync : ")[0].split("Server time is : ")[1]);
 	}
+	var time_update = "";
 	function set_time_counter(a,b,c) {
 		var localTime	= get_time_server();
 		var now 		= performance.now();
@@ -112,11 +113,21 @@
 			else if(localTime < a*1000) {
 				distance = a*1000 - localTime;
 				open_or_close = "Open in : ";
+				if (time_update == ""){
+					time_update = open_or_close;
+				}
 			}
 			else{
 				distance = b*1000 - localTime;
 				open_or_close = "Close in : ";
+				if (time_update == ""){
+					time_update = open_or_close;
+				}
 			}
+			if (time_update != open_or_close){
+					time_update = open_or_close;
+					window.location.reload(false);
+				}
 			// Time calculations for days, hours, minutes and seconds
 			var days = Math.floor(distance / (1000 * 60 * 60 * 24));
 			var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
