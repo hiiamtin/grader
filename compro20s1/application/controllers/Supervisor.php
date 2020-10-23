@@ -2326,12 +2326,12 @@ class Supervisor extends MY_Controller {
 			$chapter_data = NULL;
 		}
 		$seatData = array(
-			'seat_data' => $this->examroom_model->getSeatData($room_number),
+			'seat_list' => $this->examroom_model->getAllSeatsData($room_number),
 			'in_social_distancing' => false,
 			'accessible_room' => $room_number,
 			'chapter_data' => $chapter_data
 		);
-		
+		 
 
 		$roomData = array(
 			'room_number' => $room_number,
@@ -2375,11 +2375,17 @@ class Supervisor extends MY_Controller {
 	}
 
 	public function exam_room_ajax_stu_preview() {
-		$roomNum = $_POST['roomNum'];
-		$seatNum = $_POST['seatNum'];
+		$roomNum = intval($_POST['roomNum']);
+		$seatNum = intval($_POST['seatNum']);
+		$this->load->model('examroom_model');
+		$this->load->model('student_model');
+		$seatData = $this->examroom_model->getSeatData($roomNum,$seatNum);
+
 		$stuPreview = new stdClass();
-		
+		$stuPreview->stuId = $seatData['stu_id'];
+
 		echo json_encode($stuPreview);
+		
 	}
 
 

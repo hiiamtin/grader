@@ -81,12 +81,13 @@
                             echo "<input disabled type='submit' class='grid-seat btn btn-default' value='-'></button>";
                             break;
                         default:
-                            if(!empty($seat_data) && $seat_data[0]['seat_number']==$seatNum) {
-                                $here = array_shift($seat_data);
-                                echo "<input type='submit' class='grid-seat btn btn-warning' value='".$seatNum."' data-toggle='modal' data-target='#modalStuPreview' >";
+                            $indexInSeatList = checkAnyoneSittingHere($seat_list, $seatNum);
+                            if($indexInSeatList >= 0) {
+                                unset($seat_list[$indexInSeatList]);
+                                $seat_list = array_values($seat_list);
+                                echo "<input type='submit' class='grid-seat btn btn-warning' value='".$seatNum."' data-toggle='modal' data-target='#modalStuPreview' onclick='studentPreview(this.value)'>";
                             } else {
                                 echo "<input type='submit' class='grid-seat btn btn-info' disabled value='".$seatNum."'>";
-
                             }
                             $pcNumber++;
                             break;
@@ -101,8 +102,10 @@
                             echo "<div class='grid-way'></div>";
                             break;
                         default:
-                            if(!empty($seat_data) && $seat_data[0]['seat_number']==$seatNum) {
-                                $here = array_shift($seat_data);
+                            $indexInSeatList = checkAnyoneSittingHere($seat_list, $seatNum);
+                            if($indexInSeatList >= 0) {
+                                unset($seat_list[$indexInSeatList]);
+                                $seat_list = array_values($seat_list);
                                 echo "<input type='submit' class='grid-seat btn btn-warning' value='".$seatNum."' data-toggle='modal' data-target='#modalStuPreview' onclick='studentPreview(this.value)'>";
                             } else {
                                 echo "<input type='submit' class='grid-seat btn btn-info' disabled value='".$seatNum."'>";
@@ -111,6 +114,15 @@
                             break;
                     }
                 }
+            }
+
+            function checkAnyoneSittingHere($list, $seatNum) {
+                for($i=0; $i<sizeof($list); $i++){
+                    if($list[$i]['seat_number']==$seatNum) {
+                        return $i;
+                    }
+                }
+                return -1;
             }
             ?>
         </div>

@@ -8,7 +8,8 @@
             },
             function(data, status) {
                 let stuPreview = JSON.parse(data);
-                
+                document.getElementById("modal-title").innerHTML = stuPreview.stuId;
+                // WORK IN PROGRESS JAA
             }
         );
     }
