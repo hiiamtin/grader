@@ -2388,10 +2388,13 @@ class Supervisor extends MY_Controller {
 		$seatNum = intval($_POST['seatNum']);
 		$this->load->model('examroom_model');
 		$this->load->model('student_model');
+
 		$seatData = $this->examroom_model->getSeatData($roomNum,$seatNum);
+		$fullname = $this->student_model->getStudentNameByStuId($seatData['stu_id']);
 
 		$stuPreview = new stdClass();
 		$stuPreview->stuId = $seatData['stu_id'];
+		$stuPreview->stuFullname = $fullname;
 
 		echo json_encode($stuPreview);
 		

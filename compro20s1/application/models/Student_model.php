@@ -425,9 +425,14 @@ class Student_model extends CI_Model {
 
 	}
 
-	
-	
-
+	public function getStudentNameByStuId($stu_id) {
+		$this->db->select('stu_firstname, stu_lastname')
+			->from('user_student')
+			->where('stu_id', $stu_id);
+		$query = $this->db->get();
+		$query = $query->result_array()[0];
+		return $query['stu_firstname'].' '.$query['stu_lastname'];
+	}
 
 
 }//class Student_model
