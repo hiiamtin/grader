@@ -150,6 +150,13 @@
 		}
 	} 
 	set_time_server();
+
+	function roomCheckOut() {
+		if (confirm("นักศึกษาต้องการ Check-out ออกจากห้องสอบใช่หรือไม่?")) {
+            window.location.assign("<?php echo site_url($_SESSION['role'].'/exam_room_check_out'); ?>");
+        }
+	}
+
 </script>
 <?php
 	date_default_timezone_set("Asia/Bangkok");
@@ -177,7 +184,7 @@
 							$all_chapters_mark = 0;
 							if($chapter_data==NULL){?>
 								<h1>ข้อสอบยังไม่ถูกกำหนด</h1>
-								<a type="button" href="<?php echo site_url($_SESSION['role'].'/exam_room_check_out'); ?>">Check out</a>
+								<button type="button" onclick="roomCheckOut()" class="btn btn-danger">Check-out</button>
 							<?php
 							}else{
 								for ($x = 0; $x <= 0; $x++) {
@@ -187,7 +194,7 @@
 									$chapter_mark = 0;
 									$no_items = $chapter_data['no_items'];
 									echo '<h1>'.$chapter_name.'</h1>'; ?>
-									<a type="button" href="<?php echo site_url($_SESSION['role'].'/exam_room_check_out'); ?>">Check out</a>
+									<button type="button" onclick="roomCheckOut()" class="btn btn-danger">Check-out</button>
 									<tr>
 										<!-- <td style="text-align:center;">
 											<?php echo $chapter_id; ?>

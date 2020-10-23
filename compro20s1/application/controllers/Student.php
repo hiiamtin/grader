@@ -1688,7 +1688,7 @@ class Student extends MY_Controller {
 	
 	public function exam_room_check_out() {
 		$this->load->model('examroom_model');
-		$this->examroom_model->checkOut(63010001);
+		$this->examroom_model->checkOut($_SESSION['stu_id']);
 		redirect('student/exam_room_student_main');
 	}
 
