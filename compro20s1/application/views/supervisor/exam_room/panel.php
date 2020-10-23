@@ -107,7 +107,7 @@
 
 <script>
     function ajaxSetAllowAccess(needToAllow, roomNumber, classId) {
-        jQuery.post("<?php echo site_url('supervisor/exam_room_allow_access'); ?>",
+        jQuery.post("<?php echo site_url('supervisor/exam_room_ajax_allow_access'); ?>",
             {
                 roomNumber: roomNumber,
                 needToAllow: needToAllow,
@@ -118,7 +118,7 @@
     }
 
     function ajaxSetAllowCheckIn(needToAllow, roomNumber) {
-        jQuery.post("<?php echo site_url('supervisor/exam_room_allow_check_in'); ?>",
+        jQuery.post("<?php echo site_url('supervisor/exam_room_ajax_allow_check_in'); ?>",
             {
                 roomNumber: roomNumber,
                 needToAllow: needToAllow

@@ -92,13 +92,26 @@ class Examroom_model extends CI_Model
         }
     }
 
-    public function getSeatData($roomNumber) {
+    public function getAllSeatsData($roomNumber) {
         $this->db->select('*')
             ->from($this->TABLE_EXAM_SEAT)
             ->where('room_number', $roomNumber)
             ->order_by("seat_number");
         $query = $this->db->get();
         return $query->result_array();
+    }
+
+    public function getSeatData($roomNumber, $seatNumber) {
+        $this->db->select('*')
+            ->from($this->TABLE_EXAM_SEAT)
+            ->where('room_number', $roomNumber)
+            ->where('seat_number', $seatNumber);
+        $query = $this->db->get();
+        if(empty($query->result_array())) {
+            return array();
+        } else {
+            return $query->result_array()[0];
+        }
     }
 
     public function getStudentData_exam_seat($stu_id) {
@@ -116,14 +129,10 @@ class Examroom_model extends CI_Model
         $this->db->set($data);
         $this->db->update($this->TABLE_EXAM_ROOM);
     }
+
     public function isSeatAvailable($roomNumber, $seatNumber) {
-        $this->db->select('*')
-            ->from($this->TABLE_EXAM_SEAT)
-            ->where('room_number', $roomNumber)
-            ->where('seat_number', $seatNumber)
-            ->order_by("seat_number");
-        $query = $this->db->get();
-        return empty($query->result_array());
+        $seatData = $this->getSeatData($roomNumber, $seatNumber);
+        return empty($seatData);
     }
 
 
