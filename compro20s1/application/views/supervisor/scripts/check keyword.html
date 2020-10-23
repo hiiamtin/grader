@@ -1,0 +1,61 @@
+<input type="file" id="file-selector" multiple>
+<p id="output"></p>
+<script>
+  const fileSelector = document.getElementById('file-selector');
+  fileSelector.addEventListener('change', function() {
+    const fileList = this.files[0];
+    console.log(fileList);
+    //console.log(match('if(x==2){x+=1;}else if(asdas){asdasd;}', keywords));
+    var fr=new FileReader();
+    fr.onload=function(){
+                let x = match(fr.result, maxkeywords);
+                let y = fr.result;
+                if(x){
+                    y += ", ส่งได้";
+                }else{
+                    y += ", คุณใช้คำสั่งเกินที่กำหนด";                }
+                document.getElementById('output') 
+                        .textContent=y;
+
+            } 
+              
+            fr.readAsText(fileList); 
+  });
+</script>
+
+<script>
+const keywords = {
+    'else if': "else if(, else if (", 
+    'if': "if(,if (",
+    'else': "else"
+};
+const maxkeywords = {
+    'if': 1,
+    'else': 1
+};
+function match(input,obj) {
+const countkeywords = {
+    'else if': 0,
+    'if': 0,
+    'else': 0
+};
+let temp = input;
+for(key in keywords){
+    var words = keywords[key].split(',');
+    for(w in words){
+        //console.log(words[w],temp.split(words[w]));
+        let count = temp.split(words[w]).length-1;
+        temp = temp.replace(words[w],"");
+        countkeywords[key]+=count;
+    }
+}
+for(key in obj){
+    let count = countkeywords[key];
+    if (key == 'if'){count+=countkeywords['else if']}
+    if(count > obj[key]){
+        return false;
+    }
+}
+return true;
+}
+</script>

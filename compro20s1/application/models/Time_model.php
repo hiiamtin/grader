@@ -28,4 +28,23 @@ class Time_model extends CI_Model {
 			return ERR_CANNOT_UPDATE_TIME;
 		}
 	}
+
+	public function check_allow_access_and_submit($time_start,$time_end) {
+		date_default_timezone_set("Asia/Bangkok");
+		$current_date = date('Y-m-d H:i');
+		if(strtotime($current_date)<strtotime($time_start)){
+			$allow_access = 'no';
+			$allow_submit = 'no';
+		}else if(strtotime($current_date)>=strtotime($time_start) && strtotime($current_date)<strtotime($time_end)){
+			$allow_access = 'yes';
+			$allow_submit = 'yes';
+		}else if(strtotime($current_date)>=strtotime($time_end)){
+			$allow_access = 'yes';
+			$allow_submit = 'no';
+		}else{
+			$allow_access = 'no';
+			$allow_submit = 'no';
+		}
+		return [$allow_access,$allow_submit];
+	}
 }

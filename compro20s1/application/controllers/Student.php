@@ -444,7 +444,22 @@ class Student extends MY_Controller {
 		$this->checkForInfiniteLoop();
 		$this->update_student_data();
 		$stu_id = $_SESSION['stu_id'];
+		$this->load->model('time_model');
+		$chapter_data = $this->_group_permission[$chapter_id];
+		$result = $this->time_model->check_allow_access_and_submit($chapter_data['time_start'],$chapter_data['time_end']);
+		$allow_access = $result[0];
+		//$allow_submit = $result[1];
+		if ($stu_id == '99123456') {
+			//echo "<h2> $stu_id chapter=$chapter_id,$item_id </h2>"; exit();
+			$this->lab_exercise_action_v2($chapter_id,$item_id);
 
+		} else if($allow_access=='no') {
+			$this->show_message("You are not allowed to do exercise.");
+
+		} else {
+			$this->lab_exercise_action_v2($chapter_id,$item_id);
+		}
+		/*
 		//ตรวจสอบ การห้ามทำแลป จากตาราง class_schedule
 		if ($stu_id == '99123456') {
 			//echo "<h2> $stu_id chapter=$chapter_id,$item_id </h2>"; exit();
@@ -455,7 +470,8 @@ class Student extends MY_Controller {
 
 		} else {
 			$this->lab_exercise_action_v2($chapter_id,$item_id);
-		}
+		}*/
+
 	}
 
 	//private function lab_exercise_action_v2($chapter_id,$item_id) {
@@ -1636,6 +1652,7 @@ class Student extends MY_Controller {
 		$roomNumber = $seat_data['room_number'];
 		$room_data = $this->examroom_model->getRoomData($roomNumber);
 		$this->load->model('lab_model');
+		$this->load->model('time_model');
 		#$lab_classinfo = $this->lab_model->get_lab_info(); //return array
 		/*$data = array (	'lab_classinfo'		=>	$lab_classinfo,
 						'class_info'		=>	$this->_class_info,
@@ -1649,6 +1666,9 @@ class Student extends MY_Controller {
 			$chapter_data = NULL;
 		}else{
 			$chapter_data = $this->_group_permission[$room_data['chapter_id']];
+			$result = $this->time_model->check_allow_access_and_submit($chapter_data['time_start'],$chapter_data['time_end']);
+			$chapter_data["allow_access"] = $result[0];
+			$chapter_data["allow_submit"] = $result[1];
 		}
 		$data = array ('lab_data'		=>	$this->_lab_data,
 					'chapter_data'		=>	$chapter_data,
@@ -1656,7 +1676,8 @@ class Student extends MY_Controller {
 					'room_data'			=>	$room_data,
 					'seat_data'			=> 	$seat_data
 				);
-		#print_r($data);
+		
+		print_r($data["chapter_data"]);
         $this->load->view('student/stu_head');
         $this->load->view('student/nav_fixtop');
         $this->nav_sideleft();

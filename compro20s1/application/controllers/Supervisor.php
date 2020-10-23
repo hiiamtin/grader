@@ -987,22 +987,12 @@ class Supervisor extends MY_Controller {
 			$this->session->set_flashdata("error_time".$chapter_id, "Network ERROR! Please try again.");
 		}else if($status == ERR_TIME_NONE){
 			$this->session->set_flashdata("error_time".$chapter_id, "Update Complete.");
-			date_default_timezone_set("Asia/Bangkok");
-			$current_date = date('Y-m-d H:i');
-			echo $current_date," ",strtotime($current_date)	,"<br>",$time_start,
-			" ",strtotime($time_start),"<br>",$time_end," ",strtotime($time_end);
-			if(strtotime($current_date)<strtotime($time_start)){
-				$allow_access = FALSE;
-				$allow_submit = FALSE;
-			}else if(strtotime($current_date)>=strtotime($time_start) && strtotime($current_date)<strtotime($time_end)){
-				$allow_access = TRUE;
-				$allow_submit = TRUE;
-			}else if(strtotime($current_date)>=strtotime($time_end)){
-				$allow_access = TRUE;
-				$allow_submit = FALSE;
-			}
+			$result = $this->time_model->check_allow_access_and_submit($time_start,$time_end);
+			$allow_access = $result[0];
+			$allow_submit = $result[1];
+			/*
 			$this->lab_model->set_allow_access($class_id,$chapter_id,$allow_access);
-			$this->lab_model->set_allow_submit_class_chapter($class_id,$chapter_id,$allow_submit);
+			$this->lab_model->set_allow_submit_class_chapter($class_id,$chapter_id,$allow_submit);*/
 		}
 		redirect(site_url($_SESSION['role']).'/student_show/'.$class_id);
 	}
@@ -2351,8 +2341,27 @@ class Supervisor extends MY_Controller {
 	public function exam_room_setting() {
 		$room_number = $_POST['room_number'];
 		$chapter_id = $_POST['chapter_id'];
+		$class_id = $_POST['class_id'];
+		$time_start = $_POST['time_start'];
+		$time_end = $_POST['time_end'];
 		$this->load->model("examroom_model");
+		$this->load->model("time_model");
 		$this->examroom_model->save_Setting($room_number,$chapter_id);
+		$status = $this->time_model->set_time_open_close($class_id,$chapter_id,$time_start,$time_end);
+		if($status == ERR_INVALID_TIME_START){
+			$this->session->set_flashdata("error_time".$chapter_id, "Open time is more than close time.");
+		}else if($status == ERR_CANNOT_UPDATE_TIME){
+			$this->session->set_flashdata("error_time".$chapter_id, "Network ERROR! Please try again.");
+		}else if($status == ERR_TIME_NONE){
+			$this->session->set_flashdata("error_time".$chapter_id, "Update Complete.");
+			$result = $this->time_model->check_allow_access_and_submit($time_start,$time_end);
+			$allow_access = $result[0];
+			$allow_submit = $result[1];
+			/*
+			$this->load->model("lab_model");
+			$this->lab_model->set_allow_access($class_id,$chapter_id,$allow_access);
+			$this->lab_model->set_allow_submit_class_chapter($class_id,$chapter_id,$allow_submit);*/
+		}
 
 		redirect(site_url($_SESSION['role']).'/exam_room_seating_chart/'.$room_number);
 	}
