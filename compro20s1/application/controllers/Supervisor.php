@@ -2316,12 +2316,12 @@ class Supervisor extends MY_Controller {
 			$chapter_data = NULL;
 		}
 		$seatData = array(
-			'seat_data' => $this->examroom_model->getSeatData($room_number),
+			'seat_list' => $this->examroom_model->getAllSeatsData($room_number),
 			'in_social_distancing' => false,
 			'accessible_room' => $room_number,
 			'chapter_data' => $chapter_data
 		);
-		
+		 
 
 		$roomData = array(
 			'room_number' => $room_number,
@@ -2334,6 +2334,7 @@ class Supervisor extends MY_Controller {
 		$this->load->view('supervisor/nav_sideleft',$data);
 		$this->load->view('supervisor/exam_room/seating_chart',$seatData);
 		$this->load->view('supervisor/exam_room/popup_setting1',$roomData);
+		$this->load->view('supervisor/exam_room/popup_stu_preview',$roomData);
 		$this->load->view('supervisor/footer');
 
 	}
@@ -2366,7 +2367,7 @@ class Supervisor extends MY_Controller {
 		redirect(site_url($_SESSION['role']).'/exam_room_seating_chart/'.$room_number);
 	}
 
-	public function exam_room_allow_access() {
+	public function exam_room_ajax_allow_access() {
 		$roomNumber = intval($_POST['roomNumber']);
 		$needToAllow = $_POST['needToAllow'];
 		$classId = $_POST['classId'];
@@ -2375,11 +2376,25 @@ class Supervisor extends MY_Controller {
 
 	}
 
-	public function exam_room_allow_check_in() {
+	public function exam_room_ajax_allow_check_in() {
 		$roomNumber = intval($_POST['roomNumber']);
 		$needToAllow = $_POST['needToAllow'];
 		$this->load->model('examroom_model');
 		$this->examroom_model->setAllowCheckIn($needToAllow,$roomNumber);
+	}
+
+	public function exam_room_ajax_stu_preview() {
+		$roomNum = intval($_POST['roomNum']);
+		$seatNum = intval($_POST['seatNum']);
+		$this->load->model('examroom_model');
+		$this->load->model('student_model');
+		$seatData = $this->examroom_model->getSeatData($roomNum,$seatNum);
+
+		$stuPreview = new stdClass();
+		$stuPreview->stuId = $seatData['stu_id'];
+
+		echo json_encode($stuPreview);
+		
 	}
 
 
