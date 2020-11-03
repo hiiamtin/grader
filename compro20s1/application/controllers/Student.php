@@ -1618,7 +1618,7 @@ class Student extends MY_Controller {
 	}
 
 
-	// EXAM ROOM
+	// For Exam Room :: Start
 
     public function exam_room_gate() {
         $this->update_student_data();
@@ -1703,7 +1703,9 @@ class Student extends MY_Controller {
         else {
             echo 'มีไรบางอย่างแปลกๆ น้า';
         }
-    }
+	}
+	
+	// For Exam Room :: End
 
 
 }//class Student

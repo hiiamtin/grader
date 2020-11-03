@@ -4,11 +4,12 @@
         jQuery.post("<?php echo site_url('supervisor/exam_room_ajax_stu_preview'); ?>",
             {
                 seatNum: seatNum,
-                roomNum: <?php echo $room_number ?>
+                roomNum: <?php echo $room_number; ?>
             },
             function(data, status) {
+                console.log(data);
                 let stuPreview = JSON.parse(data);
-                document.getElementById("modal-title").innerHTML = stuPreview.stuId;
+                document.getElementById("modal-title").innerHTML = "" + stuPreview.stuId + " : " + stuPreview.stuFullname;
                 // WORK IN PROGRESS JAA
             }
         );
