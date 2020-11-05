@@ -8,12 +8,10 @@
     //console.log(match('if(x==2){x+=1;}else if(asdas){asdasd;}', keywords));
     var fr=new FileReader();
     fr.onload=function(){ 
-                document.getElementById('output') 
-                        .textContent=fr.result;
-		console.log(match(fr.result, keywords));
-            } 
-              
-            fr.readAsText(fileList); 
+        document.getElementById('output') .textContent=fr.result;
+		console.log(match(fr.result, keywords),countkeywords,fr.result.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g,''));
+    } 
+    fr.readAsText(fileList); 
   });
 </script>
 
@@ -29,11 +27,11 @@ const countkeywords = {
     'else': 0
 };
 const maxkeywords = {
-    'if': 1,
+    'if': 2,
     'else': 1
 };
 function match(input, obj) {
-let temp = input;
+let temp = input.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g,'');
 for(key in obj){
     var words = obj[key].split(',');
     for(w in words){
