@@ -22,6 +22,7 @@ class Auth_model extends CI_Model {
 		$row = $query->row_array();
 
 		// now check for the password
+    $password = $this->password_decoder($password, $username); //Call password_decoder function
 		if ($row['password'] != md5($password)) {
 			// password not match
 			return ERR_INVALID_PASSWORD;
@@ -198,5 +199,17 @@ class Auth_model extends CI_Model {
 		
 		return $query;
 	}
+
+	private function password_decoder($password, $username) {
+    $encoded = base64_decode($password);
+    $str = "";
+    for($i=0; $i<strlen($encoded); $i++) {
+      $b = ord($encoded[$i]);
+      $a = $b^(strlen($username)+5);
+      $str .= chr($a);
+    }
+    return base64_decode(base64_decode($str));
+  }
+
 
 }

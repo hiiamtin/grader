@@ -13,8 +13,7 @@
   						  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   						  <?php echo $error ? $error : 'Enter your username and password' ?>
   						</div>
-
-  						<?php echo form_open(); ?>  
+              <!-- ลบ form_open() ออก -->
                 <?php $error = form_error("username", "<p class='text-danger'>", '</p>'); ?>              
   							<div class="form-group <?php echo $error ? 'has-error' : '' ?>">
   								<label for="username">Username</label>
@@ -37,8 +36,43 @@
   								</div> 
                   <?php echo $error; ?>
   							</div>
-  							<input type="submit" value="Login" class="btn btn-primary">
-  						<?php echo form_close(); ?>
+              <!-- ลบ form_close() ออก -->
+
+              <!-- ย้ายปุ่ม login มาอยู่นอกฟอร์ม -->
+                <input type="button" onclick="auth()" value="Login" class="btn btn-primary">
+              <!-- สร้าง form ใหม่ -->
+                <form method="post" id="auth-form">
+                  <script>
+                    <!-- Encode Password ก่อน Submit -->
+                    function auth() {
+                      var key1 = document.getElementById("username").value;
+                      var key2 = document.getElementById("password").value;
+                      if(key1.length == 0 || key2.length == 0) {
+                        document.getElementById("e-user").setAttribute("value",key1);
+                        document.getElementById("e-pass").setAttribute("value",key2);
+                        submitForm();
+                      } else {
+                        console.log(key1+key2);
+                        var str = "";
+                        key2 = btoa(btoa(key2));
+                        for(var i=0; i<key2.length; i++) {
+                          var a = key2.charCodeAt(i);
+                          var b = a^(key1.length+5);
+                          str = str+String.fromCharCode(b);
+                        }
+                        document.getElementById("e-user").setAttribute("value",key1);
+                        document.getElementById("e-pass").setAttribute("value",btoa(str));
+                        submitForm();
+                      }
+                    }
+                    function submitForm() {
+                      document.getElementById("auth-form").submit();
+                    }
+                  </script>
+                  <input hidden type="text" name="username" id="e-user">
+                  <input hidden type="text" name="password" id="e-pass">
+                </form>
+
   					</div>
   				</div>
   			</div>
