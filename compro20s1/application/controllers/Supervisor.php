@@ -2286,9 +2286,14 @@ class Supervisor extends MY_Controller {
 		$this->load->view('supervisor/footer');
 	}
 
-	// For Exam Room :: Start
+
+	/* * *
+		EXAM ROOM FEATURES
+	* * */
 
 	public function exam_room_panel() {
+		/// หน้าแรก แสดง List ของห้องสอบ
+
 		$this->load->model('supervisor_model');
 		$this->load->model('examroom_model');
 		$data = array('supervisor_data'	=> $this->supervisor_model->get_supervisor_data());
@@ -2303,11 +2308,9 @@ class Supervisor extends MY_Controller {
 	}
 
 	public function exam_room_seating_chart() {
+		/// หน้าแสดงแผนผังที่นั่งห้องสอบ
+		/// Url จะเป็น exam_room_seating_chart/{เลขห้อง}
 
-		$this->load->model('supervisor_model');
-		$data = array(
-					'supervisor_data'	=> $this->supervisor_model->get_supervisor_data()
-					);
 		$this->load->model('examroom_model');
 		$this->load->helper('url');
 		$this->load->model('lab_model');
@@ -2327,25 +2330,23 @@ class Supervisor extends MY_Controller {
 			'accessible_room' => $room_number,
 			'chapter_data' => $chapter_data
 		);
-		 
-
 		$roomData = array(
 			'room_number' => $room_number,
 			'chapter_id' => $chapter_id,
 			'group_permission' => $group_permission
 		);
-		
 		$this->load->view('supervisor/head');
 		$this->load->view('supervisor/nav_fixtop');
-		$this->load->view('supervisor/nav_sideleft',$data);
 		$this->load->view('supervisor/exam_room/seating_chart',$seatData);
 		$this->load->view('supervisor/exam_room/popup_setting1',$roomData);
 		$this->load->view('supervisor/exam_room/popup_stu_preview',$roomData);
 		$this->load->view('supervisor/footer');
-
 	}
 
 	public function exam_room_setting() {
+		/// Form action ตั้งค่าห้องสอบ
+		/// เมื่อตั้งค่าเสร็จจะ Refresh หน้าเดิม
+
 		$room_number = $_POST['room_number'];
 		$chapter_id = $_POST['chapter_id'];
 		$class_id = $_POST['class_id'];
@@ -2369,7 +2370,6 @@ class Supervisor extends MY_Controller {
 			$this->lab_model->set_allow_access($class_id,$chapter_id,$allow_access);
 			$this->lab_model->set_allow_submit_class_chapter($class_id,$chapter_id,$allow_submit);*/
 		}
-
 		redirect(site_url($_SESSION['role']).'/exam_room_seating_chart/'.$room_number);
 	}
 
@@ -2445,6 +2445,8 @@ class Supervisor extends MY_Controller {
 	}
 
 	public function exam_room_ajax_allow_access() {
+		/// JQuery เปิด-ปิด การเข้าถึงห้องสอบ
+
 		$roomNumber = intval($_POST['roomNumber']);
 		$needToAllow = $_POST['needToAllow'];
 		$classId = $_POST['classId'];
@@ -2454,6 +2456,8 @@ class Supervisor extends MY_Controller {
 	}
 
 	public function exam_room_ajax_allow_check_in() {
+		/// JQuery เปิด-ปิด Check-in ห้องสอบ
+
 		$roomNumber = intval($_POST['roomNumber']);
 		$needToAllow = $_POST['needToAllow'];
 		$this->load->model('examroom_model');
@@ -2461,6 +2465,8 @@ class Supervisor extends MY_Controller {
 	}
 
 	public function exam_room_ajax_stu_preview() {
+		/// JQuery ดึงข้อมูลนักศึกษาตามที่นั่งที่กด
+
 		$roomNum = intval($_POST['roomNum']);
 		$seatNum = intval($_POST['seatNum']);
 		$this->load->model('examroom_model');
@@ -2469,15 +2475,15 @@ class Supervisor extends MY_Controller {
 		$seatData = $this->examroom_model->getSeatData($roomNum,$seatNum);
 		$fullname = $this->student_model->getStudentNameByStuId($seatData['stu_id']);
 
+
 		$stuPreview = new stdClass();
 		$stuPreview->stuId = $seatData['stu_id'];
 		$stuPreview->stuFullname = $fullname;
 
+
 		echo json_encode($stuPreview);
 		
 	}
-
-	// For Exam Room :: End
 
 
 }//class Supervisor
