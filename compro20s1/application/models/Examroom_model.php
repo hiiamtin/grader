@@ -4,6 +4,7 @@ class Examroom_model extends CI_Model
 {
   private $TABLE_EXAM_ROOM = 'exam_room';
   private $TABLE_EXAM_SEAT = 'exam_seat';
+  private $TABLE_EXAM_SUBMISSION = 'exam_answer_submission';
 
   public function __construct()
   {
@@ -137,6 +138,24 @@ class Examroom_model extends CI_Model
     $this->db->where('room_number', $room_number);
     $this->db->set($data);
     $this->db->update($this->TABLE_EXAM_ROOM);
+  }
+
+  public function notYetAssigned($stuId, $level) {
+    $this->db->select('*')
+      ->from($this->TABLE_EXAM_SUBMISSION)
+      ->where('stu_id', $stuId)
+      ->where('level', $level);
+    $query = $this->db->get();
+    return empty($query->result_array()[0]);
+  }
+
+  public function assignedProblem($stuId, $level, $examItemId) {
+    $data = array(
+        'stu_id' => $stuId,
+        'level' => $level,
+        'item_id' => $examItemId
+    );
+    $this->db->insert($this->TABLE_EXAM_SUBMISSION, $data);
   }
 
 

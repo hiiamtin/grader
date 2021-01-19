@@ -2288,7 +2288,7 @@ class Supervisor extends MY_Controller {
 
 
 	/* * *
-		EXAM ROOM FEATURES
+		EXAM ROOM FEATURES :: START
 	* * */
 
 	public function exam_room_panel() {
@@ -2485,6 +2485,9 @@ class Supervisor extends MY_Controller {
 		
 	}
 
+	/* * *
+		EXAM ROOM FEATURES :: END
+	* * */
 
 }//class Supervisor
 ?>
