@@ -243,7 +243,7 @@
 														echo 'style="background-color:Thistle ;"';
 													else
 														echo 'style="background-color:LightGreen ;"';
-													echo 'href="'.site_url($_SESSION['role'].'/lab_exercise/'.$chapter_id.'/'.$item).'" >';
+													echo 'href="'.site_url($_SESSION['role'].'/exam_room_problem_select/'.$chapter_id.'/'.$item).'" >';
 													echo 'ข้อ '.$item.'<br/>'.$item_marking.'/'.$item_fullmark.'</a> ';
 													$no_items_count++;
 													if($no_items_count > $no_items)

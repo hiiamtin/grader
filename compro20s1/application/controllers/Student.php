@@ -18,19 +18,19 @@ class Student extends MY_Controller {
 		$stu_id = $_SESSION['stu_id'];
 		$this->removeInfiniteLoop($stu_id);
 
-		
+
 	}
 
 	public function index()	{
 		$this->checkForInfiniteLoop();
-		//$this->createLogFile(__METHOD__);	
+		//$this->createLogFile(__METHOD__);
 		$this->update_student_data();
 		//echo '<h3>$_SESSION = </h3> <pre>'; print_r($_SESSION); echo "</pre><br>";
 		//echo '<h3>$_student_data = </h3> <pre>'; print_r($this->_student_data); echo "</pre><br>";
 		//echo '<h3>$_lab_data = </h3> <pre>'; print_r($this->_lab_data); echo "</pre><br>";
 
-		
-		
+
+
 		$this->load->view('student/stu_head');
 		$this->load->view('student/nav_fixtop');
 		$this->nav_sideleft();
@@ -38,19 +38,19 @@ class Student extends MY_Controller {
 		$this->load->view('student/stu_home_utf8');
 		$this->load->view('student/stu_footer');
 		//$this->load->view('test_webpage3');
-		
+
 	}//public function index()
 
 	public function instruction()	{
 		$this->checkForInfiniteLoop();
-		//$this->createLogFile(__METHOD__);	
+		//$this->createLogFile(__METHOD__);
 		$this->update_student_data();
 		//echo '<h3>$_SESSION = </h3> <pre>'; print_r($_SESSION); echo "</pre><br>";
 		//echo '<h3>$_student_data = </h3> <pre>'; print_r($this->_student_data); echo "</pre><br>";
 		//echo '<h3>$_lab_data = </h3> <pre>'; print_r($this->_lab_data); echo "</pre><br>";
 
-		
-		
+
+
 		$this->load->view('student/stu_head');
 		$this->load->view('student/nav_fixtop');
 		$this->nav_sideleft();
@@ -58,19 +58,19 @@ class Student extends MY_Controller {
 		//$this->load->view('student/stu_home_utf8');
 		$this->load->view('student/stu_footer');
 		//$this->load->view('test_webpage3');
-		
+
 	}//public function index()
 
 	public function midterm_exam()	{
 		$this->checkForInfiniteLoop();
-		//$this->createLogFile(__METHOD__);	
+		//$this->createLogFile(__METHOD__);
 		$this->update_student_data();
 		//echo '<h3>$_SESSION = </h3> <pre>'; print_r($_SESSION); echo "</pre><br>";
 		//echo '<h3>$_student_data = </h3> <pre>'; print_r($this->_student_data); echo "</pre><br>";
 		//echo '<h3>$_lab_data = </h3> <pre>'; print_r($this->_lab_data); echo "</pre><br>";
 
-		
-		
+
+
 		$this->load->view('student/stu_head');
 		$this->load->view('student/nav_fixtop');
 		$this->nav_sideleft();
@@ -78,19 +78,19 @@ class Student extends MY_Controller {
 		//$this->load->view('student/stu_home_utf8');
 		$this->load->view('student/stu_footer');
 		//$this->load->view('test_webpage3');
-		
+
 	}//public function index()
 
 	public function practice_exam()	{
 		$this->checkForInfiniteLoop();
-		//$this->createLogFile(__METHOD__);	
+		//$this->createLogFile(__METHOD__);
 		$this->update_student_data();
 		//echo '<h3>$_SESSION = </h3> <pre>'; print_r($_SESSION); echo "</pre><br>";
 		//echo '<h3>$_student_data = </h3> <pre>'; print_r($this->_student_data); echo "</pre><br>";
 		//echo '<h3>$_lab_data = </h3> <pre>'; print_r($this->_lab_data); echo "</pre><br>";
 
-		
-		
+
+
 		$this->load->view('student/stu_head');
 		$this->load->view('student/nav_fixtop');
 		$this->nav_sideleft();
@@ -98,7 +98,7 @@ class Student extends MY_Controller {
 		//$this->load->view('student/stu_home_utf8');
 		$this->load->view('student/stu_footer');
 		//$this->load->view('test_webpage3');
-		
+
 	}//public function index()
 
 	public function update_student_data() {
@@ -111,13 +111,13 @@ class Student extends MY_Controller {
 		//$this->load->model('lab_model');
 		$this->student_model->update_student_profile();
 		$this->_student_data = $this->student_model->retrieve_student_record($student_id);
-	
 
-		
+
+
 		//echo '<h3>$this->_student_data = </h3> <pre>'; print_r($this->_student_data); echo "</pre><br>";
 		//retrieve info from student_asigned_chapter_item table
 		$this->load->model('lab_model');
-		
+
 		$this->_lab_data = $this->lab_model->setup_student_lab_data($_SESSION['stu_id'],$_SESSION['stu_group']);
 		//echo '<!--<h3>$this->_lab_data = </h3> <pre>'; print_r($this->_lab_data); echo "</pre><br>-->";
 		$student_marking_all_items = $this->lab_model->get_a_student_marking_for_all_submitted_items($student_id) ;
@@ -138,21 +138,21 @@ class Student extends MY_Controller {
 		//echo '<h2>__METHOD__ = '. __METHOD__ .'</h2>';
 		//echo '<h3>$_SESSION = </h3> <pre>'; print_r($_SESSION); echo "</pre><br>";
 		//$data = $_SESSION['lab_data'];
-		//echo '<h3>$lab_data = </h3> <pre>'; print_r(array_keys($data)); echo "</pre><br>";		
+		//echo '<h3>$lab_data = </h3> <pre>'; print_r(array_keys($data)); echo "</pre><br>";
 		$this->_class_info = $this->student_model->get_class_info($_SESSION['stu_id']);
-		
+
 
 	}
 
-	
 
-	
-	
+
+
+
 
 	public function show_message($message)	{
-		//$this->createLogFile(__METHOD__);	
+		//$this->createLogFile(__METHOD__);
 		$data = array('message' => $message);
-		
+
 		$this->load->view('student/stu_head');
 		$this->load->view('student/nav_fixtop');
 		$this->nav_sideleft();
@@ -160,14 +160,14 @@ class Student extends MY_Controller {
 		$this->load->view('student/stu_footer');
 		//$this->load->view('test_webpage3');
 		//break();
-		
+
 	}//public function show_message
 
 	public function nav_sideleft() {
 		$this->update_student_data();
-		$this->load->model('student_model');		
-		$data = array( 
-						
+		$this->load->model('student_model');
+		$data = array(
+
 						'class_info'	=>	$this->_class_info,
 						'lab_data'		=>	$this->_lab_data,
 						'student_data'	=>	$this->_student_data
@@ -187,9 +187,9 @@ class Student extends MY_Controller {
 		//$this->load->model('student_model');
 		/*echo 'lab_xx    : item_xx    : exercise_id : fullmark : marking : start - end <br>";
 		foreach ($lab_data as $row) {
-			//echo $row['exercise_id']." : ".$row['full_mark']." : ".$row['marking']." : ".$row['time_start']." - ".$row['time_end']." <br>"; 
+			//echo $row['exercise_id']." : ".$row['full_mark']." : ".$row['marking']." : ".$row['time_start']." - ".$row['time_end']." <br>";
 		}
-		
+
 		echo "<pre>";print_r($_SESSION);"</pre>";
 		*/
 	}
@@ -216,10 +216,10 @@ class Student extends MY_Controller {
 		$this->load->model('lab_model');
 		$lab_classinfo = $this->lab_model->get_lab_info(); //return array
 		//$marking = $this->lab_model->get_student_marking_for_all_chapters($stu_id); // return array
-		
+
 		//echo '<h4>$student_marking : </h4>','<pre>',print_r($student_marking),'<pre>';
-		
-		//foreach($lab_classinfo->result_array() as $row)		
+
+		//foreach($lab_classinfo->result_array() as $row)
 		//	print_r($row);
 
 		$data = array (	'lab_classinfo'		=>	$lab_classinfo,
@@ -229,7 +229,7 @@ class Student extends MY_Controller {
 						'student_data'		=>	$this->_student_data
 					);
 
-		
+
 		$this->load->view('student/stu_head');
 		$this->load->view('student/nav_fixtop');
 		$this->nav_sideleft();
@@ -240,11 +240,11 @@ class Student extends MY_Controller {
 
 	}// public function exercise_home()
 
-	
 
 
-	
-	
+
+
+
 	public function test_path() 	{
 		echo '<h2>BASEPATH = '. BASEPATH .'</h2>';
 		echo '<h2>FCPATH = '. FCPATH .'</h2>';
@@ -256,25 +256,25 @@ class Student extends MY_Controller {
 		echo '<h2>__TRAIT__ = '. __TRAIT__ .'</h2>';
 		echo '<h2>__METHOD__ = '. __METHOD__ .'</h2>';
 		echo '<h2>__NAMESPACE__ = '. __NAMESPACE__ .'</h2>';
-	} 
+	}
 
 	public function edit_profile_form() 	{
 		$this->update_student_data();
 		$this->load->model('student_model');
 		$departments = $this->student_model->get_department_list();
-		
+
 
 		//$this->load->model('lab_model');
 		//$class_info = $this->student_model->get_class_info($_SESSION['stu_id']);
 		$class_schedule = $this->student_model->get_class_schedule($_SESSION['stu_id']);
 
-		$data1 = array( 
+		$data1 = array(
 						'departments'		=>		$departments,
 						//'class_info'		=>		$this->_class_info,
 						'lab_data'			=>		$this->_lab_data,
 						'student_data'		=>		$this->_student_data,
 						'class_schedule'	=>		$class_schedule
-						
+
 					);
 
 		$this->load->view('student/stu_head');
@@ -282,7 +282,7 @@ class Student extends MY_Controller {
 		$this->nav_sideleft();
 		$this->load->view('student/edit_profile',$data1);
 		$this->load->view('student/stu_footer');
-		
+
 	}
 
 	public function edit_profile_action() 	{
@@ -308,7 +308,7 @@ class Student extends MY_Controller {
 			$this->createLogFile(" Password is incorrect !!! => ".$_POST['current_password']);
 			$this->createLogFile(__METHOD__ . " : incorrect password : ".$_POST['current_password']." db : ".$database_password. " input : ". $current_password);
 			return $this->edit_profile_form();
-		} 
+		}
 		//else {
 		//	echo "<h4>Password correct</h4>";
 		//}
@@ -321,22 +321,22 @@ class Student extends MY_Controller {
 		//update name surname
 		$this->load->model('student_model');
 		$this->student_model->update_student_record();
-		
-		//update $_SESSION		
+
+		//update $_SESSION
 		//$_SESSION['stu_gender']		= $_POST['stu_gender'];
 		//$_SESSION['stu_firstname']	= $_POST['stu_firstname'];
 		//$_SESSION['stu_lastname']	= $_POST['stu_lastname'];
 		//$_SESSION['stu_nickname']	= $_POST['stu_nickname'];
-		//$_SESSION['stu_dob']		= $_POST['stu_dob'];		
+		//$_SESSION['stu_dob']		= $_POST['stu_dob'];
 		//$_SESSION['stu_email']		= $_POST['stu_email'];
 		//$_SESSION['stu_tel']		= $_POST['stu_tel'];
 		//$_SESSION['stu_department']	= $_POST['stu_department'];
 		//$_SESSION['stu_group']		= $_POST['stu_group'];
-		
+
 		//update password
-		if (strlen($new_password) >= 4 && $new_password==$confirm_password)		
+		if (strlen($new_password) >= 4 && $new_password==$confirm_password)
 		{
-			
+
 			//echo "<h2>Changing password to : ".$new_password."</h2>";
 			$this->load->model('student_model');
 			$this->student_model->update_student_password($_POST['stu_id'],md5($new_password));
@@ -362,11 +362,11 @@ class Student extends MY_Controller {
 			echo "TRUE";
 		else
 			echo "FALSE";
-		
+
 		echo "<br/>3: ",	strlen($_FILES['stu_avatar']['name']).'<br/>';
-		*/				
-					
-		
+		*/
+
+
 
 		//upload impage
 		if( !empty($_FILES['stu_avatar']) && isset($_FILES['stu_avatar']) && strlen($_FILES['stu_avatar']['name'])>2) {
@@ -376,13 +376,13 @@ class Student extends MY_Controller {
 			$ext = strtolower(pathinfo($_FILES['stu_avatar']['name'],PATHINFO_EXTENSION));
 			$upload_filename = pathinfo($_FILES['stu_avatar']['name'],PATHINFO_FILENAME);
 			$saved_filename = "image_".$_SESSION['stu_id'].'_'.uniqid().".".$ext;//ชื่อไฟล์
-			
-			$upload_path = APPPATH.STUDENT_AVATAR_FOLDER;			
+
+			$upload_path = APPPATH.STUDENT_AVATAR_FOLDER;
 			echo "Orignal filename : ".$imageupload_name."<br>";
 			echo "New filename : $saved_filename<br>";
 			echo "upload_filename : $upload_filename<br>";
 			echo  "upoad_folder : ".$upload_path."<br>";
-			
+
 
 			//create directory if not exist
 			//if(!is_dir($upload_path)) {
@@ -396,23 +396,23 @@ class Student extends MY_Controller {
 				echo "<script>alert('File type must be jpg , jpeg , png or gif')</script>";
 				return $this->edit_profile_form();
 			}
-				
-			
+
+
 			// Check file size
 			if ($_FILES["stu_avatar"]["size"] > 500000) {
 				$this->session->set_flashdata("error", "Image file is too large (>500k).");
 				//echo "Sorry, your file is too large.";
-				return $this->edit_profile_form();				
+				return $this->edit_profile_form();
 			}
 
 			//echo $_SERVER['DOCUMENT_ROOT']."<br>";
 			//echo __FILE__."<br>";
 			//echo APPPATH.STUDENT_AVATAR_FOLDER."<br>";
 
-			
+
 			//save image file to harddisk
 			move_uploaded_file ( $imageupload ,  STUDENT_AVATAR_FOLDER.$saved_filename );
-			
+
 			//update user_student table field only filename
 			$this->load->model('student_model');
 			$this->student_model->update_image($saved_filename);
@@ -421,18 +421,18 @@ class Student extends MY_Controller {
 			$this->session->set_flashdata("status", "Image file is updated.");
 			$_SESSION['stu_avatar']=$saved_filename;
 
-			
+
 		}
 
 		//echo "End now<br>";
 		$this->update_student_data();
 
-		
 
-		$this->session->set_flashdata("status", "Successfully Update.");		
+
+		$this->session->set_flashdata("status", "Successfully Update.");
 		$this->edit_profile_form();
-		
-	}//public function edit_profile_action() 
+
+	}//public function edit_profile_action()
 
 	public function get_password($student_id)
 	{
@@ -448,7 +448,7 @@ class Student extends MY_Controller {
 		$chapter_data = $this->_group_permission[$chapter_id];
 		$result = $this->time_model->check_allow_access_and_submit($chapter_data['time_start'],$chapter_data['time_end']);
 		$allow_access = $result[0];
-		
+
 		//$allow_submit = $result[1];
 		if ($stu_id == '99123456') {
 			//echo "<h2> $stu_id chapter=$chapter_id,$item_id </h2>"; exit();
@@ -500,25 +500,25 @@ class Student extends MY_Controller {
 			}
 			//echo "<h2>". "  exercise_id : ".$exercise_id."</h2>";
 
-			
+
 			// update student table
-			
+
 			$this->lab_model->update_student_exericse($stu_id,$chapter_id,$item_id,$exercise_id);
 			$this->update_student_data();
 			$lab_data = $this->_lab_data;
 		}
 		//echo "<h2>".__METHOD__ . " stu_id : ". $stu_id ."  chapter : ".  $chapter_id ."  item : " .$item_id . "  exercise_id : ".$exercise_id."</h2>";
 
-		
+
 
 		$lab_content = $this->lab_model->get_lab_content($exercise_id);
 		$sourcecode_content ='';
 
 		$number_of_testcase = $this->lab_model->get_num_testcase($exercise_id);
-		
-		//echo '<h3>$lab_content : </h3><pre> testcase nubmer: ',$number_of_testcase,"<br>"; print_r($lab_content); echo "</pre>"; 
+
+		//echo '<h3>$lab_content : </h3><pre> testcase nubmer: ',$number_of_testcase,"<br>"; print_r($lab_content); echo "</pre>";
 		$submitted_count = $this->student_model->get_student_submission_times($stu_id,$exercise_id);
-		
+
 		// infinite loop verification
 		/*
 		$sequence = $submitted_count;
@@ -538,23 +538,23 @@ class Student extends MY_Controller {
 		$exercise_test = new Exercise_test();
 		$output = '';
 
-		if($number_of_testcase <=0 ) { 
+		if($number_of_testcase <=0 ) {
 			// the exercise has no testcase
-			
+
 			// run output from sample sourcecode for display and compare
 			$sourcecode_filename = $this->get_sourcecode_filename($exercise_id);
-			$output = $exercise_test->get_result_noinput($sourcecode_filename,'supervisor'); // raw output 				
-			$output = $exercise_test->unify_whitespace($output);	// change TAB and NEWLINE to single space				
+			$output = $exercise_test->get_result_noinput($sourcecode_filename,'supervisor'); // raw output
+			$output = $exercise_test->unify_whitespace($output);	// change TAB and NEWLINE to single space
 			$output = $exercise_test->insert_newline($output); //insert newline after 80th character of each line
 			$output = rtrim($output);				//remove trailing spaces
 			$lab_name = $this->get_lab_name($exercise_id);
 			$full_mark = $this->get_fullmark_from_student_assigned_chapter_item($stu_id,$chapter_id,$item_id,$exercise_id);
 			//$marking = $this->get_marking_from_student_assigned_chapter_item($stu_id,$chapter_id,$item_id,$exercise_id);
 			$marking = $this->lab_model->get_max_marking_from_exercise_submission($stu_id,$exercise_id);
-	
+
 			$_SESSION['lab_item']=$item_id;
-			//echo '<h3>$_SESSION : </h3><pre>'; print_r($_SESSION); echo "</pre>"; 
-			//echo '<h3>$output : </h3><pre>'; print_r($output); echo "</pre>"; 
+			//echo '<h3>$_SESSION : </h3><pre>'; print_r($_SESSION); echo "</pre>";
+			//echo '<h3>$output : </h3><pre>'; print_r($output); echo "</pre>";
 			//return ;
 			if( $submitted_count > 0 ) {
 				// the exercise has no testcase and there are some submissions
@@ -581,39 +581,39 @@ class Student extends MY_Controller {
 					$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking);
 
 				} else {
-					
+
 					$error_line = $output_result['error_line'];
 					$error_column = $output_result['error_column'];
 					$error_position = $output_result['error_position'];
 					echo '<h2 style="color:red;">unmatched_position : ',$error_position,"    line : ", $error_line,"    column : ",$error_column,"</h2>";
-					
+
 					//	add a line to output showing where the first error occurs.
 					$output_student = $exercise_test->dispaly_error_in_output($output_student,$error_position);  // insert newline is embedded inside the function
 				}
 
 				$last_submit['sourcecode_content']	= $sourcecode_content;
-				$last_submit['sourcecode_output']	= $output_student;			
+				$last_submit['sourcecode_output']	= $output_student;
 				$last_submit['submitted_count']	= $submitted_count;
 
 				//for icon displayed at top-right panel
 				if ($full_mark == $marking)
 					$last_submit['status']='passed';
-				else 
+				else
 					$last_submit['status']='error';
 
 
-				//echo '<h3>$last submit : </h3><pre>'; print_r($last_submit); echo "</pre>"; 
-			} 
-			
-		} else {//if($infinite_loop_check=="NO"){ 
+				//echo '<h3>$last submit : </h3><pre>'; print_r($last_submit); echo "</pre>";
+			}
+
+		} else {//if($infinite_loop_check=="NO"){
 			/*
 			*
 			*	there are testcases because !($number_of_testcase <=0 )
 			*
 			*/
-			
+
 			$testcase_array = $this->lab_model->get_testcase_array($exercise_id);
-			$num_of_testcase = $this->lab_model->get_num_testcase($exercise_id);	
+			$num_of_testcase = $this->lab_model->get_num_testcase($exercise_id);
 			$output = ''; //reset output (no testcase)
 			$status ="first_enter";
 			//first time to do this exercise
@@ -626,14 +626,14 @@ class Student extends MY_Controller {
 				$submission_id = $last_submit['submission_id'];
 				$marking = $last_submit['marking'];
 				if ( !is_null($last_submit['output']) )
-					$output = unserialize($last_submit['output']);				
+					$output = unserialize($last_submit['output']);
 				$sourcecode_filename = $last_submit['sourcecode_filename'];
 				$sourcecode_content = file_get_contents(STUDENT_CFILES_FOLDER.$sourcecode_filename);
 
 				$data_testcase = $this->lab_model->get_testcase_array($exercise_id);
-				
+
 				//run each testcase and compare result
-				
+
 				// $chapter_pass = 'yes';
 				// each time testcase passes, $chapter_pass will be decreased.
 				// if all testcases pass, $chater_pass will be zero
@@ -664,12 +664,12 @@ class Student extends MY_Controller {
 						//$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking);
 						$testcase_pass++;
 					} else {
-						
+
 						$error_line = $output_result['error_line'];
 						$error_column = $output_result['error_column'];
 						$error_position = $output_result['error_position'];
 						//echo '<h2 style="color:red;">unmatched_position : ',$error_position,"    line : ", $error_line,"    column : ",$error_column,"</h2>";
-						
+
 						//	add a line to output showing where the first error occurs.
 						$output_student = $exercise_test->dispaly_error_in_output($output_student,$error_position);
 						$item_pass='no';
@@ -678,23 +678,23 @@ class Student extends MY_Controller {
 						$data_testcase["$i"]['error_position'] = $error_position;
 
 
-						
+
 					}
 					$data_testcase["$i"]['output_to_show']=$output_student_original;
 					$data_testcase["$i"]['item_pass']=$item_pass;
 				}
 				$status ="not_pass";
-				
-				
+
+
 				if($testcase_pass==sizeof($data_testcase)) {
 					$marking = $this->get_fullmark_from_student_assigned_chapter_item($stu_id,$chapter_id,$item_id,$exercise_id);
-					$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking); 
+					$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking);
 					$status = "passed";
 				} else {
 					$marking = 0;
-					$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking); 
+					$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking);
 				}
-				
+
 			}
 			$testcase_array = $data_testcase;
 			$data_for_testcase['exercise_id'] = $exercise_id;
@@ -707,7 +707,7 @@ class Student extends MY_Controller {
 
 			//echo "<pre>";print_r($data_testcase);echo "</pre>";
 			//echo "<pre>";print_r($data_testcase2);echo "</pre>";
-			
+
 
 		}
 		$this->load->model('time_model');
@@ -717,7 +717,7 @@ class Student extends MY_Controller {
 		$chapter_data[$chapter_id]["allow_access"] = $result[0];
 		$chapter_data[$chapter_id]["allow_submit"] = $result[1];
 
-		$data= array(	
+		$data= array(
 					"lab_content"	=> $lab_content,
 					"output"		=> $output,
 					'lab_chapter'	=> $chapter_id,
@@ -732,7 +732,8 @@ class Student extends MY_Controller {
 					//'infinite_loop_check' => $infinite_loop_check
 				);
 
-		
+
+
 
 		$this->load->view('student/stu_head');
 		$this->load->view('student/nav_fixtop');
@@ -740,7 +741,7 @@ class Student extends MY_Controller {
 		$this->load->view('student/exercise_submission_header',$data);
 
 		if($number_of_testcase <= 0 && $submitted_count <=0) {
-			// do nothing	ยังไม่เคยส่ง ไม่มีอินพุท		
+			// do nothing	ยังไม่เคยส่ง ไม่มีอินพุท
 		} else if($number_of_testcase <= 0 && $submitted_count > 0) {
 			// ไม่มีอินพุท เคยส่งแล้ว แสดงผล การส่งครั้งล่าสุด
 			$this->load->view('student/exercise_testrun',$last_submit);
@@ -754,23 +755,27 @@ class Student extends MY_Controller {
 
 		$this->load->view('student/stu_footer');
 
-		
+
+
+		return $exercise_id;
+
+
 	}//public function lab_exercise_v2($chapter_id,$item_id)
 
 
 
-	
+
 
 	private function lab_exercise_action_v1($chapter_id,$item_id) {
 		$stu_id = $_SESSION['stu_id'];
 		$group_id = $_SESSION['stu_group'];
 		$exercise_id = "";
 		//echo "<h2>".__METHOD__ . " stu_id : ". $stu_id ."  chapter : ".  $chapter_id ."  item : " .$item_id . "  exercise_id : ".$exercise_id."</h2>";
-		//echo '<h3>$_SESSION : </h3><pre>'; print_r($_SESSION); echo "</pre>"; 
-		
+		//echo '<h3>$_SESSION : </h3><pre>'; print_r($_SESSION); echo "</pre>";
+
 		// setup exercise_id for student
 		// 1. query from student_assigned_chapter_item
-		// 2. if not available, get a new one from 
+		// 2. if not available, get a new one from
 		//		- find all exercise from lab_exercise table  ==> all selected will be in $exercise_list
 		//		- put $exercise_list into group_assigned_chapter_item
 		//		- ramdomly select an exercise from $exercise_list ==> $exercise_id
@@ -780,25 +785,25 @@ class Student extends MY_Controller {
 		$exercise_id = $this->student_model->get_exercise_from_student_assigned_chapter_item($stu_id,$chapter_id,$item_id);
 		echo "<h2>".__METHOD__ . " stu_id : ". $stu_id ."  chapter : ".  $chapter_id ."  item : " .$item_id . "  exercise_id : ".$exercise_id."</h2>";
 		if ($exercise_id < 0) {
-			//	check for group status and list of exerccises 
+			//	check for group status and list of exerccises
 			//	from group_assigned_chapter_item
 			//	and update status of corresponding chapter/item
 			$exercise_list = $this->lab_model->get_exercise_list($group_id,$chapter_id,$item_id);
 			if(sizeof($exercise_list)<=0)
 				$this->show_message('lab_not_available');
-			
+
 			$exercise_id = $this->get_exercise_for_student($exercise_list); // randomly select from $exercise_list
-			
+
 			// update student table
 			$this->load->model('lab_model');
-			
+
 			$this->lab_model->assign_student_exericse($stu_id,$chapter_id,$item_id,$exercise_id);
 		}
 
 		if ($exercise_id <= 0) {
 			$this->show_message("lab_not_avialable");
 		}
-		
+
 		echo "<h2>".__METHOD__ . " stu_id : ". $stu_id ."  chapter : ".  $chapter_id ."  item : " .$item_id . "  exercise_id : ".$exercise_id."</h2>";
 		$lab_content = $this->lab_model->get_lab_content($exercise_id);
 		$sourcecode_content ='';
@@ -806,28 +811,28 @@ class Student extends MY_Controller {
 
 
 		$number_of_testcase = $this->lab_model->get_num_testcase($exercise_id);
-		//echo '<h3>$lab_content : </h3><pre> testcase nubmer: ',$number_of_testcase,"<br>"; print_r($lab_content); echo "</pre>"; 
+		//echo '<h3>$lab_content : </h3><pre> testcase nubmer: ',$number_of_testcase,"<br>"; print_r($lab_content); echo "</pre>";
 		$submitted_count = $this->student_model->get_student_submission_times($stu_id,$exercise_id);
 		require_once 'Exercise_test.php';
 		$exercise_test = new Exercise_test();
 
-		if($number_of_testcase <=0 ) { 
+		if($number_of_testcase <=0 ) {
 			// the exercise has no testcase
-			
+
 			// run output from sample sourcecode for display and compare
 			$sourcecode_filename = $this->get_sourcecode_filename($exercise_id);
-			$output = $exercise_test->get_result_noinput($sourcecode_filename,'supervisor'); // raw output 				
-			$output = $exercise_test->unify_whitespace($output);	// change TAB and NEWLINE to single space				
+			$output = $exercise_test->get_result_noinput($sourcecode_filename,'supervisor'); // raw output
+			$output = $exercise_test->unify_whitespace($output);	// change TAB and NEWLINE to single space
 			$output = $exercise_test->insert_newline($output); //insert newline after 80th character of each line
 			$output = rtrim($output);				//remove trailing spaces
 			$lab_name = $this->get_lab_name($exercise_id);
 			$full_mark = $this->get_fullmark_from_student_assigned_chapter_item($stu_id,$chapter_id,$item_id,$exercise_id);
 			//$marking = $this->get_marking_from_student_assigned_chapter_item($stu_id,$chapter_id,$item_id,$exercise_id);
 			$marking = $this->lab_model->get_max_marking_from_exercise_submission($stu_id,$exercise_id);
-	
+
 			$_SESSION['lab_item']=$item_id;
-			//echo '<h3>$_SESSION : </h3><pre>'; print_r($_SESSION); echo "</pre>"; 
-			//echo '<h3>$data : </h3><pre>'; print_r($data); echo "</pre>"; 
+			//echo '<h3>$_SESSION : </h3><pre>'; print_r($_SESSION); echo "</pre>";
+			//echo '<h3>$data : </h3><pre>'; print_r($data); echo "</pre>";
 			if( $submitted_count > 0 ) {
 				// the exercise has no testcase and there are some submissions
 				// take last_submit and do marking ==> update to exercise_submission table
@@ -853,39 +858,39 @@ class Student extends MY_Controller {
 					$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking);
 
 				} else {
-					
+
 					$error_line = $output_result['error_line'];
 					$error_column = $output_result['error_column'];
 					$error_position = $output_result['error_position'];
 					echo '<h2 style="color:red;">unmatched_position : ',$error_position,"    line : ", $error_line,"    column : ",$error_column,"</h2>";
-					
+
 					//	add a line to output showing where the first error occurs.
 					$output_student = $exercise_test->dispaly_error_in_output($output_student,$error_position);  // insert newline is embedded inside the function
 				}
 
 				$last_submit['sourcecode_content']	= $sourcecode_content;
-				$last_submit['sourcecode_output']	= $output_student;			
+				$last_submit['sourcecode_output']	= $output_student;
 				$last_submit['submitted_count']	= $submitted_count;
 
 				//for icon displayed at top-right panel
 				if ($full_mark == $marking)
 					$last_submit['status']='passed';
-				else 
+				else
 					$last_submit['status']='error';
 
 
-				//echo '<h3>$last submit : </h3><pre>'; print_r($last_submit); echo "</pre>"; 
-			} 
-			
-		} else { 
+				//echo '<h3>$last submit : </h3><pre>'; print_r($last_submit); echo "</pre>";
+			}
+
+		} else {
 			/*
 			*
 			*	there are testcases because !($number_of_testcase <=0 )
 			*
 			*/
-			
+
 			$testcase_array = $this->lab_model->get_testcase_array($exercise_id);
-			$num_of_testcase = $this->lab_model->get_num_testcase($exercise_id);	
+			$num_of_testcase = $this->lab_model->get_num_testcase($exercise_id);
 			$output = ''; //reset output (no testcase)
 			//first time to do this exercise
 			if( $submitted_count <= 0) {
@@ -899,9 +904,9 @@ class Student extends MY_Controller {
 				$data_testcase = $this->lab_model->get_testcase_array($exercise_id);
 				$sourcecode_filename = $last_submit['sourcecode_filename'];
 				$sourcecode_content = file_get_contents(STUDENT_CFILES_FOLDER.$sourcecode_filename);
-				
+
 				//run each testcase and compare result
-				
+
 				//$chapter_pass = 'yes';
 				// each time testcase passes, $chapter_pass will be decreased.
 				// if all testcases pass, $chater_pass will be zero
@@ -932,27 +937,27 @@ class Student extends MY_Controller {
 						//$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking);
 						$testcase_pass++;
 					} else {
-						
+
 						$error_line = $output_result['error_line'];
 						$error_column = $output_result['error_column'];
 						$error_position = $output_result['error_position'];
 						//echo '<h2 style="color:red;">unmatched_position : ',$error_position,"    line : ", $error_line,"    column : ",$error_column,"</h2>";
-						
+
 						//	add a line to output showing where the first error occurs.
 						$output_student = $exercise_test->dispaly_error_in_output($output_student,$error_position);
 						$item_pass='no';
-						
+
 					}
 					$data_testcase["$i"]['output_to_show']=$output_student;
 					$data_testcase["$i"]['item_pass']=$item_pass;
 				}
 				if($testcase_pass==sizeof($data_testcase)) {
 					$marking = $this->get_fullmark_from_student_assigned_chapter_item($stu_id,$chapter_id,$item_id,$exercise_id);
-					
-					$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking); 
+
+					$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking);
 				} else {
 					$marking = 0;
-					$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking); 
+					$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking);
 				}
 			}
 			$testcase_array = $data_testcase;
@@ -962,7 +967,7 @@ class Student extends MY_Controller {
 
 		}
 
-		$data= array(	
+		$data= array(
 					"lab_content"	=> $lab_content,
 					"output"		=> $output,
 					'lab_chapter'	=> $chapter_id,
@@ -976,7 +981,7 @@ class Student extends MY_Controller {
 					'group_permission'	=> $this->_group_permission
 				);
 
-		
+
 
 		$this->load->view('student/stu_head');
 		$this->load->view('student/nav_fixtop');
@@ -984,7 +989,7 @@ class Student extends MY_Controller {
 		$this->load->view('student/exercise_submission_header',$data);
 
 		if($number_of_testcase <= 0 && $submitted_count <=0) {
-			// do nothing			
+			// do nothing
 		} else if($number_of_testcase <= 0 && $submitted_count > 0) {
 			$this->load->view('student/exercise_testrun',$last_submit);
 		} else if($number_of_testcase > 0 && $submitted_count <= 0) {
@@ -1015,12 +1020,12 @@ class Student extends MY_Controller {
 		return $this->lab_model->get_exercise_list($stu_id,$chapter_id,$item_id);
 	}
 
-	public function get_exercise_for_student($exercise_list) {		
-		
+	public function get_exercise_for_student($exercise_list) {
+
 		shuffle($exercise_list);
 		$exercise_id = $exercise_list[0];
 
-		return $exercise_id;	
+		return $exercise_id;
 
 	}
 
@@ -1031,9 +1036,9 @@ class Student extends MY_Controller {
 		$this->load->model('lab_model');
 		$submission = $this->lab_model->get_exercise_submission($submission_id);
 		//print_r($submission);
-		
+
 		$exercise_id = $submission['exercise_id'];
-		$sourcecode_filename = $submission['sourcecode_filename'];		
+		$sourcecode_filename = $submission['sourcecode_filename'];
 		$data_testcase = $this->lab_model->get_testcase_array($exercise_id);
 		$num_of_testcase = $this->lab_model->get_num_testcase($exercise_id);
 		$sourcecode_content = file_get_contents(STUDENT_CFILES_FOLDER.$sourcecode_filename);
@@ -1044,16 +1049,16 @@ class Student extends MY_Controller {
 
 		if ($num_of_testcase <=0) {
 			return;
-		
-		} else { 
+
+		} else {
 			/*
 			*
 			*	there are testcases because !($number_of_testcase <=0 )
 			*
 			*/
-			
+
 			$testcase_array = $this->lab_model->get_testcase_array($exercise_id);
-			$num_of_testcase = $this->lab_model->get_num_testcase($exercise_id);	
+			$num_of_testcase = $this->lab_model->get_num_testcase($exercise_id);
 			$output = array(); //reset output (no testcase)
 			$status ="first_enter";
 			//first time to do this exercise
@@ -1068,9 +1073,9 @@ class Student extends MY_Controller {
 				$data_testcase = $this->lab_model->get_testcase_array($exercise_id);
 				$sourcecode_filename = $last_submit['sourcecode_filename'];
 				$sourcecode_content = file_get_contents(STUDENT_CFILES_FOLDER.$sourcecode_filename);
-				
+
 				//run each testcase and compare result
-				
+
 				// $chapter_pass = 'yes';
 				// each time testcase passes, $chapter_pass will be decreased.
 				// if all testcases pass, $chater_pass will be zero
@@ -1102,12 +1107,12 @@ class Student extends MY_Controller {
 						//$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking);
 						$testcase_pass++;
 					} else {
-						
+
 						$error_line = $output_result['error_line'];
 						$error_column = $output_result['error_column'];
 						$error_position = $output_result['error_position'];
 						//echo '<h2 style="color:red;">unmatched_position : ',$error_position,"    line : ", $error_line,"    column : ",$error_column,"</h2>";
-						
+
 						//	add a line to output showing where the first error occurs.
 						$output_student = $exercise_test->dispaly_error_in_output($output_student,$error_position);
 						$item_pass='no';
@@ -1116,7 +1121,7 @@ class Student extends MY_Controller {
 						$data_testcase["$i"]['error_position'] = $error_position;
 
 
-						
+
 					}
 					$data_testcase["$i"]['output_to_show']=$output_student_original;
 					$data_testcase["$i"]['item_pass']=$item_pass;
@@ -1127,9 +1132,9 @@ class Student extends MY_Controller {
 					$status = "passed";
 				} else {
 					$marking = 0;
-					
+
 				}
-				//$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking); 
+				//$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking);
 			//}
 			$testcase_array = $data_testcase;
 			$data_for_testcase['exercise_id'] = $exercise_id;
@@ -1139,7 +1144,7 @@ class Student extends MY_Controller {
 				$data_for_testcase['last_submit'] = $last_submit;
 			$data_for_testcase['status'] = $status;
 
-			
+
 			$this->lab_model->update_submission_output_and_marking($submission_id,serialize($output),$marking);
 			$message = "group : ".$stu_group." Submitting : ".$submission_id." : ".$sourcecode_filename." marking : ".$marking;
 			$this->createLogFile($message);
@@ -1149,16 +1154,16 @@ class Student extends MY_Controller {
 
 
 
-	// store submitted file in harddisk 
+	// store submitted file in harddisk
 	// interval must be at least 60 seconds between each submission MIN_INTERVAL_SUBMISSION_TIME ==> to do
 	// if not, it should be rejected.
 	// And also it must not be identical to previous submission ==> to do
 	// and update exercise_submission file name
-	public function exercise_submission() {		
+	public function exercise_submission() {
 		$this->update_student_data();
 		//ตรวจสอบ การห้ามทำแลป จากตาราง class_schedule
 
-		
+
 
 		//echo "<h1>. . .   Under Construction   . . .</h1>";
 		//check table student_assigned_chapter_item
@@ -1180,7 +1185,7 @@ class Student extends MY_Controller {
 
 		if ( $this->check_for_time_interval($stu_id,$chapter_id, $item_id, $exercise_id) )
 			return $this->show_message("".MIN_INTERVAL_SUBMISSION_TIME." seconds between submission.");
-		
+
 		if ($this->check_for_identical_submission($stu_id,$chapter_id, $item_id, $exercise_id) )
 			return $this->show_message("You cannot submit identical file.");
 
@@ -1188,7 +1193,7 @@ class Student extends MY_Controller {
 		if ($allow_submit=='no')
 			return $this->show_message("You are not allowed to submit exercise.");
 
-		
+
 		$full_mark = $this->get_fullmark_from_student_assigned_chapter_item($stu_id,$chapter_id,$item_id,$exercise_id);
 		$marking = $this->lab_model->get_max_marking_from_exercise_submission($stu_id,$exercise_id);
 		//echo $stu_id,' | ', $chapter_id,' | ', $item_id,' | ', $exercise_id,' | ', $marking ,' | ',$full_mark ,'<br>';
@@ -1206,7 +1211,7 @@ class Student extends MY_Controller {
 			$fileupload_name = $_FILES['submitted_file']['name'] ;
 			$ext = strtolower(pathinfo($_FILES['submitted_file']['name'],PATHINFO_EXTENSION));
 			$upload_filename = pathinfo($_FILES['submitted_file']['name'],PATHINFO_FILENAME);
-			
+
 			// set filename format likes 59112233_01_02_0001
 			$saved_filename = ''.$_SESSION['stu_id'];
 			$lab_chapter = ''.$_POST['chapter_id'];
@@ -1220,11 +1225,11 @@ class Student extends MY_Controller {
 
 			// submitted_round คือ ส่งมาแล้วกี่ครั้ง
 			// submit_round คือ ครั้งนี้เป็นการส่งคร้งที่เท่าไหร่
-			$submitted_round = $this->student_model->get_student_submission_times($stu_id,$exercise_id);			
+			$submitted_round = $this->student_model->get_student_submission_times($stu_id,$exercise_id);
 			$submit_round = ''.($submitted_round+1);
 			while(strlen($submit_round) < 4)
 				$submit_round = '0'.$submit_round;
-			$saved_filename = $saved_filename.'_'.$submit_round.".c"; 
+			$saved_filename = $saved_filename.'_'.$submit_round.".c";
 
 			//echo "filename : ".$fileupload_name .' newname : '.$saved_filename."<br>";
 			//echo "content : <br>";
@@ -1237,13 +1242,13 @@ class Student extends MY_Controller {
 			$elapsed_time = (int) (($now_time-$assigned_time)/60);
 			$heading = "/*".PHP_EOL;
 			$heading .= " * กลุ่มที่  : ".$_SESSION['stu_group'].PHP_EOL;
-			$heading .= " * ".$_SESSION['stu_id']. " ". $_SESSION['stu_firstname'] . " " . $_SESSION['stu_lastname'] .PHP_EOL;				
-			$heading .= " * chapter : ".$_POST['chapter_id'].chr(9)."item : ".$_POST['item_id'].  chr(9). "ครั้งที่ : ".$submit_round.PHP_EOL;	
-			$heading .= " * Assigned : ".date('l jS \of F Y h:i:s A',$assigned_time)." --> Submission : ".date('l jS \of F Y h:i:s A').chr(9).PHP_EOL;				
+			$heading .= " * ".$_SESSION['stu_id']. " ". $_SESSION['stu_firstname'] . " " . $_SESSION['stu_lastname'] .PHP_EOL;
+			$heading .= " * chapter : ".$_POST['chapter_id'].chr(9)."item : ".$_POST['item_id'].  chr(9). "ครั้งที่ : ".$submit_round.PHP_EOL;
+			$heading .= " * Assigned : ".date('l jS \of F Y h:i:s A',$assigned_time)." --> Submission : ".date('l jS \of F Y h:i:s A').chr(9).PHP_EOL;
 			$heading .= " * Elapsed time : ".$elapsed_time." minutes.".PHP_EOL;
 			$heading .= " * filename : ".$fileupload_name.PHP_EOL;
-			
-			
+
+
 			$heading .= " */".PHP_EOL;
 			$file_content_submission = $heading.$file_content;
 			//echo "<pre>".$file_content_submission."</pre>";
@@ -1253,7 +1258,7 @@ class Student extends MY_Controller {
 			} catch (Exception $e) {
 				$this->show_message($e->getMessage());
 				return;
-			} 
+			}
 			//finally {
 			//	return;
 			//}
@@ -1278,7 +1283,7 @@ class Student extends MY_Controller {
 			/*
 			if($num_testcase <= 0) {
 
-				//run and get output					
+				//run and get output
 				$output_student = $exercise_test->get_result_noinput($sourcecode_filename,'student');
 				$output_student = $exercise_test->unify_whitespace($output_student);
 
@@ -1300,19 +1305,19 @@ class Student extends MY_Controller {
 					//$this->update_marking_exercise_submission($submission_id,$marking);
 					$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking);
 				} else {
-					
+
 					$error_line = $output_result['error_line'];
 					$error_column = $output_result['error_column'];
 					$error_position = $output_result['error_position'];
 					//echo '<h2 style="color:red;">unmatched_position : ',$error_position,"    line : ", $error_line,"    column : ",$error_column,"</h2>";
-					
+
 					//	add a line to output showing where the first error occurs.
 					$output_student = $exercise_test->dispaly_error_in_output($output_student,$error_position);
 				}
 
 
 			} else { //with testcases
-				$_SESSION['testcase_data']=''; //reset first 
+				$_SESSION['testcase_data']=''; //reset first
 				$data_testcase = $this->lab_model->get_testcase_array($exercise_id);
 				//echo '<h3><pre>',print_r($data_testcase),'</pre></h3>';
 
@@ -1338,12 +1343,12 @@ class Student extends MY_Controller {
 						//$this->update_marking_exercise_submission($submission_id,$marking);
 						$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking);
 					} else {
-						
+
 						$error_line = $output_result['error_line'];
 						$error_column = $output_result['error_column'];
 						$error_position = $output_result['error_position'];
 						//echo '<h2 style="color:red;">unmatched_position : ',$error_position,"    line : ", $error_line,"    column : ",$error_column,"</h2>";
-						
+
 						//	add a line to output showing where the first error occurs.
 						$output_student = $exercise_test->dispaly_error_in_output($output_student,$error_position);
 						$pass='no';
@@ -1358,7 +1363,7 @@ class Student extends MY_Controller {
 
 			}
 			*/
-		
+
 		}
 		$stu_group = $_SESSION['stu_group'];
 		$message = "group : ".$stu_group." Submitting : ".$submission_id." : ".$saved_filename;
@@ -1369,9 +1374,9 @@ class Student extends MY_Controller {
 
 		$this->lab_exercise($chapter_id,$item_id);
 
-		
 
-		
+
+
 	}//public function exercise_submission()
 
 	public function check_for_time_interval($stu_id,$chapter_id, $item_id, $exercise_id) {
@@ -1415,8 +1420,8 @@ class Student extends MY_Controller {
 		$process = $this->process_get_student();
 		//echo 'process size : ';echo sizeof($process);echo '<br/>';echo 'process size : ';echo sizeof($process);echo '<br/>';echo 'process size : ';echo sizeof($process);echo '<br/>';echo 'process size : ';echo sizeof($process);echo '<br/>';echo 'process size : ';echo sizeof($process);echo '<br/>';echo 'process size : ';echo sizeof($process);echo '<br/>';echo 'process size : ';echo sizeof($process);echo '<br/>';echo 'process size : ';echo sizeof($process);echo '<br/>';echo 'process size : ';echo sizeof($process);echo '<br/>';echo 'process size : ';echo sizeof($process);echo '<br/>';echo 'process size : ';echo sizeof($process);echo '<br/>';
 		//echo '<br/> <pre>';print_r($process); echo '</pre><br/>';
-		
-		
+
+
 		if (sizeof($process)<=0) {
 			return;
 		}
@@ -1427,12 +1432,12 @@ class Student extends MY_Controller {
 		//	4. band for 5 minutes
 
 		foreach ($process as $line) {
-			
-			// check whether the process is running more than the time 
+
+			// check whether the process is running more than the time
 			$str_time = $line['time'];
 			sscanf($str_time, "%d:%d", $minutes, $seconds);
 			$time_in_second = 60*$minutes+$seconds;
-			
+
 			if ($time_in_second < MAX_RUN_TIME_IN_SECOND ) {
 				continue; //skip this process
 			}
@@ -1445,7 +1450,7 @@ class Student extends MY_Controller {
 			//add to database
 			$this->load->model('lab_model');
 			$this->lab_model->update_student_infinite_loop($line);
-			
+
 			//add information to sourcecode such as this is infinite loop
 			$sourcefile = STUDENT_CFILES_FOLDER.$line['filename_infinite_loop'].'.c';
 			//echo '<br/>';echo $sourcefile;
@@ -1455,8 +1460,8 @@ class Student extends MY_Controller {
 				$file_content_new = "// *** Please check the contents *** \\n";
 
 				foreach(preg_split("/((\r?\n)|(\r\n?))/", $file_content) as $line){
-					$file_content_new .= "// ".$line."\r\n";  // make every line to comment						
-				} 
+					$file_content_new .= "// ".$line."\r\n";  // make every line to comment
+				}
 				$file_content_new .= '#include<stdio.h>
 				int main() { printf("\n\nYou have submitted INFINITE LOOP.\nOR ask SUPERVISOR!\n\n ==> You have lots to learn before next submission!!\n: \n: \n"); return 0;}';
 
@@ -1471,17 +1476,17 @@ class Student extends MY_Controller {
 			//echo "Deleting . . . $exe_file <br/>";
 			if ( file_exists($exe_file) ) {
 				exec("rm $exe_file ");
-			} 
+			}
 
 			//band for 5 minutes
-				
-			
+
+
 		}
-		
+
 
 	}
 
-	
+
 	public function process_get_student() {
 		$processes = shell_exec("ps -aux | grep 'student_data' ");
 		//echo '<br/---->';print_r($processes);
@@ -1520,7 +1525,7 @@ class Student extends MY_Controller {
 				$process[$line_no]['chapter']=(int)substr($command,32,2);
 				$process[$line_no]['item']=(int)substr($command,35,2);
 				$process[$line_no]['sequence']=(int)substr($command,38,4);
-	
+
 				$line_no++;
 			}
 			//echo $line_no.' : '.$user.' : '.$pid.' : '.$command.'<br/>';
@@ -1534,7 +1539,7 @@ class Student extends MY_Controller {
 		if(strlen($processes)<20) {
 			return ;
 		}
-		
+
 		$process = array();
 		$line_no = 0;
 		foreach(preg_split("/((\r?\n)|(\r\n?))/", $processes) as $line) {
@@ -1566,7 +1571,7 @@ class Student extends MY_Controller {
 				$process[$line_no]['chapter']=(int)substr($command,32,2);
 				$process[$line_no]['item']=(int)substr($command,35,2);
 				$process[$line_no]['sequence']=(int)substr($command,38,4);
-	
+
 				$line_no++;
 			}
 			//echo $line_no.' : '.$user.' : '.$pid.' : '.$command.'<br/>';
@@ -1574,12 +1579,12 @@ class Student extends MY_Controller {
 		}
 
 		foreach ($process as $line) {
-			
-			// check whether the process is running more than the time 
+
+			// check whether the process is running more than the time
 			$str_time = $line['time'];
 			sscanf($str_time, "%d:%d", $minutes, $seconds);
 			$time_in_second = 60*$minutes+$seconds;
-			
+
 			if ($time_in_second < MAX_RUN_TIME_IN_SECOND ) {
 				continue; //skip this process
 			}
@@ -1592,7 +1597,7 @@ class Student extends MY_Controller {
 			//add to database
 			$this->load->model('lab_model');
 			$this->lab_model->update_student_infinite_loop($line);
-			
+
 			//add information to sourcecode such as this is infinite loop
 			$sourcefile = STUDENT_CFILES_FOLDER.$line['filename_infinite_loop'].'.c';
 			//echo '<br/>';echo $sourcefile;
@@ -1602,8 +1607,8 @@ class Student extends MY_Controller {
 				$file_content_new = "// *** Please check the contents *** \\n";
 
 				foreach(preg_split("/((\r?\n)|(\r\n?))/", $file_content) as $line){
-					$file_content_new .= "// ".$line."\r\n";  // make every line to comment						
-				} 
+					$file_content_new .= "// ".$line."\r\n";  // make every line to comment
+				}
 				$file_content_new .= '#include<stdio.h>
 				int main() { printf("\n\nYou have submitted INFINITE LOOP.\nOR ask SUPERVISOR!\n\n ==> You have lots to learn before next submission!!\n"); return 0;}';
 
@@ -1618,19 +1623,21 @@ class Student extends MY_Controller {
 			//echo "Deleting . . . $exe_file <br/>";
 			if ( file_exists($exe_file) ) {
 				exec("rm $exe_file ");
-			} 
+			}
 
 			//band for 5 minutes
-				
-			
+
+
 		}
 
 	}
 
 
-	// For Exam Room :: Start
+  /* * *
+    EXAM ROOM FEATURES :: START
+  * * */
 
-    public function exam_room_gate() {
+  public function exam_room_gate() {
         $this->update_student_data();
         $this->load->model('examroom_model');
 
@@ -1647,17 +1654,17 @@ class Student extends MY_Controller {
         $this->load->view('student/stu_footer');
     }
 
-    public function exam_room_student_main() {
+  public function exam_room_student_main() {
 		$this->checkForInfiniteLoop();
 		$this->update_student_data();
 		$this->load->model('examroom_model');
-		$stu_id = $_SESSION['stu_id']; 
+		$stu_id = $_SESSION['stu_id'];
         $enteredRoomNumber = $this->examroom_model->hasAlreadyCheckIn($stu_id);
         if ($enteredRoomNumber == null) {
             redirect('student/exam_room_gate','refresh');
             return;
 		}
-		
+
 		$seat_data = $this->examroom_model->getStudentData_exam_seat($stu_id);
 		$roomNumber = $seat_data['room_number'];
 		$room_data = $this->examroom_model->getRoomData($roomNumber);
@@ -1686,7 +1693,7 @@ class Student extends MY_Controller {
 					'room_data'			=>	$room_data,
 					'seat_data'			=> 	$seat_data
 				);
-		
+
 		print_r($data["chapter_data"]);
         $this->load->view('student/stu_head');
         $this->load->view('student/nav_fixtop');
@@ -1695,15 +1702,15 @@ class Student extends MY_Controller {
         $this->load->view('student/stu_footer');
 
 	}
-	
+
 	public function exam_room_check_out() {
 		$this->load->model('examroom_model');
 		$this->examroom_model->checkOut($_SESSION['stu_id']);
 		redirect('student/exam_room_student_main');
 	}
 
-    public function exam_room_check_in() {
-        $this->update_student_data();	
+	public function exam_room_check_in() {
+        $this->update_student_data();
         $this->load->helper('url');
         $this->load->model('examroom_model');
         $canCheckIn = $this->examroom_model->checkIn($_POST['room_number'], $_POST['seat_number'], $_SESSION['stu_id'], $_SESSION['stu_group']);
@@ -1714,8 +1721,30 @@ class Student extends MY_Controller {
             echo 'มีไรบางอย่างแปลกๆ น้า';
         }
 	}
-	
-	// For Exam Room :: End
+
+	public function exam_room_problem_select($chapterId, $level) {
+    $this->checkForInfiniteLoop();
+    $this->update_student_data();
+    $this->load->model('time_model');
+    $this->load->model('examroom_model');
+    $chapter_data = $this->_group_permission[$chapterId];
+    $result = $this->time_model->check_allow_access_and_submit($chapter_data['time_start'],$chapter_data['time_end']);
+    $allow_access = $result[0];
+    if($allow_access=='no') {
+      $this->show_message("You are not allowed to do exercise.");
+    } else {
+      $examItemId = $this->lab_exercise_action_v2($chapterId, $level);
+      if($this->examroom_model->notYetAssigned($_SESSION['stu_id'], $level)) {
+        // click for the first time
+        $this->examroom_model->assignedProblem($_SESSION['stu_id'], $level, $examItemId);
+      }
+
+    }
+  }
+
+  /* * *
+    EXAM ROOM FEATURES :: END
+  * * */
 
 
 }//class Student
