@@ -1736,7 +1736,7 @@ class Student extends MY_Controller {
       $examItemId = $this->lab_exercise_action_v2($chapterId, $level);
       if($this->examroom_model->notYetAssigned($_SESSION['stu_id'], $level)) {
         // click for the first time
-        $this->examroom_model->assignedProblem($_SESSION['stu_id'], $level, $examItemId);
+        $this->examroom_model->assignProblem($_SESSION['stu_id'], $level, $examItemId);
       }
 
     }

@@ -44,14 +44,23 @@
               roomNum: <?php echo $room_number; ?>
             },
             function (data, status) {
-              console.log("Fetching data: "+status)
+              console.log("Fetching data: "+status);
+              console.log(data);
               let stuInfo = JSON.parse(data);
               document.getElementById("info-name").innerHTML = "&#128512; " + stuInfo.stuId + " : " + stuInfo.stuFullname;
               for (let i = 1; i <= 5; i++) {
                 let btn = document.getElementById("btn-level" + i);
-                if (true) {
-                  btn.setAttribute("class", "btn btn-success")
-                  //Work In Progress Jaa
+                let problemName = document.getElementById("info-level" + i);
+                if (stuInfo.examItems.length === 0) {
+                  btn.setAttribute("class", "btn");
+                  problemName.innerHTML = "<i>~ No Assignment</i>";
+                } else if (stuInfo.examItems[0].level == i) {
+                  btn.setAttribute("class", "btn btn-warning");
+                  problemName.innerHTML = stuInfo.examItems[0].name;
+                  stuInfo.examItems.shift();
+                } else {
+                  btn.setAttribute("class", "btn");
+                  problemName.innerHTML = "<i>~ No Assignment</i>";
                 }
               }
             }
@@ -72,7 +81,7 @@
         <div class="information">
           <p>Seat Number : <a id="info-seatnum">0</a></p>
           <p>Verified Mark : <a id="info-mark">0</a></p>
-          <p>Progress : <a id="info-mark">40%</a></p>
+          <p>Progress : <a id="info-mark">0%</a></p>
           <table>
             <?php
             for ($level = 1; $level <= 5; $level++) {
@@ -82,7 +91,7 @@
               echo $level;
               echo '"></th><td id="info-level';
               echo $level;
-              echo '">No Assignment</td>';
+              echo '">Loading ..</td>';
               echo '<th></th></tr>';
             }
             ?>

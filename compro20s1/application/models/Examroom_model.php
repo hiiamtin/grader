@@ -149,13 +149,21 @@ class Examroom_model extends CI_Model
     return empty($query->result_array()[0]);
   }
 
-  public function assignedProblem($stuId, $level, $examItemId) {
+  public function assignProblem($stuId, $level, $examItemId) {
     $data = array(
         'stu_id' => $stuId,
         'level' => $level,
         'item_id' => $examItemId
     );
     $this->db->insert($this->TABLE_EXAM_SUBMISSION, $data);
+  }
+
+  public function getExamProblemList($stuId) {
+    $this->db->select('*')
+      ->from($this->TABLE_EXAM_SUBMISSION)
+      ->where('stu_id', $stuId);
+    $query = $this->db->get();
+    return $query->result_array();
   }
 
 
