@@ -48,6 +48,7 @@
               console.log(data);
               let stuInfo = JSON.parse(data);
               document.getElementById("info-name").innerHTML = "&#128512; " + stuInfo.stuId + " : " + stuInfo.stuFullname;
+              let sumMarking = 0;
               for (let i = 1; i <= 5; i++) {
                 let btn = document.getElementById("btn-level" + i);
                 let problemName = document.getElementById("info-level" + i);
@@ -57,12 +58,16 @@
                 } else if (stuInfo.examItems[0].level == i) {
                   btn.setAttribute("class", "btn btn-warning");
                   problemName.innerHTML = stuInfo.examItems[0].name;
+                  sumMarking = sumMarking + parseInt(stuInfo.examItems[0].marking);
                   stuInfo.examItems.shift();
                 } else {
                   btn.setAttribute("class", "btn");
                   problemName.innerHTML = "<i>~ No Assignment</i>";
                 }
               }
+              let imgUrl = stuInfo.stuAvatar;
+              document.getElementById("info-img").setAttribute("src", "<?php echo base_url(STUDENT_AVATAR_FOLDER); ?>"+imgUrl);
+              document.getElementById("info-progress").innerHTML = (sumMarking*10)+"%";
             }
     );
   }
@@ -81,7 +86,7 @@
         <div class="information">
           <p>Seat Number : <a id="info-seatnum">0</a></p>
           <p>Verified Mark : <a id="info-mark">0</a></p>
-          <p>Progress : <a id="info-mark">0%</a></p>
+          <p>Progress : <a id="info-progress">0%</a></p>
           <table>
             <?php
             for ($level = 1; $level <= 5; $level++) {

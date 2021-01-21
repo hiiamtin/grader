@@ -2474,7 +2474,7 @@ class Supervisor extends MY_Controller {
 		$this->load->model('lab_model');
 
 		$seatData = $this->examroom_model->getSeatData($roomNum,$seatNum);
-		$fullname = $this->student_model->getStudentNameByStuId($seatData['stu_id']);
+		$stuData = $this->student_model->getBriefInfoByStuId($seatData['stu_id']);
 		$examItems = $this->examroom_model->getExamProblemList($seatData['stu_id']);
 		for ($i=0; $i<sizeof($examItems); $i++) {
 			$examItems[$i]['name'] = $this->lab_model->get_lab_name($examItems[$i]['item_id']);
@@ -2488,7 +2488,8 @@ class Supervisor extends MY_Controller {
 
 		$stuPreview = new stdClass();
 		$stuPreview->stuId = $seatData['stu_id'];
-		$stuPreview->stuFullname = $fullname;
+		$stuPreview->stuFullname = $stuData['stu_firstname'].' '.$stuData['stu_lastname'];
+		$stuPreview->stuAvatar = $stuData['stu_avatar']?:'user.png';
 		$stuPreview->examItems = $examItems;
 
 		echo json_encode($stuPreview);
