@@ -44,11 +44,10 @@
               roomNum: <?php echo $room_number; ?>
             },
             function (data, status) {
-              console.log(data);
+              console.log("Fetching data: "+status)
               let stuInfo = JSON.parse(data);
               document.getElementById("info-name").innerHTML = "&#128512; " + stuInfo.stuId + " : " + stuInfo.stuFullname;
               for (let i = 1; i <= 5; i++) {
-                console.log("btn-level${i}")
                 let btn = document.getElementById("btn-level" + i);
                 if (true) {
                   btn.setAttribute("class", "btn btn-success")
@@ -69,7 +68,7 @@
         <h4 class="modal-title" id="info-name">Loading</h4>
       </div>
       <div class="modal-body" id="modal-body-status">
-        <img class="image" src="http://localhost:41062/compro20s1/student_data/avatar/user.png">
+        <img class="image" id="info-img">
         <div class="information">
           <p>Seat Number : <a id="info-seatnum">0</a></p>
           <p>Verified Mark : <a id="info-mark">0</a></p>
