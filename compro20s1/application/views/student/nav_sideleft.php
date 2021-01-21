@@ -1,6 +1,6 @@
 <!-- nav_sideleft -->
 
-<div class="col-sm-2 sidenav  text-center" style="padding-top:10px;margin-top:100px;">
+<div class="col-sm-2 sidenav  text-center" style="padding-top:10px;margin-top:100px; background-color: ghostwhite ">
 	<div class="affix" style="background-color:Pink; min-width: 15%; "><!-- -->
 
 		<div class="panel panel-default" style="background-color:AliceBlue; height:1024px;">

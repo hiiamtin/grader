@@ -24,6 +24,10 @@
         width: 400px;
     }
 
+    .container {
+      width: 80vw;
+    }
+
 
 </style>
 
