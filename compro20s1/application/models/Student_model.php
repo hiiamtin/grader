@@ -427,13 +427,12 @@ class Student_model extends CI_Model {
 
 	// For Exam Room :: Start
 	
-	public function getStudentNameByStuId($stu_id) {
-		$this->db->select('stu_firstname, stu_lastname')
+	public function getBriefInfoByStuId($stu_id) {
+		$this->db->select('stu_firstname, stu_lastname, stu_avatar')
 			->from('user_student')
 			->where('stu_id', $stu_id);
 		$query = $this->db->get();
-		$query = $query->result_array()[0];
-		return $query['stu_firstname'].' '.$query['stu_lastname'];
+		return $query->result_array()[0];
 	}
 	// For Exam Room :: End
 

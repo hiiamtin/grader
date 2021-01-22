@@ -44,17 +44,30 @@
               roomNum: <?php echo $room_number; ?>
             },
             function (data, status) {
+              console.log("Fetching data: "+status);
               console.log(data);
               let stuInfo = JSON.parse(data);
               document.getElementById("info-name").innerHTML = "&#128512; " + stuInfo.stuId + " : " + stuInfo.stuFullname;
+              let sumMarking = 0;
               for (let i = 1; i <= 5; i++) {
-                console.log("btn-level${i}")
                 let btn = document.getElementById("btn-level" + i);
-                if (true) {
-                  btn.setAttribute("class", "btn btn-success")
-                  //Work In Progress Jaa
+                let problemName = document.getElementById("info-level" + i);
+                if (stuInfo.examItems.length === 0) {
+                  btn.setAttribute("class", "btn");
+                  problemName.innerHTML = "<i>~ No Assignment</i>";
+                } else if (stuInfo.examItems[0].level == i) {
+                  btn.setAttribute("class", "btn btn-warning");
+                  problemName.innerHTML = stuInfo.examItems[0].name;
+                  sumMarking = sumMarking + parseInt(stuInfo.examItems[0].marking);
+                  stuInfo.examItems.shift();
+                } else {
+                  btn.setAttribute("class", "btn");
+                  problemName.innerHTML = "<i>~ No Assignment</i>";
                 }
               }
+              let imgUrl = stuInfo.stuAvatar;
+              document.getElementById("info-img").setAttribute("src", "<?php echo base_url(STUDENT_AVATAR_FOLDER); ?>"+imgUrl);
+              document.getElementById("info-progress").innerHTML = (sumMarking*10)+"%";
             }
     );
   }
@@ -69,11 +82,11 @@
         <h4 class="modal-title" id="info-name">Loading</h4>
       </div>
       <div class="modal-body" id="modal-body-status">
-        <img class="image" src="http://localhost:41062/compro20s1/student_data/avatar/user.png">
+        <img class="image" id="info-img">
         <div class="information">
           <p>Seat Number : <a id="info-seatnum">0</a></p>
           <p>Verified Mark : <a id="info-mark">0</a></p>
-          <p>Progress : <a id="info-mark">40%</a></p>
+          <p>Progress : <a id="info-progress">0%</a></p>
           <table>
             <?php
             for ($level = 1; $level <= 5; $level++) {
@@ -83,7 +96,7 @@
               echo $level;
               echo '"></th><td id="info-level';
               echo $level;
-              echo '">No Assignment</td>';
+              echo '">Loading ..</td>';
               echo '<th></th></tr>';
             }
             ?>

@@ -2471,15 +2471,26 @@ class Supervisor extends MY_Controller {
 		$seatNum = intval($_POST['seatNum']);
 		$this->load->model('examroom_model');
 		$this->load->model('student_model');
+		$this->load->model('lab_model');
 
 		$seatData = $this->examroom_model->getSeatData($roomNum,$seatNum);
-		$fullname = $this->student_model->getStudentNameByStuId($seatData['stu_id']);
-
+		$stuData = $this->student_model->getBriefInfoByStuId($seatData['stu_id']);
+		$examItems = $this->examroom_model->getExamProblemList($seatData['stu_id']);
+		for ($i=0; $i<sizeof($examItems); $i++) {
+			$examItems[$i]['name'] = $this->lab_model->get_lab_name($examItems[$i]['item_id']);
+		}
+		/*
+		foreach ($examItems as $item) {
+			$item['stu_id'] = $this->lab_model->get_lab_name($item['item_id']);
+			array_replace($examItems,)
+		}
+		*/
 
 		$stuPreview = new stdClass();
 		$stuPreview->stuId = $seatData['stu_id'];
-		$stuPreview->stuFullname = $fullname;
-
+		$stuPreview->stuFullname = $stuData['stu_firstname'].' '.$stuData['stu_lastname'];
+		$stuPreview->stuAvatar = $stuData['stu_avatar']?:'user.png';
+		$stuPreview->examItems = $examItems;
 
 		echo json_encode($stuPreview);
 		
