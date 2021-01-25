@@ -149,6 +149,8 @@ class Examroom_model extends CI_Model
     return empty($query->result_array()[0]);
   }
 
+
+  /* >>> May Be Deprecated <<<
   public function assignProblem($stuId, $level, $examItemId) {
     $data = array(
         'stu_id' => $stuId,
@@ -165,6 +167,7 @@ class Examroom_model extends CI_Model
     $query = $this->db->get();
     return $query->result_array();
   }
+  */
 
 
 }//class Examroom_model
