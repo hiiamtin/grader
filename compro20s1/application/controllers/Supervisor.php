@@ -2479,12 +2479,6 @@ class Supervisor extends MY_Controller {
 		for ($i=0; $i<sizeof($examItems); $i++) {
 			$examItems[$i]['name'] = $this->lab_model->get_lab_name($examItems[$i]['item_id']);
 		}
-		/*
-		foreach ($examItems as $item) {
-			$item['stu_id'] = $this->lab_model->get_lab_name($item['item_id']);
-			array_replace($examItems,)
-		}
-		*/
 
 		$stuPreview = new stdClass();
 		$stuPreview->stuId = $seatData['stu_id'];
