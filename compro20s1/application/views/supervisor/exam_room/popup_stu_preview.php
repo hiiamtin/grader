@@ -55,10 +55,22 @@
                 if (stuInfo.examItems.length === 0) {
                   btn.setAttribute("class", "btn");
                   problemName.innerHTML = "<i>~ No Assignment</i>";
-                } else if (stuInfo.examItems[0].level == i) {
-                  btn.setAttribute("class", "btn btn-warning");
+                } else if (stuInfo.examItems[0].item_id == i) {
+                  switch (stuInfo.examItems[0].marking) {
+                    case "2": {
+                      btn.setAttribute("class", "btn btn-success");
+                      btn.setAttribute("onclick", "codePreview("+stuInfo.stuId+","+stuInfo.examItems[0].exercise_id+")");
+                      sumMarking = sumMarking + parseInt(stuInfo.examItems[0].marking);
+                      break;
+                    }
+                    case "-1": {
+                      btn.setAttribute("class", "btn btn-danger");
+                      btn.setAttribute("onclick", "codePreview("+stuInfo.stuId+","+stuInfo.examItems[0].exercise_id+")");
+                      break;
+                    }
+                    default: btn.setAttribute("class", "btn btn-warning");
+                  }
                   problemName.innerHTML = stuInfo.examItems[0].name;
-                  sumMarking = sumMarking + parseInt(stuInfo.examItems[0].marking);
                   stuInfo.examItems.shift();
                 } else {
                   btn.setAttribute("class", "btn");
@@ -70,6 +82,10 @@
               document.getElementById("info-progress").innerHTML = (sumMarking*10)+"%";
             }
     );
+  }
+
+  function codePreview(stuId, problemId) {
+    window.open("<?php echo site_url('supervisor/exam_room_ajax_code_preview/'); ?>"+stuId+"/"+problemId);
   }
 </script>
 

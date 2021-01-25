@@ -2475,9 +2475,9 @@ class Supervisor extends MY_Controller {
 
 		$seatData = $this->examroom_model->getSeatData($roomNum,$seatNum);
 		$stuData = $this->student_model->getBriefInfoByStuId($seatData['stu_id']);
-		$examItems = $this->examroom_model->getExamProblemList($seatData['stu_id']);
+		$examItems = $this->examroom_model->getExamProblemList($roomNum, $seatData['stu_id']);
 		for ($i=0; $i<sizeof($examItems); $i++) {
-			$examItems[$i]['name'] = $this->lab_model->get_lab_name($examItems[$i]['item_id']);
+			$examItems[$i]['name'] = $this->lab_model->get_lab_name($examItems[$i]['exercise_id']);
 		}
 
 		$stuPreview = new stdClass();
@@ -2488,6 +2488,15 @@ class Supervisor extends MY_Controller {
 
 		echo json_encode($stuPreview);
 		
+	}
+
+	public function exam_room_ajax_code_preview($stuId, $problemId) {
+		$this->load->model('examroom_model');
+		$path = $this->examroom_model->getSourceCodePath($stuId, $problemId);
+		$srcFile = fopen("supervisor_data/c_files/exercise_00088.c","r") or die("File Error!");
+		$scrStream = fread($srcFile, filesize("supervisor_data/c_files/exercise_00088.c"));
+		fclose($srcFile);
+		// WIP // create view to display source code
 	}
 
 	/* * *
