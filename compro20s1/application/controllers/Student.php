@@ -1644,7 +1644,7 @@ class Student extends MY_Controller {
         $data = array(
             'exam_rooms' => $this->examroom_model->getAllExamRoom(),
             'stu_group' => $_SESSION['stu_group'],
-            'in_social_distancing' => false
+            'in_social_distancing' => IN_SOCIAL_DISTANCING
         );
 
         $this->load->view('student/stu_head');
