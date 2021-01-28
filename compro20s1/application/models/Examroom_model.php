@@ -159,15 +159,33 @@ class Examroom_model extends CI_Model
     );
     $this->db->insert($this->TABLE_EXAM_SUBMISSION, $data);
   }
+  */
 
-  public function getExamProblemList($stuId) {
+  public function getExamProblemList($roomNum, $stuId) {
+    $chapterId= $this->getRoomData($roomNum)['chapter_id'];
     $this->db->select('*')
-      ->from($this->TABLE_EXAM_SUBMISSION)
-      ->where('stu_id', $stuId);
+      ->from('student_assigned_chapter_item')
+      ->where('stu_id', $stuId)
+      ->where('chapter_id',$chapterId)
+      ->where('exercise_id IS NOT NULL', null, false);
     $query = $this->db->get();
     return $query->result_array();
   }
-  */
+
+  public function getSourceCodePath($stuId, $problemId) {
+    $this->db->select('sourcecode_filename')
+        ->from('exercise_submission')
+        ->where('stu_id', $stuId)
+        ->where('exercise_id',$problemId)
+        ->order_by('submission_id','DESC');
+    $query = $this->db->get();
+    if(sizeof($query->result_array())>0) {
+      return $query->result_array()[0]['sourcecode_filename'];
+    } else {
+      return null;
+    }
+  }
+
 
 
 }//class Examroom_model

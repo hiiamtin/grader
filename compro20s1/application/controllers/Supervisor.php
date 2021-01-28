@@ -2475,9 +2475,9 @@ class Supervisor extends MY_Controller {
 
 		$seatData = $this->examroom_model->getSeatData($roomNum,$seatNum);
 		$stuData = $this->student_model->getBriefInfoByStuId($seatData['stu_id']);
-		$examItems = $this->examroom_model->getExamProblemList($seatData['stu_id']);
+		$examItems = $this->examroom_model->getExamProblemList($roomNum, $seatData['stu_id']);
 		for ($i=0; $i<sizeof($examItems); $i++) {
-			$examItems[$i]['name'] = $this->lab_model->get_lab_name($examItems[$i]['item_id']);
+			$examItems[$i]['name'] = $this->lab_model->get_lab_name($examItems[$i]['exercise_id']);
 		}
 
 		$stuPreview = new stdClass();
@@ -2488,6 +2488,22 @@ class Supervisor extends MY_Controller {
 
 		echo json_encode($stuPreview);
 		
+	}
+
+	public function exam_room_stu_code_preview($stuId, $problemId) {
+		$this->load->model('examroom_model');
+		$this->load->model('student_model');
+		$path = $this->examroom_model->getSourceCodePath($stuId, $problemId);
+		$srcFile = fopen("student_data/c_files/".$path,"r") or die("File Error Krub!");
+		$scrStream = fread($srcFile, filesize("student_data/c_files/".$path));
+		fclose($srcFile);
+		$dataToShow = array(
+				'source_code' => $scrStream
+		);
+		$this->load->view('supervisor/head');
+		$this->load->view('supervisor/nav_fixtop');
+		$this->load->view('supervisor/exam_room/code_preview', $dataToShow);
+		$this->load->view('supervisor/footer');
 	}
 
 	/* * *
