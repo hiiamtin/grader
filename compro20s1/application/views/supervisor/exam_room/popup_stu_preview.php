@@ -85,7 +85,7 @@
   }
 
   function codePreview(stuId, problemId) {
-    window.open("<?php echo site_url('supervisor/exam_room_ajax_code_preview/'); ?>"+stuId+"/"+problemId);
+    window.open("<?php echo site_url('supervisor/exam_room_stu_code_preview/'); ?>"+stuId+"/"+problemId);
   }
 </script>
 

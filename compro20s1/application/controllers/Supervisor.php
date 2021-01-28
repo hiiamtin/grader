@@ -2490,13 +2490,20 @@ class Supervisor extends MY_Controller {
 		
 	}
 
-	public function exam_room_ajax_code_preview($stuId, $problemId) {
+	public function exam_room_stu_code_preview($stuId, $problemId) {
 		$this->load->model('examroom_model');
+		$this->load->model('student_model');
 		$path = $this->examroom_model->getSourceCodePath($stuId, $problemId);
-		$srcFile = fopen("supervisor_data/c_files/exercise_00088.c","r") or die("File Error!");
-		$scrStream = fread($srcFile, filesize("supervisor_data/c_files/exercise_00088.c"));
+		$srcFile = fopen("student_data/c_files/".$path,"r") or die("File Error Krub!");
+		$scrStream = fread($srcFile, filesize("student_data/c_files/".$path));
 		fclose($srcFile);
-		// WIP // create view to display source code
+		$dataToShow = array(
+				'source_code' => $scrStream
+		);
+		$this->load->view('supervisor/head');
+		$this->load->view('supervisor/nav_fixtop');
+		$this->load->view('supervisor/exam_room/code_preview', $dataToShow);
+		$this->load->view('supervisor/footer');
 	}
 
 	/* * *

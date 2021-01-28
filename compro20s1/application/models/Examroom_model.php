@@ -171,7 +171,6 @@ class Examroom_model extends CI_Model
     $query = $this->db->get();
     return $query->result_array();
   }
-  */
 
   public function getSourceCodePath($stuId, $problemId) {
     $this->db->select('sourcecode_filename')
@@ -180,7 +179,11 @@ class Examroom_model extends CI_Model
         ->where('exercise_id',$problemId)
         ->order_by('submission_id','DESC');
     $query = $this->db->get();
-    return $query->result_array()[0]['sourcecode_filename'];
+    if(sizeof($query->result_array())>0) {
+      return $query->result_array()[0]['sourcecode_filename'];
+    } else {
+      return null;
+    }
   }
 
 
