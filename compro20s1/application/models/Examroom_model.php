@@ -149,18 +149,6 @@ class Examroom_model extends CI_Model
     return empty($query->result_array()[0]);
   }
 
-
-  /* >>> May Be Deprecated <<<
-  public function assignProblem($stuId, $level, $examItemId) {
-    $data = array(
-        'stu_id' => $stuId,
-        'level' => $level,
-        'item_id' => $examItemId
-    );
-    $this->db->insert($this->TABLE_EXAM_SUBMISSION, $data);
-  }
-  */
-
   public function getExamProblemList($roomNum, $stuId) {
     $chapterId= $this->getRoomData($roomNum)['chapter_id'];
     $this->db->select('*')
@@ -186,6 +174,18 @@ class Examroom_model extends CI_Model
     }
   }
 
-
+  public function getSupervisor($classId) {
+    $this->db->select('staff_id')
+      ->from('class_lab_staff')
+      ->where('class_id', $classId)
+      ->order_by('staff_id', 'ASC');
+    $query = $this->db->get();
+    $supervisorId = $query->result_array()[0]['staff_id'];
+    $this->db->select('*')
+        ->from('user_supervisor')
+        ->where('supervisor_id', $supervisorId);
+    $query = $this->db->get();
+    return $query->result_array()[0];
+  }
 
 }//class Examroom_model
