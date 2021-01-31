@@ -2307,31 +2307,32 @@ class Supervisor extends MY_Controller {
 		$this->load->view('supervisor/footer');
 	}
 
-	public function exam_room_seating_chart() {
+	public function exam_room_seating_chart($roomNum) {
 		/// หน้าแสดงแผนผังที่นั่งห้องสอบ
 		/// Url จะเป็น exam_room_seating_chart/{เลขห้อง}
 
 		$this->load->model('examroom_model');
-		$this->load->helper('url');
 		$this->load->model('lab_model');
-		$room_number = $this->uri->segment(3);
-		$roomData = $this->examroom_model->getRoomData($room_number);
+		$roomData = $this->examroom_model->getRoomData($roomNum);
 		$class_id = $roomData["class_id"];
 		$chapter_id = $roomData["chapter_id"];
 		$group_permission = $this->lab_model->get_group_permission($class_id);
+		$supervisor = $this->examroom_model->getSupervisor($class_id);
 		if($chapter_id!=NULL){
 			$chapter_data = $group_permission[$chapter_id];
 		}else{
 			$chapter_data = NULL;
 		}
 		$seatData = array(
-			'seat_list' => $this->examroom_model->getAllSeatsData($room_number),
+			'seat_list' => $this->examroom_model->getAllSeatsData($roomNum),
 			'in_social_distancing' => IN_SOCIAL_DISTANCING,
-			'accessible_room' => $room_number,
-			'chapter_data' => $chapter_data
+			'accessible_room' => $roomNum,
+			'chapter_data' => $chapter_data,
+			'group_number' => substr($class_id, 6),
+			'supervisor_info' => $supervisor
 		);
 		$roomData = array(
-			'room_number' => $room_number,
+			'room_number' => $roomNum,
 			'chapter_id' => $chapter_id,
 			'group_permission' => $group_permission
 		);

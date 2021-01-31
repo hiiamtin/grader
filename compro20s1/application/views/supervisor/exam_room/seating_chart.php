@@ -26,8 +26,8 @@
     width: parent;
   }
 
-  #btn-set-chapter {
-
+  #seating-chart li {
+    font-size: 18px;
   }
 
   span.emoji {
@@ -181,6 +181,10 @@
 
 <div id="seating-chart">
   <label id="timer"></label><br>
+  <ul>
+    <li>กลุ่มที่สอบ: <?php echo $group_number?></li>
+    <li>อาจารย์ผู้สอน: <?php echo $supervisor_info['supervisor_firstname']." ".$supervisor_info['supervisor_lastname']; ?></li>
+  </ul>
   <button class="btn btn-danger" id="btn-rotate" value="180deg" onclick="rotateScreen(this.value)">Click here to
     rotate!
   </button>
