@@ -2327,13 +2327,14 @@ class Supervisor extends MY_Controller {
 			'seat_list' => $this->examroom_model->getAllSeatsData($roomNum),
 			'in_social_distancing' => IN_SOCIAL_DISTANCING,
 			'accessible_room' => $roomNum,
-			'chapter_data' => $chapter_data
+			'chapter_data' => $chapter_data,
+			'group_number' => substr($class_id, 6),
+			'supervisor_info' => $supervisor
 		);
 		$roomData = array(
 			'room_number' => $roomNum,
 			'chapter_id' => $chapter_id,
-			'group_permission' => $group_permission,
-			'supervisor_info' => $supervisor
+			'group_permission' => $group_permission
 		);
 		$this->load->view('supervisor/head');
 		$this->load->view('supervisor/nav_fixtop');
