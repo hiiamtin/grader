@@ -188,4 +188,12 @@ class Examroom_model extends CI_Model
     return $query->result_array()[0];
   }
 
+  public function getNumberOfStudentInClass($classId) {
+    $this->db->select('stu_id')
+        ->from('user_student')
+        ->where('stu_group', $classId);
+    $query = $this->db->get();
+    return $query->num_rows();
+  }
+
 }//class Examroom_model
