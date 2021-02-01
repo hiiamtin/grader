@@ -1,22 +1,23 @@
 <style>
   #exam-room-panel {
-    margin-left: 300px;
+    margin-left: 250px;
     margin-top: 30px;
-    width: 70vw;
+    width: 80vw;
     display: flex;
     flex-wrap: wrap;
   }
 
   #exam-room-panel .room-controller {
-    background-color: #ffc373;
-    width: 500px;
-    height: 400px;
+    background-color: #c0e5e5;
+    width: 350px;
+    height: 350px;
     margin: 10px;
     padding: 10px;
   }
 
   #exam-room-panel h2 {
-    width: 500px;
+    font-family: "Consolas", monospace;
+    font-size: x-large;
     text-align: center;
     font-weight: bold;
     padding-bottom: 5px;
@@ -75,11 +76,11 @@
   }
 
   #exam-room-panel input:checked + .slider {
-    background-color: #1bc30f;
+    background-color: #e98e05;
   }
 
   #exam-room-panel input:focus + .slider {
-    box-shadow: 0 0 1px #1bc30f;
+    box-shadow: 0 0 1px #e98e05;
   }
 
   #exam-room-panel input:checked + .slider:before {
@@ -101,6 +102,41 @@
 
   #exam-room-panel .status a {
     font-weight: bold;
+    color: #7d0dff;
+  }
+
+  #exam-room-panel #add-new-room {
+    position: relative;
+  }
+
+  #exam-room-panel .circle {
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+    background: #c0e5e5;
+    border-style: double;
+    border-color: #888888;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+  }
+
+  #exam-room-panel .circle b {
+    font-size: xxx-large;
+    color: #888888;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+  #exam-room-panel #add-new-room h2 {
+    color: #888888;
   }
 
 </style>
@@ -176,12 +212,12 @@
   if (!empty($exam_rooms)) {
     foreach ($exam_rooms as $room) {
       echo '<div class="room-controller">';
-      echo '<h2>ECC - '
+      echo '<h2>ECC: '
               . $room['room_number']
               . '</h2>';
       echo '<ul class="list-group list-group-flush">';
       // Allow Students to Access
-      echo '<li class="list-group-item d-flex justify-content-between align-items-center">Allow Students to Access';
+      echo '<li class="list-group-item d-flex justify-content-between align-items-center">Allow Access';
       echo '<label class="badge switch">';
       echo '<input type="checkbox" id="'
               . $room['room_number']
@@ -191,7 +227,7 @@
       echo '<span class="slider round">';
       echo '</span></label></li>';
       // Allow Students to Check in
-      echo '<li class="list-group-item d-flex justify-content-between align-items-center">Allow Students to Check in';
+      echo '<li class="list-group-item d-flex justify-content-between align-items-center">Allow Check in';
       echo '<label class="badge switch">';
       echo '<input type="checkbox" id="'
               . $room['room_number']
@@ -202,17 +238,28 @@
       echo '</span></label></li>';
       echo '</ul>';
       // Go to Seating Chart Page
-      $siteUrl = site_url($_SESSION["role"] . "/exam_room_seating_chart/") . $room['room_number'];
-      echo '<a href="'
-              . $siteUrl
-              . '" class="btn btn-success">View Seating Chart</a>';
-      echo '<div class="status">';
-      echo '<p>Student Group: <a>' . $room['class_id'] . '</a></p>';
-      echo '<p>Is in Exam: <a>' . $room['is_active'] . '</a></p>';
+      if($room['class_id']==0){
+        echo '<a class="btn btn-default" disabled>Seating Chart</a>';
+        echo '<div class="status">';
+        echo '<p>Student Group: <a>' . '-' . '</a></p>';
+        echo '<p>Is in Exam: <a>' . '-' . '</a></p>';
+      } else {
+        $siteUrl = site_url($_SESSION["role"] . "/exam_room_seating_chart/") . $room['room_number'];
+        echo '<a href="'
+                . $siteUrl
+                . '" class="btn btn-success">Seating Chart</a>';
+        echo '<div class="status">';
+        echo '<p>Student Group: <a>' . $room['class_id'] . '</a></p>';
+        echo '<p>Is in Exam: <a>' . $room['is_active'] . '</a></p>';
+      }
       echo '</div>';
       echo '</div>';
     }
   }
   ?>
+  <a class="room-controller" id="add-new-room" href="<?php echo site_url($_SESSION["role"]."/exam_room_create_room/"); ?>">
+    <h2>Create New Room</h2>
+    <div class="circle"><b>+</b></div>
+  </a>
 
 </div>

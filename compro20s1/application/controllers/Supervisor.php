@@ -2508,6 +2508,11 @@ class Supervisor extends MY_Controller {
 		$this->load->view('supervisor/footer');
 	}
 
+	public function exam_room_create_room() {
+		echo "กำลังทำครับ";
+		//WIP
+	}
+
 	/* * *
 		EXAM ROOM FEATURES :: END
 	* * */
