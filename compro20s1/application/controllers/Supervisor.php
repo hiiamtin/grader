@@ -2317,7 +2317,7 @@ class Supervisor extends MY_Controller {
 		$class_id = $roomData["class_id"];
 		$chapter_id = $roomData["chapter_id"];
 		$group_permission = $this->lab_model->get_group_permission($class_id);
-		$supervisor = $this->examroom_model->getSupervisor($class_id);
+
 		if($chapter_id!=NULL){
 			$chapter_data = $group_permission[$chapter_id];
 		}else{
@@ -2329,7 +2329,8 @@ class Supervisor extends MY_Controller {
 			'accessible_room' => $roomNum,
 			'chapter_data' => $chapter_data,
 			'group_number' => substr($class_id, 6),
-			'supervisor_info' => $supervisor
+			'supervisor_info' => $this->examroom_model->getSupervisor($class_id),
+			'num_of_student' => $this->examroom_model->getNumberOfStudentInClass($class_id)
 		);
 		$roomData = array(
 			'room_number' => $roomNum,
