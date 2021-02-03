@@ -196,4 +196,23 @@ class Examroom_model extends CI_Model
     return $query->num_rows();
   }
 
+  public function getClassListWithSupervisorName() {
+    $this->db->select('group_id, lecturer')
+        ->from('class_schedule');
+    $query = $this->db->get();
+    $classList = $query->result_array();
+
+    for ($i=0; $i<sizeof($classList); $i++) {
+      $this->db->select('supervisor_firstname, supervisor_lastname')
+          ->from('user_supervisor')
+          ->where('supervisor_id', $classList[$i]['lecturer']);
+      $query = $this->db->get();
+      $name = $query->result_array()[0];
+      $classList[$i]['lecturer'] = $name['supervisor_firstname'].' '.$name['supervisor_lastname'];
+    }
+    return $classList;
+  }
+
+
+
 }//class Examroom_model

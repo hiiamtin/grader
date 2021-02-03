@@ -142,19 +142,6 @@
 </style>
 
 <script>
-  function ajaxSetAllowAccess(needToAllow, roomNumber, classId) {
-    jQuery.post("<?php echo site_url('supervisor/exam_room_ajax_allow_access'); ?>",
-            {
-              roomNumber: roomNumber,
-              needToAllow: needToAllow,
-              classId: classId
-            },
-            setTimeout(function () {
-              window.location = window.location
-            }, 500)
-    );
-  }
-
   function ajaxSetAllowCheckIn(needToAllow, roomNumber) {
     jQuery.post("<?php echo site_url('supervisor/exam_room_ajax_allow_check_in'); ?>",
             {
@@ -165,25 +152,6 @@
               window.location = window.location
             }, 500)
     );
-  }
-
-  function toggleAllowAccess(id) {
-    let toggleSwitch = document.getElementById(id);
-    let roomNumber = id.substr(0, 3);
-    if (toggleSwitch.checked) {
-      let classId = prompt(roomNumber + " : ใส่เลขกลุ่มที่ต้องการให้เข้าถึง (สองหลัก เช่น 08, 41)", "");
-      if (classId == null || classId == "") {
-        toggleSwitch.checked = false;
-      } else {
-        ajaxSetAllowAccess("checked", roomNumber, '200100' + classId);
-      }
-    } else {
-      if (confirm(roomNumber + " : ห้ามนักศึกษาเข้าถึง ใช่หรือไม่?")) {
-        ajaxSetAllowAccess("unchecked", roomNumber, "");
-      } else {
-        toggleSwitch.checked = true;
-      }
-    }
   }
 
   function toggleAllowCheckIn(id) {
@@ -221,6 +189,7 @@
       echo '<label class="badge switch">';
       echo '<input type="checkbox" id="'
               . $room['room_number']
+              //. '-access" data-toggle="modal" data-target="#modalGroupSelector" '
               . '-access" onclick="toggleAllowAccess(this.id)" '
               . $room['allow_access']
               . '>';
