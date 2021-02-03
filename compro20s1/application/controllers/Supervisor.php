@@ -2298,12 +2298,14 @@ class Supervisor extends MY_Controller {
 		$this->load->model('examroom_model');
 		$data = array('supervisor_data'	=> $this->supervisor_model->get_supervisor_data());
 		$exam_data = array(
-			'exam_rooms' => $this->examroom_model->getAllExamRoom()
+			'exam_rooms' => $this->examroom_model->getAllExamRoom(),
+			'class_list' => $this->examroom_model->getClassListWithSupervisorName()
 		);
 		$this->load->view('supervisor/head');
 		$this->load->view('supervisor/nav_fixtop');
 		$this->load->view('supervisor/nav_sideleft',$data);
 		$this->load->view('supervisor/exam_room/panel',$exam_data);
+		$this->load->view('supervisor/exam_room/popup_group_select');
 		$this->load->view('supervisor/footer');
 	}
 
@@ -2511,6 +2513,10 @@ class Supervisor extends MY_Controller {
 	public function exam_room_create_room() {
 		echo "กำลังทำครับ";
 		//WIP
+	}
+
+	public function testSth() {
+		// เอาไว้ Test Back-end Function
 	}
 
 	/* * *
