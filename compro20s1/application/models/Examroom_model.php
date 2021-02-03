@@ -175,12 +175,11 @@ class Examroom_model extends CI_Model
   }
 
   public function getSupervisor($classId) {
-    $this->db->select('staff_id')
-      ->from('class_lab_staff')
-      ->where('class_id', $classId)
-      ->order_by('staff_id', 'ASC');
+    $this->db->select('lecturer')
+      ->from('class_schedule')
+      ->where('group_id', $classId);
     $query = $this->db->get();
-    $supervisorId = $query->result_array()[0]['staff_id'];
+    $supervisorId = $query->result_array()[0]['lecturer'];
     $this->db->select('*')
         ->from('user_supervisor')
         ->where('supervisor_id', $supervisorId);
