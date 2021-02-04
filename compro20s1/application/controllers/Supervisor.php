@@ -2468,6 +2468,15 @@ class Supervisor extends MY_Controller {
 		$this->examroom_model->setAllowCheckIn($needToAllow,$roomNumber);
 	}
 
+	public function exam_room_ajax_social_distancing() {
+		/// JQuery เปิด-ปิด เว้นระยะห่าง
+
+		$roomNumber = intval($_POST['roomNumber']);
+		$distancing = $_POST['value'];
+		$this->load->model('examroom_model');
+		$this->examroom_model->setSocialDistancing($distancing,$roomNumber);
+	}
+
 	public function exam_room_ajax_stu_preview() {
 		/// JQuery ดึงข้อมูลนักศึกษาตามที่นั่งที่กด
 

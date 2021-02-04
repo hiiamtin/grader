@@ -16,7 +16,7 @@
             },
             setTimeout(function () {
               window.location = window.location
-            }, 500)
+            }, 800)
     );
   }
 

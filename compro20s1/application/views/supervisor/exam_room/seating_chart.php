@@ -180,7 +180,7 @@
 <?php date_default_timezone_set("Asia/Bangkok"); ?>
 
 <div id="seating-chart">
-  <label id="timer"></label><br>
+  <label id="timer">Loading...</label><br>
   <ul>
     <li>กลุ่มที่สอบ: <?php echo $group_number;?></li>
     <li>อาจารย์ผู้สอน: <?php echo $supervisor_info['supervisor_firstname']." ".$supervisor_info['supervisor_lastname']; ?></li>
