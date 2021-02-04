@@ -1638,21 +1638,19 @@ class Student extends MY_Controller {
   * * */
 
   public function exam_room_gate() {
-        $this->update_student_data();
-        $this->load->model('examroom_model');
+    $this->update_student_data();
+    $this->load->model('examroom_model');
 
-        $data = array(
-            'exam_rooms' => $this->examroom_model->getAllExamRoom(),
-            'stu_group' => $_SESSION['stu_group'],
-            'in_social_distancing' => IN_SOCIAL_DISTANCING
-        );
+    $data = array(
+        'exam_room' => $this->examroom_model->getStudentAccessibleRoom($_SESSION['stu_group'])
+    );
 
-        $this->load->view('student/stu_head');
-        $this->load->view('student/nav_fixtop');
-        $this->nav_sideleft();
-        $this->load->view('student/exam_room/gate',$data);
-        $this->load->view('student/stu_footer');
-    }
+    $this->load->view('student/stu_head');
+    $this->load->view('student/nav_fixtop');
+    $this->nav_sideleft();
+    $this->load->view('student/exam_room/gate',$data);
+    $this->load->view('student/stu_footer');
+  }
 
   public function exam_room_student_main() {
 		$this->checkForInfiniteLoop();
@@ -1718,7 +1716,9 @@ class Student extends MY_Controller {
             redirect('student/exam_room_student_main', 'refresh');
         }
         else {
-            echo 'มีไรบางอย่างแปลกๆ น้า';
+            echo 'มีไรบางอย่างแปลกๆ น้า<br>';
+            echo 'เรากดผิด หรือเพื่อนกดผิดรึเปล่า<br>';
+            echo 'ยกมือเรียกอาจารย์ หรือ TA';
         }
 	}
 

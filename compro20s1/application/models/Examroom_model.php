@@ -219,6 +219,18 @@ class Examroom_model extends CI_Model
     return $classList;
   }
 
+  public function getStudentAccessibleRoom($classId) {
+    $this->db->select('*')
+        ->from($this->TABLE_EXAM_ROOM)
+        ->where('class_id', $classId);
+    $query = $this->db->get();
+    if(empty($query->result_array())){
+      return null;
+    } else {
+      return $query->result_array()[0];
+    }
+  }
+
 
 
 }//class Examroom_model

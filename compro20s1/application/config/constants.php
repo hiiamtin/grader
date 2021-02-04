@@ -144,5 +144,3 @@ defined('MIN_INTERVAL_SUBMISSION_TIME')		OR define('MIN_INTERVAL_SUBMISSION_TIME
 defined('IF_LIMIT')                  OR define('IF_LIMIT',10);
 defined('SWITCH_LIMIT')              OR define('SWITCH_LIMIT',1);
 defined('CASE_LIMIT')                OR define('CASE_LIMIT',5);
-
-defined('IN_SOCIAL_DISTANCING') OR define('IN_SOCIAL_DISTANCING',true);
