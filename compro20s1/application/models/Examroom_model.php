@@ -47,6 +47,13 @@ class Examroom_model extends CI_Model
     return $this->db->update($this->TABLE_EXAM_ROOM);
   }
 
+  public function setSocialDistancing($distancing, $roomNumber) {
+    $data = array('in_social_distancing' => $distancing);
+    $this->db->where('room_number', $roomNumber);
+    $this->db->set($data);
+    return $this->db->update($this->TABLE_EXAM_ROOM);
+  }
+
   public function checkIn($roomNumber, $seatNumber, $stuId, $stuGroup)
   {
     $roomData = $this->getRoomData($roomNumber);
@@ -210,6 +217,18 @@ class Examroom_model extends CI_Model
       $classList[$i]['lecturer'] = $name['supervisor_firstname'].' '.$name['supervisor_lastname'];
     }
     return $classList;
+  }
+
+  public function getStudentAccessibleRoom($classId) {
+    $this->db->select('*')
+        ->from($this->TABLE_EXAM_ROOM)
+        ->where('class_id', $classId);
+    $query = $this->db->get();
+    if(empty($query->result_array())){
+      return null;
+    } else {
+      return $query->result_array()[0];
+    }
   }
 
 

@@ -61,18 +61,13 @@
   <div class="panel-body">
     <h2>Exam Room Check-in</h2>
     <?php
-    if (!empty($exam_rooms)) {
-      foreach ($exam_rooms as $room) {
-        if ($room['class_id'] == $stu_group) {
-          $accessibleRoom = $room;
-          echo '<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#component-exam-room" onclick="clickedRoom('
-                  . $room['room_number']
-                  . ')">'
-                  . '<i class="glyphicon glyphicon-new-window"></i><b>Check-in '
-                  . $room['room_number']
-                  . '</b></button>&nbsp;';
-        }
-      }
+    if ($exam_room!=null) {
+      echo '<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#component-exam-room" onclick="clickedRoom('
+              . $exam_room['room_number']
+              . ')">'
+              . '<i class="glyphicon glyphicon-new-window"></i><b>Check-in '
+              . $exam_room['room_number']
+              . '</b></button>&nbsp;';
     }
     ?>
     <div class="alert alert-success" role="alert">
@@ -92,14 +87,14 @@
         <div class="modal-header">
           <h5 class="modal-title modal-instruction">
             ด้านนี้คือ White Board ของห้อง
-            <?php echo $accessibleRoom['room_number']; ?>
+            <?php echo $exam_room['room_number']; ?>
           </h5>
         </div>
         <div class="modal-body">
           <div class="grid-room">
             <?php
             $pcNumber = 0;
-            if ($in_social_distancing) {
+            if ($exam_room['in_social_distancing']=='checked') {
               for ($i = 0; $i < 90; $i++) {
                 $seatNum = ($pcNumber % 4) * 10 + ceil(($pcNumber + 1) / 4);
                 switch ($i % 9) {
@@ -115,7 +110,7 @@
                   default:
                     echo "<form name='check_in' method='post' accept-charset='utf-8' action='"
                             . site_url('student/exam_room_check_in') . "'>"
-                            . "<input id='input-room-num' type='text' name='room_number' value='" . $accessibleRoom['room_number'] . "' hidden=''>"
+                            . "<input id='input-room-num' type='text' name='room_number' value='" . $exam_room['room_number'] . "' hidden=''>"
                             . "<input type='text' name='seat_number' value='" . $seatNum . "' hidden='' >";
                     echo "<input type='submit' class='grid-seat btn btn-success' value='" . $seatNum . "'></button></form>";
                     $pcNumber++;
@@ -133,7 +128,7 @@
                   default:
                     echo "<form name='check_in' method='post' accept-charset='utf-8' action='"
                             . site_url('student/exam_room_check_in') . "'>"
-                            . "<input id='input-room-num' type='text' name='room_number' value='" . $accessibleRoom['room_number'] . "' hidden=''>"
+                            . "<input id='input-room-num' type='text' name='room_number' value='" . $exam_room['room_number'] . "' hidden=''>"
                             . "<input type='text' name='seat_number' value='" . $seatNum . "' hidden='' >";
                     echo "<input type='submit' class='grid-seat btn btn-success' value='" . $seatNum . "'></button></form>";
                     $pcNumber++;

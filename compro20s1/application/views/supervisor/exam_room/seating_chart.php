@@ -180,7 +180,7 @@
 <?php date_default_timezone_set("Asia/Bangkok"); ?>
 
 <div id="seating-chart">
-  <label id="timer"></label><br>
+  <label id="timer">Loading...</label><br>
   <ul>
     <li>กลุ่มที่สอบ: <?php echo $group_number;?></li>
     <li>อาจารย์ผู้สอน: <?php echo $supervisor_info['supervisor_firstname']." ".$supervisor_info['supervisor_lastname']; ?></li>
@@ -225,7 +225,7 @@
     <div class="grid-room">
       <?php
       $pcNumber = 0;
-      if ($in_social_distancing) {
+      if ($in_social_distancing == "checked") {
         for ($i = 0; $i < 90; $i++) {
           $seatNum = ($pcNumber % 4) * 10 + ceil(($pcNumber + 1) / 4);
           switch ($i % 9) {
