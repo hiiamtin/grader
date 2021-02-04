@@ -225,7 +225,7 @@
     <div class="grid-room">
       <?php
       $pcNumber = 0;
-      if ($in_social_distancing) {
+      if ($in_social_distancing == "checked") {
         for ($i = 0; $i < 90; $i++) {
           $seatNum = ($pcNumber % 4) * 10 + ceil(($pcNumber + 1) / 4);
           switch ($i % 9) {
