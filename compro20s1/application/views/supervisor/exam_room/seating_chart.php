@@ -182,7 +182,7 @@
 <div id="seating-chart">
   <label id="timer">Loading...</label><br>
   <ul>
-    <li>กลุ่มที่สอบ: <?php echo $group_number;?></li>
+    <li>กลุ่มที่สอบ: <?php echo $group_number; ?> || ภาควิชา<?php echo $department ?></li>
     <li>อาจารย์ผู้สอน: <?php echo $supervisor_info['supervisor_firstname']." ".$supervisor_info['supervisor_lastname']; ?></li>
     <li>จำนวนนักศึกษาเข้าสอบ: <?php echo sizeof($seat_list);?> / <?php echo $num_of_student;?></li>
   </ul>
