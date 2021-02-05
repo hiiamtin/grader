@@ -2331,6 +2331,7 @@ class Supervisor extends MY_Controller {
 			'chapter_data' => $chapter_data,
 			'in_social_distancing' => $roomData["in_social_distancing"],
 			'group_number' => substr($class_id, 6),
+			'department' => $this->examroom_model->getDepartment($class_id),
 			'supervisor_info' => $this->examroom_model->getSupervisor($class_id),
 			'num_of_student' => $this->examroom_model->getNumberOfStudentInClass($class_id)
 		);

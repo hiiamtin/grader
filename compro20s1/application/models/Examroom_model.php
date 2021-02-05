@@ -231,6 +231,18 @@ class Examroom_model extends CI_Model
     }
   }
 
+  public function getDepartment($classId) {
+    $this->db->select('department')
+        ->from('class_schedule')
+        ->where('group_id', $classId);
+    $query = $this->db->get();
+    $deptId = $query->result_array()[0]['department'];
+    $this->db->select('dept_name')
+        ->from('department')
+        ->where('dept_id', $deptId);
+    $query = $this->db->get();
+    return $query->result_array()[0]['dept_name'];
+  }
 
 
 }//class Examroom_model
