@@ -210,16 +210,17 @@
                 . '</h2>';
         echo '<ul class="list-group list-group-flush">';
 
-        // Allow Students to Access
+        // Social Distancing
         echo '<li class="list-group-item d-flex justify-content-between align-items-center">Social Distancing';
-        echo '<label class="badge switch">';
         if($room['allow_access']=='checked') {
+          echo '<label class="badge switch" onclick="alert(\'กรุณาปิด Allow Access ของห้องนั้นก่อน\')">';
           echo '<input type="checkbox" id="'
                   . $room['room_number']
                   . '-social-distancing" '
                   . $room['in_social_distancing']
                   . ' disabled>';
         } else {
+          echo '<label class="badge switch">';
           echo '<input type="checkbox" id="'
                   . $room['room_number']
                   . '-social-distancing" onclick="toggleSocialDistancing(this.id)" '
