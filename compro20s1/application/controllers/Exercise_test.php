@@ -286,7 +286,7 @@ class Exercise_test extends CI_Controller {
 		//echo "testcase file : ",$testcase_file,"<br>";
 		
 		$start_time = microtime(true); 
-		$output_result = exec("$timeout $compiler $source -o $output_file");
+		$output_result = exec("$timeout $compiler $source -o $output_file -lm");
 		$end_time = microtime(true); 
 		$elapsed_time = $end_time-$start_time;
 
@@ -314,7 +314,7 @@ class Exercise_test extends CI_Controller {
 		
 		$testcase_content = rtrim($testcase_content);
 		$cmd = $this->compiler ;
-		$cmd .= " $infile -o $outfile";
+		$cmd .= " $infile -o $outfile -lm";
 	
 		//echo "cmd : $cmd<br/>";
 		$result = shell_exec("$cmd");
@@ -364,10 +364,16 @@ class Exercise_test extends CI_Controller {
 		//echo '$infile : '.$infile.'<br>';
 		//echo '$outfile : '.$outfile.'<br>';
 
-		
+		if(file_exists($outfile)) {
+			// outfile must be removed every time 
+			// if it exists, it is infinite loop
+			exec('rm '.$outfile);
+			return INFINITE_LOOP;
+		}
+			
 		$testcase_content = rtrim($testcase_content);
 		$cmd = $this->compiler ;
-		$cmd .= " $infile -o $outfile";
+		$cmd .= " $infile -o $outfile -lm";
 	
 		//echo "cmd : $cmd<br/>";
 		$result = shell_exec("$cmd");

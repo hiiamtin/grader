@@ -38,8 +38,8 @@ class Supervisor extends MY_Controller {
 		$this->load->view('supervisor/head');
 		$this->load->view('supervisor/nav_fixtop');
 		$this->load->view('supervisor/nav_sideleft');
-		//$this->load->view('supervisor/home',$data);
-		$this->load->view('student/stu_home_utf8');
+		$this->load->view('supervisor/home',$data);
+		//$this->load->view('student/stu_home_utf8');
 		$this->load->view('supervisor/footer');
 		
 		
@@ -49,10 +49,10 @@ class Supervisor extends MY_Controller {
 		
 	}//public function index()
 	
-	/*
-	*	Add new row into lab_exercise table
-	*	then, go to exercise_edit
-	*/
+	// *
+	// *	Add new row into lab_exercise table
+	// *	then, go to exercise_edit
+	// *
 	public function exercise_add() {
 		//echo "<h3>". __METHOD__ ." : _SESSION :</h3><pre>"; print_r($_SESSION); echo "</pre>";
 		// insert new record into lab_exercise table
@@ -95,6 +95,9 @@ class Supervisor extends MY_Controller {
 		$exercise_id = $_POST['exercise_id'];
 		$this->load->model("lab_model");
 		$this->lab_model->update_lab_exercise_part1($data);
+		// echo "<h2>". __METHOD__ ." : _SESSION :</h2><pre>"; print_r($_SESSION); echo "</pre>";
+		// echo "<h2>POST</h2><br><pre>"; print_r($_POST); echo "</pre>";
+		// exit();
 		//reset $_POST
 		$_POST = array();
 		$_POST['exercise_id'] = $exercise_id;
@@ -133,26 +136,30 @@ class Supervisor extends MY_Controller {
 		$data = $_POST;
 		$exercise_id = $data['exercise_id'];
 		$sourcecode_filename = $data['sourcecode_filename'];
-		$sourcecode_content = $data['sourcecode_content'];
+		
+		// have to remove html tags before saving cannot use strip_tags because <stdio.h>  
+		//</stdio.h> will be striped as well
+		$sourcecode_content = $data['sourcecode_content']; 
+		
 		if (strlen($sourcecode_content) > 10 ) {
 			//	write content to harddisk
 			if (strlen($sourcecode_content) > 10) {
 				file_put_contents(SUPERVISOR_CFILES_FOLDER.$sourcecode_filename,$sourcecode_content);
 			}
 
-			/*
+			
 			//	mode is to choose where to keep .exe file  --> 'student' or 'supervisor'
 			//	generate $sourcecode_output
-			require_once 'Exercise_test.php';
-			$exercise_test = new exercise_test();
-			$mode = $_SESSION['role'];
-			$sourcecode_output = $exercise_test->get_result_noinput($sourcecode_filename,$mode);
-			$sourcecode_output = $exercise_test->unify_whitespace($sourcecode_output);
-			$sourcecode_output = $exercise_test->insert_newline($sourcecode_output);
-			$_SESSION['sourcecode_output']  = $sourcecode_output;
-			$_SESSION['sourcecode_content']  = $sourcecode_content;
-			*/
-		};
+			// require_once 'Exercise_test.php';
+			// $exercise_test = new exercise_test();
+			// $mode = $_SESSION['role'];
+			// $sourcecode_output = $exercise_test->get_result_noinput($sourcecode_filename,$mode);
+			// $sourcecode_output = $exercise_test->unify_whitespace($sourcecode_output);
+			// $sourcecode_output = $exercise_test->insert_newline($sourcecode_output);
+			// $_SESSION['sourcecode_output']  = $sourcecode_output;
+			// $_SESSION['sourcecode_content']  = $sourcecode_content;
+			
+		}
 		//reset $_POST
 		$_POST= array();
 		$_POST['exercise_id'] = $exercise_id;
@@ -198,11 +205,11 @@ class Supervisor extends MY_Controller {
 		$this->exercise_edit();
 	}
 
-	/*
-	*	1. call from exercise_show, only $exercise_id is posted.
-	*	2. call from exercise_show/add exercise only  $exercise_id is posted and no other info in database
-	*	3. call from exercise_edit, will have all 
-	*/	
+	// *
+	// *	1. call from exercise_show, only $exercise_id is posted.
+	// *	2. call from exercise_show/add exercise only  $exercise_id is posted and no other info in database
+	// *	3. call from exercise_edit, will have all 
+	// *	
 	public function exercise_edit() {
 		//echo "<h3>". __METHOD__ ." : _SESSION :</h3><pre>"; print_r($_SESSION); echo "</pre>";
 		//echo "<h3>". __METHOD__ ." : _POST : size = ". sizeof($_POST)."</h3><pre>"; print_r($_POST); echo "</pre>";
@@ -259,22 +266,22 @@ class Supervisor extends MY_Controller {
 			if (file_exists(SUPERVISOR_CFILES_FOLDER.$sourcecode_filename)) {
 				$sourcecode_content = file_get_contents (SUPERVISOR_CFILES_FOLDER.$sourcecode_filename);
 				//$_SESSION['sourcecode_content'] =  $sourcecode_content;
-					/*			
+							
 				//	mode is to choose where to keep .exe file  --> 'student' or 'supervisor'
 				//	generate $sourcecode_output
-				require_once 'exercise_test.php';
-				$exercise_test = new exercise_test();
-				$mode = $_SESSION['role'];
-				if ($num_of_testcase <= 0 ) {
+				// require_once 'exercise_test.php';
+				// $exercise_test = new exercise_test();
+				// $mode = $_SESSION['role'];
+				// if ($num_of_testcase <= 0 ) {
 
-					$sourcecode_output = $exercise_test->get_result_noinput($sourcecode_filename,$mode);
-					$sourcecode_output = $exercise_test->unify_whitespace($sourcecode_output);
-					$sourcecode_output = $exercise_test->insert_newline($sourcecode_output);
-					$_SESSION['sourcecode_output']  = $sourcecode_output;
-				}
-				*/
+				// 	$sourcecode_output = $exercise_test->get_result_noinput($sourcecode_filename,$mode);
+				// 	$sourcecode_output = $exercise_test->unify_whitespace($sourcecode_output);
+				// 	$sourcecode_output = $exercise_test->insert_newline($sourcecode_output);
+				// 	$_SESSION['sourcecode_output']  = $sourcecode_output;
+				// }
+				
 			} else {
-				$sourcecode_content = "#include<stdio.h>".NEWLINE.'int main() {'.NEWLINE.TAB.'return 0;'.NEWLINE.'}'; 
+				$sourcecode_content = "#include<stdio.h>".NEWLINE.'int main() {'.NEWLINE.TAB.'return 0;'.NEWLINE."}"; 
 			}
 
 			
@@ -377,7 +384,8 @@ class Supervisor extends MY_Controller {
 		} else {
 			$this->load->view('supervisor/exercise_edit_testcase',$data_testcase);
 		}
-		$this->load->view('supervisor/add_exercise_footer');
+		//$this->load->view('supervisor/add_exercise_footer');
+		$this->load->view('supervisor/footer');
 		
 		
 	} // function exercise_edit()
@@ -1250,6 +1258,7 @@ class Supervisor extends MY_Controller {
 
 	public function exercise_view($exercise_id) {
 		//echo '<pre>';print_r($_POST);echo '</pre>';
+		
 		$this->load->model('lab_model');
 		$lab_exercise = $this->lab_model->get_lab_exercise_by_id($exercise_id);
 		$sourcecode_filename = $lab_exercise['sourcecode'];
@@ -1265,8 +1274,11 @@ class Supervisor extends MY_Controller {
 		$num_of_testcase = $this->lab_model->get_num_testcase($exercise_id);
 		
 
-		$data = array( 'lab_exercise'	=>	$lab_exercise);
-
+		$data = array( 'lab_exercise'	=>	$lab_exercise,
+						'lab_info'		=>	$this->lab_model->get_lab_info(),
+						'levels'	 	=> 	$this->lab_model->get_level() );
+		//echo '<pre>';print_r($data);echo '</pre>';				
+		
 		$this->load->view('supervisor/head');
 		$this->load->view('supervisor/nav_fixtop');
 		$this->load->view('supervisor/nav_sideleft');
@@ -1418,12 +1430,6 @@ class Supervisor extends MY_Controller {
 		print_r($_POST);
 	}
 
-	
-
-	
-
-	
-
 	private function reset_student_exercise($stu_id,$chapter,$item) {
 		//check if this supervisor has previledge to reset student data
 
@@ -1483,22 +1489,106 @@ class Supervisor extends MY_Controller {
 	}
 
 	public function student_exercise_view($stu_id,$chapter,$item) {		
-
+		require_once 'Exercise_test.php';
+		$exercise_test = new Exercise_test();
 		$this->load->model('lab_model');
-		$exercise_id = $this->lab_model->get_student_exercise($stu_id, $chapter, $item);
-
-		$lab_exercise = $this->lab_model->get_lab_exercise_by_id($exercise_id);
-
-
-		$number_of_testcase = -1;
-		if (is_array($lab_exercise['testcase']))
-			$number_of_testcase = isset($lab_exercise['testcase']) ? sizeof($lab_exercise['testcase']) : -1 ;
-		$stu_submit = $this->lab_model->get_student_submission($stu_id,$exercise_id);
-		$submitted_count = sizeof($stu_submit);
-		$data_for_testcase = $this->get_data_for_testcase($stu_id,$exercise_id);
 		$this->load->model('student_model');
+		$exercise_id = $this->lab_model->get_student_exercise($stu_id, $chapter, $item);
+		$lab_exercise = $this->lab_model->get_lab_exercise_by_id($exercise_id);
+		$number_of_testcase = $this->lab_model->get_num_testcase($exercise_id);
+		$submitted_count = $this->student_model->get_student_submission_times($stu_id,$exercise_id);
 		$student_data = $this->student_model->retrieve_student_record($stu_id);
+		$stu_submit = $this->lab_model->get_student_submission($stu_id,$exercise_id);
+		
+		if($number_of_testcase <=0 ) { 
+			// the exercise has no testcase
+			$chapter_id = $chapter;
+			$item_id = $item;
+			// run output from sample sourcecode for display and compare
+			$sourcecode_filename = $this->lab_model->get_sourcecode_filename($exercise_id);
+			$output = $exercise_test->get_result_noinput($sourcecode_filename,'supervisor'); // raw output 				
+			$output = $exercise_test->unify_whitespace($output);	// change TAB and NEWLINE to single space				
+			$output = $exercise_test->insert_newline($output); //insert newline after 80th character of each line
+			$output = rtrim($output);				//remove trailing spaces
+			$full_mark =  $this->lab_model->get_fullmark_from_student_assigned_chapter_item($stu_id,$chapter_id,$item_id,$exercise_id);
+			//$marking = $this->get_marking_from_student_assigned_chapter_item($stu_id,$chapter_id,$item_id,$exercise_id);
+			$marking = $this->lab_model->get_max_marking_from_exercise_submission($stu_id,$exercise_id);
+	
+			$_SESSION['lab_item']=$item_id;
+			//echo '<h3>$_SESSION : </h3><pre>'; print_r($_SESSION); echo "</pre>"; 
+			//echo '<h3>$output : </h3><pre>'; print_r($output); echo "</pre>"; 
+			//return ;
+			if( $submitted_count > 0 ) {
 
+				// the exercise has no testcase and there are some submissions
+				// take last_submit and do marking ==> update to exercise_submission table
+				$last_submit = $this->student_model->get_student_last_submission_record($stu_id,$exercise_id);
+				$submission_id = $last_submit['submission_id'];
+				$sourcecode_filename = $last_submit['sourcecode_filename'];  // ของนักศึกษา
+				$sourcecode_content = file_get_contents(STUDENT_CFILES_FOLDER.$sourcecode_filename);
+				//echo '<h3>$last_submit : </h3><pre>'; print_r($last_submit); echo "</pre>"; 
+
+				//run and get output
+				$output_student = $exercise_test->get_result_noinput($sourcecode_filename,'student');
+				$output_student = $exercise_test->unify_whitespace($output_student);
+
+				$sample_filename = $this->lab_model->get_lab_exercise_sourcecode_filename($exercise_id);
+				$output_sample = $exercise_test->get_result_noinput($sample_filename,'supervisor');
+				$output_sample = $exercise_test->unify_whitespace($output_sample);
+
+				//compare to exercise sample
+				$output_result = $exercise_test->output_compare($output_student,$output_sample);
+				if ($output_result == -1) {		// -1 means OK.
+					$output_student = $exercise_test->insert_newline($output_student);
+					//echo '<h2 style="color:red;">OK: </h2>';
+					$marking = $full_mark;
+					$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking);
+
+				} else {
+					
+					$error_line = $output_result['error_line'];
+					$error_column = $output_result['error_column'];
+					$error_position = $output_result['error_position'];
+					//echo '<h2 style="color:red;">unmatched_position : ',$error_position,"    line : ", $error_line,"    column : ",$error_column,"</h2>";
+					
+					//	add a line to output showing where the first error occurs.
+					$output_student = $exercise_test->dispaly_error_in_output($output_student,$error_position);  // insert newline is embedded inside the function
+				}
+
+				$last_submit['sourcecode_content']	= $sourcecode_content;
+				$last_submit['sourcecode_output']	= $output_student;			
+				$last_submit['submitted_count']	= $submitted_count;
+
+				//for icon displayed at top-right panel
+				if ($full_mark == $marking)
+					$last_submit['status']='passed';
+				else 
+					$last_submit['status']='error';
+
+
+				//echo '<!-- <h3>$last submit : </h3><pre>'; print_r($last_submit); echo "</pre> -->"; 
+			} 
+		} else {
+			$number_of_testcase = -1;
+			if (is_array($lab_exercise['testcase'])) {
+				$number_of_testcase = isset($lab_exercise['testcase']) ? sizeof($lab_exercise['testcase']) : -1 ;
+			}
+			
+			
+			$submitted_count = sizeof($stu_submit);
+			$last_submit = array_slice($stu_submit,-1);
+			
+			
+			
+		}
+		
+		//echo "<!-- last_submit<br><pre>"; print_r($last_submit); echo "</pre> -->";
+		
+		$data_for_testcase = $this->get_data_for_testcase($stu_id,$exercise_id);
+
+
+		
+		
 		$data_ = array( 'lab_exercise'	=>	$lab_exercise,
 						'student_data'	=>	$student_data,
 						'stu_id'		=>	$stu_id,
@@ -1533,9 +1623,7 @@ class Supervisor extends MY_Controller {
 		
 		
 		$this->load->view('supervisor/footer');
-		/* */
-
-
+		
 	}
 
 	private function get_data_for_student_view($stu_id,$chapter,$item){
@@ -1714,17 +1802,63 @@ class Supervisor extends MY_Controller {
 
 	}
 
+	//2021-Jan-19 
 	public function remove_last_submission() {
-		if($_SESSION['username'] != "kanut") {
-			$this->show_message("Under Construction . . .");
+		// if($_SESSION['username'] != "kanut") {
+		// 	$this->show_message("Under Construction . . .");
+		// 	//return;
+		// }
+		//echo '<pre>';print_r($_POST);echo '</pre>';
+		$stu_id = $_POST['stu_id'];
+		$chapter = $_POST['chapter'];
+		$item = $_POST['item'];
+		$exercise_id = $_POST['exercise_id'];
+		$submission_id = $_POST['submission_id'];
+		//echo "student id : $stu_id<br>";;
+		//echo "chapter : $chapter<br>";
+		//echo "item: $item <br>";
+		//echo "exercise id : $exercise_id<br>";
+		//echo "submission id : $submission_id <br>";
+		//get detail from table 
+		$this->load->model('lab_model');
+		$submission = $this->lab_model->get_exercise_submission($submission_id);
+		$marking =$submission['marking'];
+		if ($marking <= 0) {
+			$this->student_exercise_view($stu_id,$chapter,$item);
 			return;
 		}
-		echo '<pre>';print_r($_POST);echo '</pre>';
-		$this->createLogfile(__METHOD__.serialize($_POST));
+		$marking = 0;
+		$this->lab_model-> update_marking_exercise_submission($stu_id,$submission_id,$marking);
+		//echo '<pre>';print_r($submission);echo '</pre>';
+		$filename = $submission['sourcecode_filename'];
+		$filename = STUDENT_CFILES_FOLDER.$filename;
+		//echo "filename : $filename<br>";
+		//echo "<h2>".__METHOD__." : ".STUDENT_CFILES_FOLDER.$filename."</h2>";
+		if (file_exists($filename) ) {
+			$file_content = file_get_contents($filename);
+			//echo "<textarea cols='80' rows='20'>$file_content</textarea>";
+			$lines = explode(PHP_EOL,$file_content);
+			//echo '<pre>';print_r($lines);echo '</pre>';
+			$comment = "";
+			foreach ($lines as $line) {
+				//echo "$line<br>";
+				$comment .= "// ".$line.PHP_EOL;
+				
+			}
+			$comment .= "// by ".$_SESSION['id']." ".$_SESSION['username']." date : ". date('l jS \of F Y h:i:s A',time()).PHP_EOL;
+			//$comment .= "// date : ".PHP_EOP;
+			//echo "<textarea cols='80' rows='20'>$comment</textarea>";
+			file_put_contents($filename, $comment);
+			$this->createLogfile(__METHOD__." $stu_id $chapter $item $submission_id $exercise_id $filename");
+		} else {
+			$this->createLogfile(__METHOD__. $filename." does not exists.");
+		}
+
+		//$this->createLogfile(__METHOD__." $stu_id $chapter $item $submission_id $exercise_id $filename");
 		// verify access control student must belong to a group supervised by this supervisor
 
-		//remove a record from table exercise_submission
-		//reset marking in table student_assigned_chapter_item
+		$this->student_exercise_view($stu_id,$chapter,$item);
+		
 		
 	}
 
@@ -1760,50 +1894,50 @@ class Supervisor extends MY_Controller {
 		curl_close($ch);
 
 		print_r($output);
-		/*
-		<html>
-    <header> <title> MyTestLDAP </title> </header>
-    
-    <body>
-        
-       <table border="1">
-           <tr>
-               <td>column 1:</td>
-               <td>column 2:</td>
-           </tr>
-           
-            <form method="post" action="https://myauthapi.kmitl.ac.th/authenLDAP.php"> <!-----action="authenLDAP.php, adauthen.php"----->
-	       <!-- <form method="post" action="https://161.246.52.34/authenLDAP.php"> -->
-               <tr>
-                   <td>Name:</td>
-                   <td><input name="login_" type="text"  value="" placeholder="Username> "></td>
-               </tr>
+		
+			// <html>
+			// <header> <title> MyTestLDAP </title> </header>
 
-               <tr>
-                   <td>Password:</td>
-                   <td><input name="key_" type="password" value="" placeholder="Password "></td>
-               </tr>
-               
-               <tr>
-                   <td>Action:
-			<select name="action_" id="action_" style="height:0.8cm;">
-                        	<option value="authen">Authen</option>
-                                <option value="search">Search</option>
-                              	<option value="count">Count</option>
-			</select>
-		   </td>
-                   <td><input name="clear" type="reset"  value="Clear"><input name="commit" type="submit"  value="OK"></td>
-               </tr>
-	       <input name="operatorLog_" type="hidden" value="myfirstacc.se">
-	       <input name="operatorKey_" type="hidden" value="yGTHJYpm">
-	       <input name="ldapMode_"    type="hidden" value="MSAD">
-           </form>
-          
-           
-       </table>
-        
-    </body>
-</html>*/
+			// <body>
+
+			// <table border="1">
+			// <tr>
+			// <td>column 1:</td>
+			// <td>column 2:</td>
+			// </tr>
+
+			// <form method="post" action="https://myauthapi.kmitl.ac.th/authenLDAP.php"> <!-----action="authenLDAP.php, adauthen.php"----->
+			// <!-- <form method="post" action="https://161.246.52.34/authenLDAP.php"> -->
+			// <tr>
+			// <td>Name:</td>
+			// <td><input name="login_" type="text"  value="" placeholder="Username> "></td>
+			// </tr>
+
+			// <tr>
+			// <td>Password:</td>
+			// <td><input name="key_" type="password" value="" placeholder="Password "></td>
+			// </tr>
+
+			// <tr>
+			// <td>Action:
+			// <select name="action_" id="action_" style="height:0.8cm;">
+			// <option value="authen">Authen</option>
+			// <option value="search">Search</option>
+			// <option value="count">Count</option>
+			// </select>
+			// </td>
+			// <td><input name="clear" type="reset"  value="Clear"><input name="commit" type="submit"  value="OK"></td>
+			// </tr>
+			// <input name="operatorLog_" type="hidden" value="myfirstacc.se">
+			// <input name="operatorKey_" type="hidden" value="yGTHJYpm">
+			// <input name="ldapMode_"    type="hidden" value="MSAD">
+			// </form>
+
+
+			// </table>
+
+			// </body>
+			// </html>
 
 	}
 
@@ -1899,12 +2033,12 @@ class Supervisor extends MY_Controller {
 
 	
 	public function process_kill() {
-		/*
-		if($_SESSION['username'] != 'kanut') {
-			$this->show_message('Access dinied . . .');
-			return;
-		}
-		*/
+		
+		// if($_SESSION['username'] != 'kanut') {
+		// 	$this->show_message('Access dinied . . .');
+		// 	return;
+		// }
+		
 		//print_r($_POST);
 		
 		if(isset($_POST['pid'])) {
@@ -1930,19 +2064,19 @@ class Supervisor extends MY_Controller {
 				echo "Rename $sourcefile ==> $newname <br/>";
 				if ( file_exists($sourcefile) ) {
 
-					/*
-					$newname = $sourcefile.".bak";
-					//exec("chmod 777 $filename  ");
-					//exec("mv $filename $newname ");
-					rename($sourcefile, $newname);
-					if ( file_exists($newname) ) {
-						echo "Done... rename sourcefile<br/>";
-					} else if ( file_exists($sourcefile) ){
-						echo "NOT done... cannot rename $sourcefile ==> $newname <br/>";
-					} else {
-						echo "Something went wrong <br/>";
-					}
-					*/
+					
+					// $newname = $sourcefile.".bak";
+					// //exec("chmod 777 $filename  ");
+					// //exec("mv $filename $newname ");
+					// rename($sourcefile, $newname);
+					// if ( file_exists($newname) ) {
+					// 	echo "Done... rename sourcefile<br/>";
+					// } else if ( file_exists($sourcefile) ){
+					// 	echo "NOT done... cannot rename $sourcefile ==> $newname <br/>";
+					// } else {
+					// 	echo "Something went wrong <br/>";
+					// }
+					
 					$file_content = file_get_contents($sourcefile);
 					$file_content_new = "// *** Please check the contents *** \\n";
 
@@ -2076,14 +2210,14 @@ class Supervisor extends MY_Controller {
 			fclose($pipes[1]);
 			echo "Close pipes1 <br/>";
 		}	
-		/*
-		if (is_resource($pipes[2])) {
-			ob_flush();
-			flush();
-			fclose($pipes[2]);
-			echo "Close pipes2 <br/>";
-		}	
-		*/
+		
+		// if (is_resource($pipes[2])) {
+		// 	ob_flush();
+		// 	flush();
+		// 	fclose($pipes[2]);
+		// 	echo "Close pipes2 <br/>";
+		// }	
+		
 		if (is_resource($process)) {
 			proc_terminate($process);
 			echo "Close process <br/>";
@@ -2091,28 +2225,28 @@ class Supervisor extends MY_Controller {
 		}
 
 		//donot use proc_terminate
-		/*
-
-		$status = proc_get_status($process);
-		if($status['running'] == true) { //process ran too long, kill it
-			//close all pipes that are still open
-			fclose($pipes[1]); //stdout
-			fclose($pipes[2]); //stderr
-			//get the parent pid of the process we want to kill
-			$ppid = $status['pid'];
-			//use ps to get all the children of this process, and kill them
-			$pids = preg_split('/\s+/', `ps -o pid --no-heading --ppid $ppid`);
-			foreach($pids as $pid) {
-				if(is_numeric($pid)) {
-					echo "Killing $pid\n";
-					posix_kill($pid, 9); //9 is the SIGKILL signal
-				}
-			}
-				
-			proc_close($process);
-		}
 		
-		*/
+
+		// $status = proc_get_status($process);
+		// if($status['running'] == true) { //process ran too long, kill it
+		// 	//close all pipes that are still open
+		// 	fclose($pipes[1]); //stdout
+		// 	fclose($pipes[2]); //stderr
+		// 	//get the parent pid of the process we want to kill
+		// 	$ppid = $status['pid'];
+		// 	//use ps to get all the children of this process, and kill them
+		// 	$pids = preg_split('/\s+/', `ps -o pid --no-heading --ppid $ppid`);
+		// 	foreach($pids as $pid) {
+		// 		if(is_numeric($pid)) {
+		// 			echo "Killing $pid\n";
+		// 			posix_kill($pid, 9); //9 is the SIGKILL signal
+		// 		}
+		// 	}
+				
+		// 	proc_close($process);
+		// }
+		
+		
 	}
 
 	public function rename_file() {
@@ -2122,9 +2256,9 @@ class Supervisor extends MY_Controller {
 		exec("mv $sourcefile $newname");
 	}
 
-	/*
-	https://stackoverflow.com/questions/16351302/reading-from-stdin-pipe-when-using-proc-open
-	*/
+	
+	// https://stackoverflow.com/questions/16351302/reading-from-stdin-pipe-when-using-proc-open
+	
 	public function test_process() {
 		//starting subprocess
 		$cmd = 'stdbuf -o0 ./a.out 2>&1';
@@ -2236,7 +2370,66 @@ class Supervisor extends MY_Controller {
 		$this->load->view('supervisor/footer');
 	}
 
+	// last edit 2563-08-29
+	public function copyTo() {
+		//echo "<h1 style='color:darkblue'>".__METHOD__."</h1>";
+		// echo "<h2 style='color:blue'>Post variable </h2><br/><pre>"; print_r($_POST); echo "</pre><br/>";
+		// echo "<h2 style='color:blue'>Environment</h2><br/><pre>"; print_r($_ENV); echo "</pre><br/>";
+		// echo "<h2 style='color:blue'>Cookie </h2><br/><pre>"; print_r($_COOKIE); echo "</pre><br/>";
+		// echo "<h2 style='color:blue'>Server </h2><br/><pre>"; print_r($_SERVER); echo "</pre><br/>";
+		// //echo "<h2 style='color:blue'>FILE </h2><br/><pre>"; print_r($_FILE); echo "</pre><br/>";
+		// echo "<h2 style='color:blue'>FILES </h2><br/><pre>"; print_r($_FILES); echo "</pre><br/>";
+		$source_exercise_id = $this->input->post('exercise_id');
+		$target_chapter_id = $this->input->post('chapter_id');
+		$target_level = $this->input->post('level');
+		$this->load->model('lab_model');
+
+		// add a row in lab_exercise table
+		$clone_exercise_id = $this->lab_model->cloneExercise($source_exercise_id, $target_chapter_id, $target_level);
+		
+		// clone all testcases in exercise_testcase table from $source_exercise_id to $clone_exercise_id
+		// $source_exercise_id=63; $clone_exercise_id=  1301125;
+		$this->lab_model->cloneTestcase($source_exercise_id, $clone_exercise_id);
 
 
-}//class Supervisor
+
+		$source_lab_exercise = $this->lab_model->get_lab_exercise_by_id($source_exercise_id);
+		//echo "<h2 style='color:blue'>Exercise ID: $source_exercise_id</h2><br/><pre>"; print_r($source_lab_exercise); echo "</pre><br/>";
+		
+		$sourcecode_filename = $source_lab_exercise['sourcecode'];
+		$clone_filename = "exercise_".$clone_exercise_id.".c";
+		if (file_exists(SUPERVISOR_CFILES_FOLDER.$sourcecode_filename)) {
+			// echo "The file $sourcecode_filename ==> OK.\n";
+			// echo "target = $clone_filename \n";
+			$status = copy(SUPERVISOR_CFILES_FOLDER.$sourcecode_filename , SUPERVISOR_CFILES_FOLDER.$clone_filename);
+			// if ($status) {
+			// 	echo "copy ok";
+			// } else {
+			// 	echo "copy NG.";
+			// }
+		}
+
+		$_POST = array();
+		$_POST['exercise_id']= $clone_exercise_id;
+		$this->exercise_edit();
+		
+	}
+
+	public function get_online_students() {
+		$this->load->model('lab_model');
+		$this->lab_model->get_online_students();
+	}
+
+
+
+	public function bs5_test() {
+		$this->load->view('supervisor/head5');
+		$this->load->view('supervisor/nav_fixtop5');
+		$this->load->view('supervisor/nav_sideleft5');
+		//$this->load->view('student/stu_home_utf8');
+		$this->load->view('supervisor/footer5');
+	}
+
+}//class Supervisor 
+
 ?>

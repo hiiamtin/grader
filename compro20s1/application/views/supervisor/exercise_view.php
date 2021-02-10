@@ -22,7 +22,7 @@
 			$exercise_id		= $lab_exercise['exercise_id'];
 			
 
-    ?>
+	?>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-4" style="text-align:center;margin-top:20px;">
@@ -37,24 +37,26 @@
 				</div>
 			</div>
 			<div class="col-sm-2">
-				<div class="well" style="margin-top:20px;">
+				<div class="well" style="margin-top:20px; display:flex">
 					<form method="post" action="<?php echo site_url('supervisor/exercise_edit'); ?>" >
 						<input type="text" name="exercise_id" value="<?php echo $exercise_id ?>" hidden >
-						<button type="button submit" class="btn btn-primary" <?php
+						<button type="button submit" class="btn btn-primary" style="margin-left:0px;padding-left:10px;" <?php
 							if ($user_id == $created_by || $_SESSION['username']=='kanut') {
 								echo ' > Edit ';
 							} else {
 								echo ' disabled > NO edit ';
 							}					
-						?>
+							?>>
 						</button>
 					</form>
+					<?php $modal_name="copyto"; $form_id="copyto_form"; ?>
+					<button type="button" class="btn btn-primary" data-toggle="modal" style="margin-left:5px;" data-target="<?php echo '#'.$modal_name; ?>" >COPY TO</button>
 
 				</div>
+				
 			</div>
 		</div>
 
-		
 		<div class="row" >
 			<div class="container" >
 				<div class="panel panel-default">
@@ -121,16 +123,7 @@
 			</div>
 		</div>
 
-		<div class="row">
-			<?php //echo '<pre>';print_r($lab_exercise); echo '</pre>' ?>
-			<?php //echo '<pre>';print_r($_SESSION); echo '</pre>' ?>
-		</div>
-		
-	<!-- ย้ายไป header
-	<script src="<?php echo base_url('assets/jquery/jquery-3.1.1.min.js') ?>"></script>
-	<script src="<?php echo base_url('assets/bootstrap-3.3.7/js/bootstrap.min.js') ?>"></script>	
-	-->
-	<script src="<?php echo base_url('assets/summernote/summernote.js') ?>"></script>	
+		<script src="<?php echo base_url('assets/summernote/summernote.js') ?>"></script>	
 	<script type="text/javascript" src="<?php echo base_url('assets/codemirror-5.22.0/lib/codemirror.js')?>"></script>
 	<script type="text/javascript" src="<?php echo base_url('assets/codemirror-5.22.0/mode/clike/clike.js')?>"></script>
 	<!-- <script type="text/javascript" src="<?php echo base_url('assets/codemirror-5.22.0/mode/xml/xml.js')?>"></script> -->
@@ -163,7 +156,6 @@
 			
 		});
 	</script>
-
 	<script>
 		$(document).ready(function() {
 		  $('.summernote').summernote();
@@ -205,7 +197,43 @@
 					mode: "text/x-csrc"
 			});
 	</script>
-	
 
-</div>
+	</div>
 
+	<div class="modal fade" role="dialog" id="<?php echo $modal_name; ?>" >
+		<div class="modal-dialog w-auto">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title"><?php echo "Copy from : ".$exercise_id." Chapter:".$lab_chapter." Level:".$lab_level."<br/>"?></h3>
+					<h3><?php "Lab name : ".$lab_name; ?></h3>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<form id="<?php echo $form_id; ?>" action="<?php echo site_url('supervisor/copyTo'); ?>" method="post" accept-charset="utf-8">
+					<div class="modal-body" style="display:flex;margin-left:10px;">                            
+						<div class="form-group">
+							<input  form="<?php echo $form_id; ?>" type="hidden" name="exercise_id" class="form-control" value="<?php echo $exercise_id; ?>" ></input>
+							<p >Copy TO :</p>
+							<select class="custom-select" name="chapter_id">
+								<?php foreach ($lab_info as $lab) { ?>								
+								<option value=<?php echo '"'.$lab['chapter_id'].'" '; 
+									if ( $lab['chapter_id']==$lab_chapter) 
+										echo 'selected';?>><?php echo $lab['chapter_id']." ".$lab['chapter_name']; ?></option><?php }	?>
+							</select>
+							<select class="custom-select" name="level">
+								<?php foreach ($levels as $row) { 
+									$row_id = $row['level_id'];
+									$row_name = $row['level_name'];?>								
+								<option value=<?php echo '"'.$row_id.'" '; 
+									if ( $row_id==$lab_level) 
+										echo 'selected';?>><?php echo $row_id.". ".$row_name; ?></option>
+								<?php }	?>
+							</select> 
+						</div>
+					</div>
+					<div class="modal-footer">
+                        <button form="<?php echo $form_id; ?>" type="submit" onclick="alert('copy to NEW item.')" class="btn btn-success">submit</button>
+                    </div>
+				</form>
+			</div>
+		</div>
+	</div>

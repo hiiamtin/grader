@@ -74,6 +74,51 @@ class Lab_model extends CI_Model {
 
 	}
 
+	public function cloneExercise($source_exercise_id, $target_chapter_id, $target_level) {
+		//echo __METHOD__."\n";
+		$source_lab_exercise = $this->get_lab_exercise_by_id($source_exercise_id);
+		$data = array(
+			'lab_chapter'	=> $target_chapter_id,
+			'lab_level'		=> $target_level,
+			'lab_name'		=> $source_lab_exercise['lab_name'].' (clone)',
+			'lab_content'	=> $source_lab_exercise['lab_content'],
+			
+			'created_by'	=> $_SESSION['id'],
+			'added_by'		=> $_SESSION['username']
+			);
+		$query = $this->db->insert('lab_exercise',$data);
+		$this->db->select('exercise_id');
+		$inserted_id = $this->db->insert_id();
+		//update sourcecode filename 
+		$sourcecode_filename = "exercise_".$inserted_id.".c";
+		$this->db->set('sourcecode',$sourcecode_filename);
+		$this->db->where('exercise_id',$inserted_id);
+		$query = $this->db->update('lab_exercise');
+		
+		return $inserted_id;
+	}
+
+	public function cloneTestcase($source_exercise_id, $clone_exercise_id) {
+		//echo "source exercise id : $source_exercise_id \t clone exercise id : $clone_exercise_id\n";
+		//$source_exercise_id=63; $clone_exercise_id=1301125;
+		$this->db->where('exercise_id', $source_exercise_id);
+		$query = $this->db->get('exercise_testcase');
+		$this->db->select('*')
+			->from('exercise_testcase')
+			->where('exercise_id', $source_exercise_id);
+		$query = $this->db->get();
+		$num_rows = $query->num_rows();
+		//echo "<pre>"; print_r($query->result_array()); echo "</pre>";
+		$query_array = $query->result_array();
+		foreach ($query_array as $key => $row) {
+			//echo "key=$key --- <pre>";print_r($row); echo "</pre>";
+			$row['exercise_id'] = $clone_exercise_id;
+			unset($row['testcase_id']);
+			//echo "key=$key --- <pre>";print_r($row); echo "</pre>";
+			$this->db->insert('exercise_testcase',$row);
+		}
+	}
+
 	/*
 	*	insert a new row to lab_exercise table
 	*	 and query from database to get exercise_id
@@ -666,6 +711,8 @@ class Lab_model extends CI_Model {
 
 	public function exercise_submission_add($data) {
 		$table = 'exercise_submission';
+		$data['inf_loop'] = 'Yes';
+		$data['output'] = "";
 		$query = $this->db->insert($table,$data);
 		//echo "<h1>",__METHOD__," : ",print_r($query),"</h1>";
 		$this->db->where($data);
@@ -877,7 +924,7 @@ class Lab_model extends CI_Model {
 		$this->db->select('group_id')
 			->from('class_schedule')	
 			->where('class_schedule.year', 2020)
-			->where('class_schedule.semester', 1)
+			->where('class_schedule.semester', 2)
 			->where('class_schedule.lecturer', $lecturer);
 
 		$query = $this->db->get();
@@ -1378,9 +1425,6 @@ class Lab_model extends CI_Model {
 		return strtotime($query['added_date']);
 	}
 
-	public function get_online_users() {
-
-	}
 
 	public function update_submission_output_and_marking($submission_id,$output_serialize,$marking){
 		$_table = 'exercise_submission';
@@ -1456,5 +1500,26 @@ class Lab_model extends CI_Model {
 
 	}
 
+	public function get_level() {
+		$this->db->select('*')
+			->from('level');
+		//$query = $this->db->get()->first_row("array");
+		$query = $this->db->get()->result_array();
+		return $query;
+
+	}
+
+	// 30 Aug 2563
+	public function get_online_student() {
+		$query = $this->db->query('SELECT `T1`.`stu_group`, COUNT(`stu_id`) AS `num_students` 
+						FROM `user_student` AS `T1` 
+						LEFT JOIN `user` AS `T2` ON `T1`.`stu_id` = `T2`.`id` 
+						WHERE `status`="online" 
+						GROUP BY `T1`.`stu_group`');
+	
+		
+		return $query->result_array();
+	
+	}
 	
 }//class Lab_model

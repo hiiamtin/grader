@@ -76,8 +76,8 @@
 			<?php	if($group_permission[$lab_chapter]['allow_submit']=='no') {
 						echo '<button class="btn btn-warning btn-lg " readonly> Not allow to submit !!! </button>';
 					} else 	if($marking<$full_mark) {
-						echo '<input type="file" name="submitted_file" id="userfile" >';
-						echo '<span><button type="submit"   >Submit</button></span>';
+						echo '<input type="file" name="submitted_file" id="userfile" accept=".c" onchange="return checkfilename(this);">';
+						echo '<span><button type="button" onclick="form_submit(this)"   >Submit</button></span>';
 					} else {
 						echo '<button class="btn btn-success btn-lg " readonly> You have got full mark !!! </button>';
 					}
@@ -125,6 +125,8 @@
 		*/
 		alert("File name : "+sourceCodeName+" "+soruceCodeFileSize);
 	}
+	var lab_chapter = <?php echo $lab_chapter;?>;
+	var lab_item = <?php echo $lab_item;?>;
 
 	
 	</script>

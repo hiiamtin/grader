@@ -11,7 +11,7 @@
 		<div class="nav navbar-nav navbar-right" style="margin-top:15px;margin-right:15px;" >
 			<li><a href="<?php echo site_url('supervisor/index'); ?>">Home</a></li>
 			<?php if (substr($_SESSION['id'],0,2) =='90') 
-					echo '<li><a href="'.site_url($_SESSION['role'].'/exercise_show').'"title="Exercise Management">Exercise</a></li>';
+					echo '<li><a href="'. site_url($_SESSION['role'].'/exercise_show').'" title="Exercise Management">Exercise</a></li>';
 			?>
 			<li><a href="<?php echo site_url($_SESSION['role'].'/group_management'); ?>" title="Group Mangement"> Group Management </a></li>
 			<li><a href="<?php echo site_url($_SESSION['role'].'/edit_profile_form'); ?>">Edit profile</a></li>

@@ -19,20 +19,22 @@
 				<th style="text-align:center;">วัน</th>
 				<th style="text-align:center;">เวลา</th>
 				<th  style="text-align:center;">จำนวนนักศึกษา</th></tr>
-<?php 
+	<?php 
 	foreach ($class_schedule as $data) {
-		echo "<tr>";
-		echo "<td>".$data['group_id']."</td>";
-		echo "<td>".$data['group_no']."</td>";
-		echo "<td>".$data['year']."</td>";
-		echo "<td>".$data['semester']."</td>";
-		echo "<td>".$data['group_name']."</td>";
-		echo "<td>".$data['day_of_week']."</td>";
-		echo "<td>".$data['time_start']." - ".$data['time_end'];
-		echo "</td><td>".$data['num_students']."</td>";
-		echo "</tr>";
+		if ($data['group_no']<99) {
+			echo "<tr>";
+			echo "<td>".$data['group_id']."</td>";
+			echo "<td>".$data['group_no']."</td>";
+			echo "<td>".$data['year']."</td>";
+			echo "<td>".$data['semester']."</td>";
+			echo "<td>".$data['group_name']."</td>";
+			echo "<td>".$data['day_of_week']."</td>";
+			echo "<td>".$data['time_start']." - ".$data['time_end'];
+			echo "</td><td>".$data['num_students']."</td>";
+			echo "</tr>";
+		}
 	}
-?>
+	?>
 		</table>
 	</div>
 	</div>

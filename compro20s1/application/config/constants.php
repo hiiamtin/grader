@@ -124,3 +124,4 @@ defined('TIME_LIMIT_IN_MINUTE')		OR define('TIME_LIMIT_IN_MINUTE',120);
 defined('MAX_RUN_TIME_IN_SECOND')	OR define('MAX_RUN_TIME_IN_SECOND',1);
 defined('MAX_OUTPUT_SIZE')			OR define('MAX_OUTPUT_SIZE',4096);
 defined('MIN_INTERVAL_SUBMISSION_TIME')		OR define('MIN_INTERVAL_SUBMISSION_TIME',60);	// in seconds
+defined('INFINITE_LOOP')        			OR define('INFINITE_LOOP',"Infinite loop !!!");

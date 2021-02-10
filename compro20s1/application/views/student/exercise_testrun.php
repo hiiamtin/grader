@@ -35,7 +35,7 @@
 					<textarea id="sourcecode_content_testrun" style="text-align:left;" readonly><?php echo $sourcecode_content; ?></textarea>
 				</div>
 				<div class="panel-footer" style= "align:center;">
-					<div style="font-family: Courier, monospace;font-style: normal;font-size: 16px;font-variant: normal;text-align: left; white-space:pre-wrap; width:770px; background-color:rgb(10,10,10); color:white; align:center;"><?php echo $sourcecode_output; ?>
+					<div style="height:50vh; font-family: Courier, monospace;font-style: normal;font-size: 16px;font-variant: normal;text-align: left; white-space:pre-wrap; width:770px; background-color:rgb(10,10,10); color:white; align:center;"><?php echo $sourcecode_output; ?>
 					</div>
 				</div>
 				

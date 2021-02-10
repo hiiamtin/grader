@@ -37,10 +37,46 @@
   								</div> 
                   <?php echo $error; ?>
   							</div>
-  							<input type="submit" value="Login" class="btn btn-primary">
+  							<input type="submit" value="Login" onclick="auth()" class="btn btn-primary">
   						<?php echo form_close(); ?>
   					</div>
   				</div>
   			</div>
   		</div>
   	</div>
+
+
+	  <script>
+		<!-- Encode Password ก่อน Submit -->
+		function auth() {
+			var key1 = document.getElementById("username").value;
+			var key2 = document.getElementById("password").value;
+			//alert(key1+key2);
+			if(key1.length == 0 || key2.length == 0) {
+				document.getElementById("e-user").setAttribute("value",key1);
+				document.getElementById("e-pass").setAttribute("value",key2);
+				submitForm();
+			} else {
+				//console.log(key1+key2);
+				var str = "";
+				key2 = btoa(btoa(key2));
+				for(var i=0; i<key2.length; i++) {
+					var a = key2.charCodeAt(i);
+					var b = a^(key1.length+5);
+					str = str+String.fromCharCode(b);
+					console.log(key2);
+			}
+			//document.getElementById("e-user").setAttribute("value",key1);
+			//document.getElementById("e-pass").setAttribute("value",btoa(str));
+			pw = btoa(str);
+			document.getElementById("password").value = pw;
+			key2 = document.getElementById("password").value;
+			//alert("password "+ key2);
+			//submitForm();
+			}
+		}
+
+		function submitForm() {
+			document.getElementById("auth-form").submit();
+		}
+    </script>

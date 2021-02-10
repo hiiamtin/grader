@@ -23,7 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://127.0.0.1:41062/compro20s1/';
+//$config['base_url'] = 'http://161.246.127.85/compro20s2/';
+$config['base_url'] = 'http://compro.ce.kmitl.ac.th/compro20s2/';
 
 /*
 |--------------------------------------------------------------------------
