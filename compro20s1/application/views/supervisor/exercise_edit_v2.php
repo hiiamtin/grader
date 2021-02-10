@@ -65,9 +65,13 @@
 			</div></span>
 
 			<span><div class="form-group col-md-2" style="margin-top:30px;">
-				<form action="<?php echo site_url('supervisor/exercise_edit_part1')?>" id="exercise_edit_part1" method="post" name="exercise_edit" accept-charset="utf-8" >
+				<form 	action="<?php echo site_url('supervisor/exercise_edit_part1')?>" 
+						id="exercise_edit_part1" 
+						method="post" 
+						name="exercise_edit" 
+						accept-charset="utf-8" >
 					<label for="submit"></label>
-					<button type="submit" form="exercise_edit_part1">Submit Part 1</button>
+					<button type="submit" form="exercise_edit_part1" >Submit Part 1</button>
 					<input type="text" name="exercise_id" form="exercise_edit_part1" value="<?php echo $exercise_id; ?>" hidden ></input>
 				</form>
 			</div></span>
@@ -189,7 +193,7 @@
 		}
 	</script>
 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		function checkSourceCode(){
 			var sourceCodeName = document.getElementById("userfile").value;
 			if(sourceCodeName==""){
@@ -211,7 +215,7 @@
 				return false;
 			}
 		}
-	</script>
+	</script> -->
 
 	<script>
 		var editor = CodeMirror.fromTextArea(document.getElementById("sourcecode_content"), {

@@ -1,0 +1,955 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>PLMS Supervisor</title>
+	
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link rel="stylesheet" href="http://compro.ce.kmitl.ac.th/compro20s2/assets/bootstrap-3.3.7/css/bootstrap.min.css" >
+	<link href="http://compro.ce.kmitl.ac.th/compro20s2/assets/summernote/summernote.css" rel="stylesheet" >
+	<link rel="stylesheet" type="text/css" href="http://compro.ce.kmitl.ac.th/compro20s2/assets/codemirror-5.22.0/lib/codemirror.css">
+	<link rel="stylesheet" type="text/css" href="http://compro.ce.kmitl.ac.th/compro20s2/assets/codemirror-5.22.0/theme/monokai.css">
+	
+
+	
+	
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="assets/js/jquery.min.js"><\/script>')</script> -->
+	<script src="http://compro.ce.kmitl.ac.th/compro20s2/assets/jquery/jquery-3.1.1.min.js"></script>
+	<!-- <script src="http://compro.ce.kmitl.ac.th/compro20s2/assets/bootstrap-3.3.7/js/bootstrap.min.js"></script> -->
+    
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="http://compro.ce.kmitl.ac.th/compro20s2/assets/bootstrap-3.3.7/js/bootstrap.min.js" ></script>
+
+	<script type="text/javascript" src="http://compro.ce.kmitl.ac.th/compro20s2/assets/jquery/jquery.tablesorter.min.js"></script>
+
+	
+
+	<style>
+		/* Remove the navbar's default margin-bottom and rounded borders */ 
+		.navbar {
+			margin-bottom: 0;
+			border-radius: 0;
+		}
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+	#page-content {
+		margin-top:95px;
+	}
+	.kpanel_top {
+		position: fix;
+	}
+	.kpanel_left {
+		position: fix;
+	}
+	.kpanel_body {
+		margin-left: 300px;
+	}
+	
+	.showHideColumn {
+		cursor : pointer;
+		color : brown;
+	}
+	
+  </style>
+</head>
+
+
+<body>
+<!-- end tag in footer -->
+<div class="navbar navbar-fixed-top navbar-default">
+  	<div class="container-fulid" >
+			
+		<a href="http://compro.ce.kmitl.ac.th/compro20s2/index.php" class="navbar-left"><img height="80px" width="80px" src="http://compro.ce.kmitl.ac.th/compro20s2/assets/images/logo1.png" style="padding-top:5px;padding-bottom:5px;"></a>
+
+		<div class="navbar-text" style="margin-top:0px;margin-bottom:0px;padding-top:0px;padding-bottom:5px;">
+		<h3>Programming Lab Management System</h3>
+		<h5>King Mongkut's Institute of Technolygy Ladkrabang</h5>
+		</div>
+		<div class="nav navbar-nav navbar-right" style="margin-top:15px;margin-right:15px;" >
+			<li><a href="http://compro.ce.kmitl.ac.th/compro20s2/index.php/supervisor/index">Home</a></li>
+			<li><a href="http://compro.ce.kmitl.ac.th/compro20s2/index.php/supervisor/exercise_show" title="Exercise Management">Exercise</a></li>			<li><a href="http://compro.ce.kmitl.ac.th/compro20s2/index.php/supervisor/group_management" title="Group Mangement"> Group Management </a></li>
+			<li><a href="http://compro.ce.kmitl.ac.th/compro20s2/index.php/supervisor/edit_profile_form">Edit profile</a></li>
+			<li><a href="#" title="Under Construction . . .">Help</a></li>
+			<li><a href="#" title="Under Construction . . .">About</a></li>			
+			<li><a href="http://compro.ce.kmitl.ac.th/compro20s2/index.php/auth/logout" class="btn btn-default btn-lg"> Log out. <span class="glyphicon glyphicon-log-out"></span> </a></li> 
+		</div>
+      
+        <!--/.navbar-collapse -->
+    </div>
+</div>
+<div class="container-fluid"  style="background-color:HoneyDew;">	
+	<div class="panel panel-default">
+		<div class="panel-body">A Basic Panel</div>
+	</div>
+</div>
+<div class="clear-fix"></div> 
+<!-- Page Contents -->
+<div class="container-fluid"  style="background-color:HoneyDew ;margin-top:10px;">	
+	<!-- row content -->
+	<div class="row">
+
+<!-- nav_sideleft -->
+<div class="col-lg-2 col-md-2 col-sm-2 sidenav" style="background-color:HoneyDew;">
+	<div class="affix" style="background-color:Pink; min-width: 15%; "><!-- -->
+		<div class="panel panel-default" style="background-color:AliceBlue;text-align: center; " >
+			<img src="http://compro.ce.kmitl.ac.th/compro20s2/supervisor_data/avatar/image_kanut2_599abe2beaf62.jpg" style="width:200px;height:250px;margin-left:20px;padding-top:20px">
+			
+			<div class="row" style="text-align: center; align-content: center;color:Blue;">
+				
+					<h3 >Supervisor</h3>
+				
+			</div>
+			<div class="row" style="text-align: center;color:Blue;">
+				<div>
+					<h4>วิศวกรรมคอมพิวเตอร์</h4>
+				</div>
+			</div>
+
+			<div class="row" style="">
+				<div class="col-sm-5" style="text-align: right;">
+					<p>username :</p>
+				</div>
+				<div class="col-sm-7" style="text-align: left;">
+					<p>kanut2</p>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-5" style="text-align: right;">
+					<p>ID :</p>
+				</div>
+				<div class="col-sm-7" style="text-align: left;">
+					<p>900009</p>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-5" style="text-align: right;">
+					<p>เพศ</p>
+				</div>
+				<div class="col-sm-7" style="text-align: left;">
+					<p>male</p>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-5" style="text-align: right;">
+					<p>ชื่อ</p>
+				</div>
+				<div class="col-sm-7" style="text-align: left;">
+					<p>kanut2<p>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-5" style="text-align: right;">
+					<p>นามสกุล</p>
+				</div>
+				<div class="col-sm-7" style="text-align: left;">
+					<p>staff</p>
+				</div>			
+			</div>
+			<button id="online_students" class="btn btn-info">online students</button>
+			
+			
+			
+
+		</div><!--  -->
+	</div>
+
+	
+</div>
+<!-- nav_sideleft -->
+		
+		
+
+<!-- nav_body -->
+<div class="col-lg-10 col-md-10 col-sm-10" style="margin-top:100px;">
+	<!-- 63900100 =>	2			=>	1	=>	6 <br/>student_data <pre>Array
+(
+    [stu_id] => 63900100
+    [stu_gender] => male
+    [stu_firstname] => คณัฐ
+    [stu_lastname] => ตังติสานนท์
+    [stu_nickname] => 
+    [stu_dob] => 0000-00-00
+    [stu_avatar] => image_63900100_5ffbaf2c48a47.jpg
+    [stu_email] => 
+    [stu_tel] => 
+    [stu_group] => 20020002
+    [note] => 
+    [stu_dept_id] => 9
+    [group_id] => 20020002
+    [group_no] => 2
+    [group_name] => จันทร์ เช้า
+    [department] => 9
+    [lecturer] => 900001
+    [day_of_week] => Monday
+    [time_start] => 10:00:00
+    [time_end] => 12:00:00
+    [year] => 2020
+    [semester] => 2
+    [allow_upload_pic] => yes
+    [allow_submit] => yes
+    [allow_login] => yes
+    [allow_exercise] => yes
+    [supervisor_id] => 900001
+    [supervisor_firstname] => คณัฐ
+    [supervisor_lastname] => ตังติสานนท์
+    [supervisor_nickname] => ยู้
+    [supervisor_gender] => male
+    [supervisor_dob] => 0000-00-00
+    [supervisor_avatar] => image_kanut_59a65158903e4.jpg
+    [supervisor_email] => kanut.ta@kmitl.ac.th
+    [supervisor_tel] => 
+    [supervisor_department] => วิศวกรรมคอมพิวเตอร์
+    [stu_dept_name] => วิศวกรรมแมคคาทรอนิกส์
+)
+</pre>lab_exercise <pre>Array
+(
+    [exercise_id] => 6
+    [lab_chapter] => 2
+    [lab_level] => 1
+    [lab_name] => การจัดรูปแบบข้อความ
+    [lab_content] => &lt;div align=&quot;left&quot;&gt;ให้นักศึกษา เขียนโปรแกรมตามข้อกำหนดดังนี้&lt;font face=&quot;Courier New&quot; style=&quot;text-align: center;&quot;&gt;&amp;nbsp;&lt;/font&gt;&lt;/div&gt;&lt;ul&gt;&lt;li style=&quot;text-align: left; &quot;&gt;แสดงผลลัพธ์&lt;font face=&quot;Courier New&quot; style=&quot;text-align: center;&quot;&gt;&amp;nbsp;Computer&lt;/font&gt;&lt;span style=&quot;text-align: center;&quot;&gt;&amp;nbsp;อยู่ด้านซ้ายของจอภาพ&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;text-align: left; &quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;&lt;font face=&quot;Courier New&quot;&gt;Programming&amp;nbsp;&lt;/font&gt;อยู่ด้านขวาของจอภาพ&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;text-align: left; &quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;ใช้คำสั่ง&amp;nbsp;&lt;font face=&quot;Courier New&quot; style=&quot;text-align: -webkit-left;&quot;&gt;printf&lt;/font&gt;&lt;span style=&quot;text-align: -webkit-left;&quot;&gt;&amp;nbsp;ได้เพียงครั้งเดียว&lt;/span&gt;&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;text-align: left; &quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;text-align: -webkit-left;&quot;&gt;ห้ามใช้ space&lt;font face=&quot;Courier New&quot;&gt; \t &lt;/font&gt;และ&lt;font face=&quot;Courier New&quot;&gt; \n&amp;nbsp;&lt;/font&gt;&lt;/span&gt;&lt;/span&gt;&lt;font color=&quot;#ff0000&quot;&gt;(ถ้าตรวจพบภายหลังจะได้ ศูนย์คะแนน)&lt;/font&gt;&lt;/li&gt;&lt;li style=&quot;text-align: left; &quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;text-align: -webkit-left;&quot;&gt;&lt;font face=&quot;Arial&quot;&gt;กรณีที่ไม่ทำตามข้อกำหนด คะแนนที่ได้จะถูกปรับเป็น 0 คะแนน&amp;nbsp;&lt;/font&gt;&lt;br&gt;&lt;/span&gt;&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;text-align: left; &quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;text-align: -webkit-left;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;text-align: -webkit-left;&quot;&gt;&lt;u&gt;หมายเหตุ&lt;/u&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;text-align: -webkit-left;&quot;&gt;1. การแสดงผลแต่ละบรรทัดมี 80 ตัวอักษร&lt;br&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/p&gt;
+    [testcase] => no_input
+    [sourcecode] => exercise_00006.c
+    [full_mark] => 10
+    [added_date] => 2017-01-19 09:34:07
+    [last_update] => 2017-01-20 11:56:31
+    [lab_constrain] => 
+    [added_by] => kanut
+    [created_by] => 900001
+    [sourcecode_content] => exercise_00006.c
+)
+</pre>stu_submit <pre>Array
+(
+    [0] => Array
+        (
+            [submission_id] => 200210036
+            [stu_id] => 63900100
+            [exercise_id] => 6
+            [sourcecode_filename] => 63900100_02_01_0001.c
+            [marking] => 0
+            [time_submit] => 2021-01-19 10:33:47
+            [inf_loop] => No
+            [output] => s:80:"Computer                                                             Programming";
+        )
+
+    [1] => Array
+        (
+            [submission_id] => 200210041
+            [stu_id] => 63900100
+            [exercise_id] => 6
+            [sourcecode_filename] => 63900100_02_01_0002.c
+            [marking] => 0
+            [time_submit] => 2021-01-19 10:35:45
+            [inf_loop] => No
+            [output] => s:80:"Computer                                                             Programming";
+        )
+
+)
+</pre> -->
+	<div class="row">
+		<div class="container">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<img src="http://compro.ce.kmitl.ac.th/compro20s2/student_data/avatar/image_63900100_5ffbaf2c48a47.jpg" style="width:150px;height:180px;margin-left:20px;padding-top:20px">
+					63900100 คณัฐ ตังติสานนท์  กลุ่มที่ :2/จันทร์ เช้า<br/> Chapter:2 item: 1 submission_no: 2 Marking: 0					
+				
+				</div>
+				<!--<div class="panel-body"><pre>Array
+(
+    [submission_id] => 200210041
+    [stu_id] => 63900100
+    [exercise_id] => 6
+    [sourcecode_filename] => 63900100_02_01_0002.c
+    [marking] => 0
+    [time_submit] => 2021-01-19 10:35:45
+    [inf_loop] => No
+    [output] => s:80:"Computer                                                             Programming";
+)
+</pre> -->
+				<!--<div class="panel-body" style="text-align:left;tab-size:4; font-family: Courier;">
+						
+<div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Notice</p>
+<p>Message:  Undefined index: sourcecode_content</p>
+<p>Filename: supervisor/student_exercise_view.php</p>
+<p>Line Number: 40</p>
+
+
+	<p>Backtrace:</p>
+	
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: /opt/lampp/htdocs/compro20s2/application/views/supervisor/student_exercise_view.php<br />
+			Line: 40<br />
+			Function: _error_handler			</p>
+
+		
+	
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: /opt/lampp/htdocs/compro20s2/application/controllers/Supervisor.php<br />
+			Line: 1603<br />
+			Function: view			</p>
+
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: /opt/lampp/htdocs/compro20s2/index.php<br />
+			Line: 315<br />
+			Function: require_once			</p>
+
+		
+	
+
+</div>						<textarea readonly class="sourcecode_content" cols="120" rows="4" id="sourcecode_content" name="sourcecode_content" ></textarea>
+					</div>
+				</div>-->
+				<div class="panel-footer">
+					<form method="post" action="http://compro.ce.kmitl.ac.th/compro20s2/index.php/supervisor/remove_last_submission">
+						<button type="submit">Remove this submission</button>
+						<input type="text" name="stu_id" value="63900100" hidden></input>
+						<input type="text" name="chapter" value="2" hidden></input>
+						<input type="text" name="item" value="1" hidden></input>
+						<input type="text" name="exercise_id" value="6" hidden></input>
+						<input type="text" name="submission_id" value="200210041" hidden></input>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="http://compro.ce.kmitl.ac.th/compro20s2/assets/summernote/summernote.js"></script>	
+	<script type="text/javascript" src="http://compro.ce.kmitl.ac.th/compro20s2/assets/codemirror-5.22.0/lib/codemirror.js"></script>
+	<script type="text/javascript" src="http://compro.ce.kmitl.ac.th/compro20s2/assets/codemirror-5.22.0/mode/clike/clike.js"></script>
+	<script>
+		var editor = CodeMirror.fromTextArea(document.getElementById("sourcecode_content"), {
+					lineNumbers: true,
+					matchBrackets: true,
+					indentUnit: 4,
+					readonly: true,
+					mode: "text/x-csrc"
+			});
+	</script>
+	<script>
+		$(document).ready(function() {
+			$('#summernote').summernote({
+				height: 500,                 // set editor height
+				width:240,					// set editor height
+				minHeight: null,             // set minimum height of editor
+				maxHeight: null,             // set maximum height of editor
+				focus: true,                  // set focus to editable area after initializing summernote
+				airmode: true
+			});
+		});
+	</script>
+</div>
+<!-- nav_body -->
+
+<!-- lab_classinfo<pre>
+<div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Notice</p>
+<p>Message:  Undefined variable: lab_classinfo</p>
+<p>Filename: supervisor/student_exercise_view.php</p>
+<p>Line Number: 89</p>
+
+
+	<p>Backtrace:</p>
+	
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: /opt/lampp/htdocs/compro20s2/application/views/supervisor/student_exercise_view.php<br />
+			Line: 89<br />
+			Function: _error_handler			</p>
+
+		
+	
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: /opt/lampp/htdocs/compro20s2/application/controllers/Supervisor.php<br />
+			Line: 1603<br />
+			Function: view			</p>
+
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: /opt/lampp/htdocs/compro20s2/index.php<br />
+			Line: 315<br />
+			Function: require_once			</p>
+
+		
+	
+
+</div></pre>class_info<pre>
+<div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Notice</p>
+<p>Message:  Undefined variable: class_info</p>
+<p>Filename: supervisor/student_exercise_view.php</p>
+<p>Line Number: 90</p>
+
+
+	<p>Backtrace:</p>
+	
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: /opt/lampp/htdocs/compro20s2/application/views/supervisor/student_exercise_view.php<br />
+			Line: 90<br />
+			Function: _error_handler			</p>
+
+		
+	
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: /opt/lampp/htdocs/compro20s2/application/controllers/Supervisor.php<br />
+			Line: 1603<br />
+			Function: view			</p>
+
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: /opt/lampp/htdocs/compro20s2/index.php<br />
+			Line: 315<br />
+			Function: require_once			</p>
+
+		
+	
+
+</div></pre>group_permission<pre>
+<div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Notice</p>
+<p>Message:  Undefined variable: group_permission</p>
+<p>Filename: supervisor/student_exercise_view.php</p>
+<p>Line Number: 91</p>
+
+
+	<p>Backtrace:</p>
+	
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: /opt/lampp/htdocs/compro20s2/application/views/supervisor/student_exercise_view.php<br />
+			Line: 91<br />
+			Function: _error_handler			</p>
+
+		
+	
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: /opt/lampp/htdocs/compro20s2/application/controllers/Supervisor.php<br />
+			Line: 1603<br />
+			Function: view			</p>
+
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: /opt/lampp/htdocs/compro20s2/index.php<br />
+			Line: 315<br />
+			Function: require_once			</p>
+
+		
+	
+
+</div></pre>lab_data<pre>
+<div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Notice</p>
+<p>Message:  Undefined variable: lab_data</p>
+<p>Filename: supervisor/student_exercise_view.php</p>
+<p>Line Number: 92</p>
+
+
+	<p>Backtrace:</p>
+	
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: /opt/lampp/htdocs/compro20s2/application/views/supervisor/student_exercise_view.php<br />
+			Line: 92<br />
+			Function: _error_handler			</p>
+
+		
+	
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: /opt/lampp/htdocs/compro20s2/application/controllers/Supervisor.php<br />
+			Line: 1603<br />
+			Function: view			</p>
+
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: /opt/lampp/htdocs/compro20s2/index.php<br />
+			Line: 315<br />
+			Function: require_once			</p>
+
+		
+	
+
+</div></pre>student_data<pre>Array
+(
+    [stu_id] => 63900100
+    [stu_gender] => male
+    [stu_firstname] => คณัฐ
+    [stu_lastname] => ตังติสานนท์
+    [stu_nickname] => 
+    [stu_dob] => 0000-00-00
+    [stu_avatar] => image_63900100_5ffbaf2c48a47.jpg
+    [stu_email] => 
+    [stu_tel] => 
+    [stu_group] => 20020002
+    [note] => 
+    [stu_dept_id] => 9
+    [group_id] => 20020002
+    [group_no] => 2
+    [group_name] => จันทร์ เช้า
+    [department] => 9
+    [lecturer] => 900001
+    [day_of_week] => Monday
+    [time_start] => 10:00:00
+    [time_end] => 12:00:00
+    [year] => 2020
+    [semester] => 2
+    [allow_upload_pic] => yes
+    [allow_submit] => yes
+    [allow_login] => yes
+    [allow_exercise] => yes
+    [supervisor_id] => 900001
+    [supervisor_firstname] => คณัฐ
+    [supervisor_lastname] => ตังติสานนท์
+    [supervisor_nickname] => ยู้
+    [supervisor_gender] => male
+    [supervisor_dob] => 0000-00-00
+    [supervisor_avatar] => image_kanut_59a65158903e4.jpg
+    [supervisor_email] => kanut.ta@kmitl.ac.th
+    [supervisor_tel] => 
+    [supervisor_department] => วิศวกรรมคอมพิวเตอร์
+    [stu_dept_name] => วิศวกรรมแมคคาทรอนิกส์
+)
+</pre> --><!-- nav_body -->
+<div class="col-lg-10 col-md-10 col-sm-10 kpanel_body" style="margin-top:120px;">
+	<div class="row">
+		<div class="col-lg-1">
+		</div> 
+		<!-- <pre>Array
+(
+    [__ci_last_regenerate] => 1611033333
+    [username] => kanut2
+    [id] => 900009
+    [role] => supervisor
+    [added] => 2017-08-10 16:06:53
+    [last_login] => 2021-01-19 09:03:33
+    [last_seen] => 2021-01-19 09:03:33
+    [status] => online
+    [active] => yes
+    [added_by] => 
+    [ci_session] => 1611021805
+    [session_id] => ea237f13f64fc76b0e5ab95b3791cc3c883e443a
+    [logged_in] => 1
+    [supervisor_id] => 900009
+    [supervisor_department] => วิศวกรรมคอมพิวเตอร์
+    [supervisor_gender] => male
+    [supervisor_firstname] => kanut2
+    [supervisor_lastname] => staff
+    [supervisor_nickname] => 
+    [supervisor_email] => 
+    [supervisor_avatar] => image_kanut2_599abe2beaf62.jpg
+    [lab_item] => 1
+)
+</pre> --> 
+		
+		<div class="col-lg-10">
+			<div class="panel panel-primary" style="min-width:800px;">
+				<div class="panel-heading">
+					 <div class="row">
+						<div class="col-xs-1">
+							<div></div>
+						</div>
+
+						<div class="col-xs-7">
+							<h2>Chapter : 2 - item : 1 - การจัดรูปแบบข้อความ</h2>
+						</div>
+						
+						<div class="col-xs-4">
+							<button class="btn btn-info btn-lg">คะแนน คะแนน : 0 / 2</button>
+							<p class="badge">ส่งมาแล้ว 2 ครั้ง</p>
+						</div>						
+
+					</div>
+				</div>
+
+				<div style="display:inline-block;"></div>
+
+				<div class="panel-body" style="text-align:left;">
+					<p><div align="left">ให้นักศึกษา เขียนโปรแกรมตามข้อกำหนดดังนี้<font face="Courier New" style="text-align: center;">&nbsp;</font></div><ul><li style="text-align: left; ">แสดงผลลัพธ์<font face="Courier New" style="text-align: center;">&nbsp;Computer</font><span style="text-align: center;">&nbsp;อยู่ด้านซ้ายของจอภาพ</span></li><li style="text-align: left; "><span style="text-align: center;"><font face="Courier New">Programming&nbsp;</font>อยู่ด้านขวาของจอภาพ</span></li><li style="text-align: left; "><span style="text-align: center;">ใช้คำสั่ง&nbsp;<font face="Courier New" style="text-align: -webkit-left;">printf</font><span style="text-align: -webkit-left;">&nbsp;ได้เพียงครั้งเดียว</span></span></li><li style="text-align: left; "><span style="text-align: center;"><span style="text-align: -webkit-left;">ห้ามใช้ space<font face="Courier New"> \t </font>และ<font face="Courier New"> \n&nbsp;</font></span></span><font color="#ff0000">(ถ้าตรวจพบภายหลังจะได้ ศูนย์คะแนน)</font></li><li style="text-align: left; "><span style="text-align: center;"><span style="text-align: -webkit-left;"><font face="Arial">กรณีที่ไม่ทำตามข้อกำหนด คะแนนที่ได้จะถูกปรับเป็น 0 คะแนน&nbsp;</font><br></span></span></li><li style="text-align: left; "><span style="text-align: center;"><span style="text-align: -webkit-left;"><br></span></span></li></ul><p style="text-align: left;"><span style="text-align: center;"><span style="text-align: -webkit-left;"><u>หมายเหตุ</u></span></span></p><p style="text-align: left;"><span style="text-align: center;"><span style="text-align: -webkit-left;">1. การแสดงผลแต่ละบรรทัดมี 80 ตัวอักษร<br></span></span><br></p></p>
+				</div>
+				
+				<div class="panel-footer pull-left" style="text-align:left;">
+					<h3>Output : </h3>
+					<div  style="font-family: Courier;font-size: 16px;border:2px blue;"><code><textarea cols="80" rows="25" style="background:black;color:white;">Computer                                                             Programming
+</textarea></code>
+					</div>						
+				</div>				
+				
+			</div>
+		</div>
+		<div class="col-lg-1">
+		</div>
+	</div>
+	<!--- --->
+	<div class="row">
+		<!-- 		<form action="http://compro.ce.kmitl.ac.th/compro20s2/index.php/student/exercise_submission" method="post" accept-charset="utf-8" id="exercise_submission" enctype="multipart/form-data"  onsubmit="return checkSourceCode()"  >
+			<input type="hidden"	name="stu_id"		value="63900100" >
+			<input type="hidden"	name="chapter_id"	value="2" >
+			<input type="hidden"	name="item_id"		value="1" >
+			<input type="hidden"	name="exercise_id"	value="6" >
+			
+
+
+			<input type="file" name="submitted_file" id="userfile" accept=".c" onchange="return checkfilename(this);"><span><button type="button" onclick="form_submit(this)"   >Submit</button></span>			
+
+		</form>
+		 --> 	</div>
+	
+
+
+  
+
+  <script type="text/javascript">
+	function checkSourceCode(){
+		//alert("checking source code");
+
+		var sourceCode = document.getElementById("userfile");
+		var sourceCodeName = sourceCode.value;
+		
+		if(sourceCodeName==""){
+			alert("คุณยังไม่ได้เลือกซอร์สโค้ดที่ต้องการส่ง");
+			return false;
+		}
+		var extension = sourceCodeName.split(".");
+		if(extension[1]!=document.getElementById("id_extension").value) {
+			alert("อนุญาตให้ส่งไฟล์สกุล ."+document.getElementById("id_extension").value+"เท่านั้น");
+			return false;
+		}
+		/*
+		var fileName = extension[0].split('\\');
+		if(/^[a-zA-Z0-9]+/.test(fileName[2]) == true) {
+			
+		} else {
+			alert("ชื่อไฟล์สามารถประกอบด้วย a-z,A-Z,0-9 เท่านั้น");
+			return false;
+		}
+		
+		var soruceCodeFileSize = parseInt(sourceCode.files[0].size);
+		if (sourceCodeFileSize > 4096) {
+			alert("File size is too big : "+sourceCodeFileSize+" bytes.");
+			return false;
+		}
+		*/
+		alert("File name : "+sourceCodeName+" "+soruceCodeFileSize);
+	}
+	var lab_chapter = 2;
+	var lab_item = 1;
+
+	
+	</script>
+<!-- nav_body -->
+<div class="col-lg-10 col-md-10 col-sm-10 kpanel_body" style="margin-left:300px;padding-top:40px;">
+	<div class="row">
+		<div class="col-lg-1">
+		</div> 
+		
+		<div class="col-lg-10">
+			<div class="panel panel-success" style="min-width:800px;text-align:left">
+				<div class="panel-heading">
+					 <div class="row">
+						 <div class="col-xs-8 text-left">
+							
+							<h2 style="color:blue;">Last submission :   </span></h2>
+						</div>
+
+						
+						<div class="col-xs-4">
+							<h1 style="color:red;"><span class="glyphicon glyphicon-remove pull-right"></span> </h1>
+
+						</div>
+						
+
+					</div>
+				</div>
+
+				<div style="display:inline-block;"></div>
+
+				<div class="panel-body" style="text-align:left;">
+					<textarea id="sourcecode_content_testrun" style="text-align:left;" readonly>// /*
+//  * กลุ่มที่  : 20020002
+//  * 63900100 คณัฐ ตังติสานนท์
+//  * chapter : 2	item : 1	ครั้งที่ : 0002
+//  * Assigned : Tuesday 19th of January 2021 10:31:36 AM --> Submission : Tuesday 19th of January 2021 10:35:45 AM	
+//  * Elapsed time : 4 minutes.
+//  * filename : hello_covid.c
+//  */
+// #include<stdio.h>
+// int main() {
+// 	printf("%-40s%40s","Computer","Programming");
+// 	return 0;
+// }
+// by 900009 kanut2 date : Tuesday 19th of January 2021 10:38:39 AM
+</textarea>
+				</div>
+				<div class="panel-footer" style= "align:center;">
+					<div style="height:50vh; font-family: Courier, monospace;font-style: normal;font-size: 16px;font-variant: normal;text-align: left; white-space:pre-wrap; width:770px; background-color:rgb(10,10,10); color:white; align:center;">^                                                                               
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<div class="col-lg-1">
+		</div>
+	</div>
+	
+	
+</div>
+	<script type="text/javascript" src="http://compro.ce.kmitl.ac.th/compro20s2/assets/codemirror-5.22.0/lib/codemirror.js"></script>
+	<script type="text/javascript" src="http://compro.ce.kmitl.ac.th/compro20s2/assets/codemirror-5.22.0/mode/clike/clike.js"></script>
+	<script>
+		var testrun_output = CodeMirror.fromTextArea(document.getElementById("sourcecode_content_testrun"), {
+					lineNumbers: true,
+					tabSize:		4,
+					matchBrackets: true,
+					readOnly:		true,
+					mode: "text/x-csrc"
+			});
+	</script>
+  
+
+			</div>
+			<!-- row content -->
+
+		</div>
+		<!-- Page content -->
+		
+		<div class="clearfix"></div>
+
+		<!-- footer start -->
+		<footer class="container-fluid" style="background-color:LightSteelBlue;border:2px blue;  margin-right:2px;margin-left:300px; ">
+			<div style="display:inline";>
+			
+			<p style="text-align:center;">
+				<marquee behavior=alternate direction=left scrollAmount=3 width="4%"> <font face=Webdings> 3</font> </marquee> <marquee scrollAmount=1 direction=left width="2%"> | | |</marquee> Department of Computer Engineering, KMITL 2017 <marquee scrollAmount=1 direction=right width="2%"> | | |</marquee><marquee behavior=alternate direction=right scrollAmount=3 width="4%"> <font face=Webdings> 4</font> </marquee>
+			</p>
+			<p style="color:darkblue;">
+				Page rendered in <strong>0.3169</strong> seconds. 
+				CodeIgniter Version <strong>3.1.2</strong><br/>Tuesday 19th of January 2021 12:18:26 PM			</p>
+			
+			</div>
+		  
+		</footer>
+		<!-- footer end -->
+		<script>
+			var baseURL = "http://compro.ce.kmitl.ac.th/compro20s2/";
+			var baseurl = "http://compro.ce.kmitl.ac.th/compro20s2/";
+			var user_role  = "supervisor";
+			var user_id  = "900009";
+		</script>
+		<script src="http://compro.ce.kmitl.ac.th/compro20s2/assets/js/plms.js";></script>
+
+	
+	
+	
+
+
+	</body>
+	 
+	
+	<!-- 	<h3>_SERVER</h3><pre>Array
+(
+    [UNIQUE_ID] => YAZrolyUi3Ykls6ml6sjxQAAAA8
+    [HTTP_HOST] => compro.ce.kmitl.ac.th
+    [HTTP_CONNECTION] => keep-alive
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate
+    [HTTP_ACCEPT_LANGUAGE] => en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7,th;q=0.6
+    [HTTP_COOKIE] => __utmz=18382763.1596109518.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); _ga=GA1.3.1771808231.1597380787; __utma=18382763.2011470428.1596109518.1610524756.1610527190.40; ci_session=22dd2bb03922efdb148aa27cb6caa7ceecf00ce0
+    [PATH] => /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+    [LD_LIBRARY_PATH] => /opt/lampp/lib:/opt/lampp/lib
+    [SERVER_SIGNATURE] => 
+    [SERVER_SOFTWARE] => Apache/2.4.43 (Unix) OpenSSL/1.1.1f PHP/7.4.4 mod_perl/2.0.8-dev Perl/v5.16.3
+    [SERVER_NAME] => compro.ce.kmitl.ac.th
+    [SERVER_ADDR] => 192.168.109.7
+    [SERVER_PORT] => 80
+    [REMOTE_ADDR] => 10.66.13.83
+    [DOCUMENT_ROOT] => /opt/lampp/htdocs
+    [REQUEST_SCHEME] => http
+    [CONTEXT_PREFIX] => 
+    [CONTEXT_DOCUMENT_ROOT] => /opt/lampp/htdocs
+    [SERVER_ADMIN] => you@example.com
+    [SCRIPT_FILENAME] => /opt/lampp/htdocs/compro20s2/index.php
+    [REMOTE_PORT] => 52292
+    [GATEWAY_INTERFACE] => CGI/1.1
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [REQUEST_METHOD] => GET
+    [QUERY_STRING] => 
+    [REQUEST_URI] => /compro20s2/index.php/supervisor/student_exercise_view/63900100/2/1
+    [SCRIPT_NAME] => /compro20s2/index.php
+    [PATH_INFO] => /supervisor/student_exercise_view/63900100/2/1
+    [PATH_TRANSLATED] => /opt/lampp/htdocs/supervisor/student_exercise_view/63900100/2/1
+    [PHP_SELF] => /compro20s2/index.php/supervisor/student_exercise_view/63900100/2/1
+    [REQUEST_TIME_FLOAT] => 1611033506.486
+    [REQUEST_TIME] => 1611033506
+)
+</pre>-->
+	<!-- 	<h3>_REQUEST</h3><pre>Array
+(
+)
+</pre>-->
+	<!-- 	<h3>_POST</h3><pre>Array
+(
+)
+</pre>-->
+	<!-- 	<h3>_FILES</h3><pre>Array
+(
+)
+</pre>-->
+	<!-- 	<h3>_ENV</h3><pre>Array
+(
+)
+</pre>-->
+	<!-- 	<h3>_COOKIE</h3><pre>Array
+(
+    [__utmz] => 18382763.1596109518.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)
+    [_ga] => GA1.3.1771808231.1597380787
+    [__utma] => 18382763.2011470428.1596109518.1610524756.1610527190.40
+    [ci_session] => 22dd2bb03922efdb148aa27cb6caa7ceecf00ce0
+)
+</pre>-->
+	<!-- 	<h3>_SESSION</h3><pre>Array
+(
+    [__ci_last_regenerate] => 1611033333
+    [username] => kanut2
+    [id] => 900009
+    [role] => supervisor
+    [added] => 2017-08-10 16:06:53
+    [last_login] => 2021-01-19 09:03:33
+    [last_seen] => 2021-01-19 09:03:33
+    [status] => online
+    [active] => yes
+    [added_by] => 
+    [ci_session] => 1611021805
+    [session_id] => ea237f13f64fc76b0e5ab95b3791cc3c883e443a
+    [logged_in] => 1
+    [supervisor_id] => 900009
+    [supervisor_department] => วิศวกรรมคอมพิวเตอร์
+    [supervisor_gender] => male
+    [supervisor_firstname] => kanut2
+    [supervisor_lastname] => staff
+    [supervisor_nickname] => 
+    [supervisor_email] => 
+    [supervisor_avatar] => image_kanut2_599abe2beaf62.jpg
+    [lab_item] => 1
+)
+</pre> -->
+	
+		
+	
+</html>

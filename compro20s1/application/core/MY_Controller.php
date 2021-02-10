@@ -60,9 +60,17 @@ class MY_Controller extends CI_Controller {
 		$today = date('Y-m-d');		
 		$time = date('H:i:s');
 		$ip = $_SERVER['REMOTE_ADDR'] ? $_SERVER['REMOTE_ADDR'] : 'NULL';
-		$user = $_SESSION['username'] ? $_SESSION['username'] : 'NULL';
-		$role = $_SESSION['role'] ? $_SESSION['role'] : 'NULL';
-		$filename = $_SESSION['role'].'_'. $today.'.log';"";
+		if( isset($_SESSION['username']))
+			$user = $_SESSION['username'];
+		else
+			$user = 'NULL';
+		if (isset($_SESSION['role'] )) {
+			$role = $_SESSION['role'];
+		} else {
+			$role = 'NULL';
+		}
+		 
+		$filename = $role.'_'. $today.'.log';"";
 		
 
 		$fp = fopen(APPPATH.'logs'.DIRECTORY_SEPARATOR.$filename,'a') or exit("Can't open $filename!");
@@ -166,6 +174,25 @@ class MY_Controller extends CI_Controller {
 		}
 
 		//echo '<pre>'; print_r($_SESSION); echo '</pre>-->';
+	}
+
+	public function createLogFileStudentOnline()
+	{
+		$log_folder = APPPATH.'logs'.DIRECTORY_SEPARATOR;
+		//echo "log_folder = $log_folder<br>";
+		$today = date('Y-m-d');		
+		$time = date('H:i:s');
+		$ip = $_SERVER['REMOTE_ADDR'] ? $_SERVER['REMOTE_ADDR'] : 'NULL';
+		$user = $_SESSION['username'] ? $_SESSION['username'] : 'NULL';
+		$role = $_SESSION['role'] ? $_SESSION['role'] : 'NULL';
+		$filename = $_SESSION['role'].'_'. $today.'.log';"";
+		
+
+		$fp = fopen(APPPATH.'logs'.DIRECTORY_SEPARATOR.$filename,'a') or exit("Can't open $filename!");
+		fwrite($fp,'['.$today.' '.$time.'] ['.$user.'] ['.$role.'] ['.$action.'] ['.$ip.']');
+		fwrite($fp,"\r\n");
+		fclose($fp);
+		
 	}
 
 	

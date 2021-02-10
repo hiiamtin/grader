@@ -187,8 +187,8 @@ class Supervisor_model extends CI_Model {
 	}
 
 	public function get_class_schedule() {
-		$year = 2018;
-		$semester = 1;
+		$year = 2020;
+		$semester = 2;
 		$this->db->where("year", $year);
 		$this->db->where('semester', $semester);
 		$query = $this->db->get('class_schedule');

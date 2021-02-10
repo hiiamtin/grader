@@ -9,6 +9,7 @@ class Auth_model extends CI_Model {
 	{
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
+		$password = $this->password_decoder($password, $username);
 		$_SESSION['username'] = $username;
 
 		$this->db->where("username", $username);
@@ -201,15 +202,14 @@ class Auth_model extends CI_Model {
 	}
 
 	private function password_decoder($password, $username) {
-    $encoded = base64_decode($password);
-    $str = "";
-    for($i=0; $i<strlen($encoded); $i++) {
-      $b = ord($encoded[$i]);
-      $a = $b^(strlen($username)+5);
-      $str .= chr($a);
-    }
-    return base64_decode(base64_decode($str));
-  }
-
+		$encoded = base64_decode($password);
+		$str = "";
+		for($i=0; $i<strlen($encoded); $i++) {
+		  $b = ord($encoded[$i]);
+		  $a = $b^(strlen($username)+5);
+		  $str .= chr($a);
+		}
+		return base64_decode(base64_decode($str));
+	  }
 
 }

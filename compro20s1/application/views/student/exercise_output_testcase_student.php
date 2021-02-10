@@ -23,13 +23,13 @@
 			<div style="display:inline-block;"></div>
 
 			<div class="panel-body" style="text-align:left;">
-				<textarea id="sourcecode_content" style="text-align:left;" readonly><?php echo $sourcecode_content; ?></textarea>
+				<textarea id="sourcecode_content" style="height:50vh; width:100%; text-align:left;" readonly><?php echo $sourcecode_content; ?></textarea>
 			</div>				
 			
 		</div>
 	</div>
 </div>
-<!--- last submit -->
+<!--- last submit 555-->
 
 
 <!--- Testcase -->
@@ -38,7 +38,9 @@
 	for($testcase_count = 0; $testcase_count < $num_of_testcase; $testcase_count++) {
 		$testcase_row = $testcase_array[$testcase_count];
 		$action = 'exercise_submission_testcase';
-
+		if (empty($testcase_row['active']) || is_null($testcase_row['active']) ) {
+			$testcase_row['active']="yes";
+		}
 		if ($testcase_row['active']=="yes") {
 			$count++;
 			$num_rows = strlen($testcase_row['output_to_show']);
@@ -134,19 +136,6 @@ echo $testcase_html;
 	echo ' status: '.$status.' -->';
 ?>
 <!--- Testcase End -->
-
-
-	
-	<script>
-		var editor = CodeMirror.fromTextArea(document.getElementById("sourcecode_content"), {
-					lineNumbers: true,
-					matchBrackets: true,
-					indentUnit: 4,
-					readonly: true,
-					mode: "text/x-csrc"
-			});
-	</script>
-			
 
 
 

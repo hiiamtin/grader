@@ -38,10 +38,9 @@ class Auth extends MY_Controller {
 
 	}
 */
-	public function index()
-	{	
+	public function index()	{	
 		$this->logout_after_time_limit();
-		
+
 
 		$this->logged_in_check();
 		
@@ -119,25 +118,26 @@ class Auth extends MY_Controller {
 			}
 		}
 
-		$this->load->view("auth/auth_header");		
-		$this->load->view("auth/auth_topbar");
-		$this->load->view("auth/auth");
-		$this->load->view("auth/auth_footer");
+		$this->load->view("auth_header");
+		$this->load->view("auth_topbar");
+		$this->load->view("auth");
+		$this->load->view("auth_footer");
 	
 	}
 
-	public function logout()
-	{
+	public function logout()	{
 		
 		$this->load->model('auth_model');
-		$this->auth_model->update_user_logout($_SESSION['id']);
-		#$this->createLogFile("log out");
-		
+		if (!empty($_SESSION['id'])) {
+			$this->auth_model->update_user_logout($_SESSION['id']);
+			$this->createLogFile("log out");
+			
 
-		$this->session->unset_userdata("logged_in");
-		$this->session->sess_destroy();
-		$this->access = "*";	
-		$this->logout_after_time_limit();
+			$this->session->unset_userdata("logged_in");
+			$this->session->sess_destroy();
+			$this->access = "*";	
+			$this->logout_after_time_limit();
+		}
 		redirect("auth");
 		
 	}

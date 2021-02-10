@@ -36,6 +36,7 @@
 					if(isset($student_data['stu_dept_name']))
 						echo $student_data['stu_dept_name'];
 					?></p>
+					<button id="online_students" class="btn btn-info">Student  onlines</button>
 			</div>
 			
 			

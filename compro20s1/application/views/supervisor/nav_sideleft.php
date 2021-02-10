@@ -60,15 +60,14 @@
 					<p><?php echo $_SESSION['supervisor_lastname'] ? $_SESSION['supervisor_lastname'] : ""; ?></p>
 				</div>			
 			</div>
-
+			<button id="online_students" class="btn btn-info">online students</button>
+			
 			<?php 
 				if ($_SESSION['username']=='kanut') {
 					echo '<div class="row">';
 					echo '<a href="'.site_url('supervisor/process_show').'" >Process</a>';
 					echo '<br/><br/>';
 					$today = date('Y-m-d');	
-
-
 					echo '<a href="'.site_url('supervisor/student_activity_show/').$today.'" >Student log</a>';
 					echo '<br/><br/>';
 					echo '<a href="'.site_url('supervisor/demo_sse').'" >Demo SSE</a>';

@@ -1,0 +1,816 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PLMS Student</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <link rel="stylesheet" href="http://161.246.127.85/compro20s1/assets/bootstrap-3.3.7/css/bootstrap.min.css" >
+    <link href="http://161.246.127.85/compro20s1/assets/css/auth_custom.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="http://161.246.127.85/compro20s1/assets/codemirror-5.22.0/lib/codemirror.css" >    
+    <link rel="stylesheet" type="text/css" href="http://161.246.127.85/compro20s1/assets/css/plms.css" >    
+</head>
+
+<body>
+<!--  NAV TOP  -->
+<div class="container-fluid">
+	<div class="navbar navbar-default navbar-fixed-top">
+		<div class="navbar-header">
+		
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>                        
+			</button>
+			<!-- <a class="navbar-brand" href="#">Logo</a> -->
+
+			<img height="80px" width="80px" src="http://161.246.127.85/compro20s1/assets/images/logo1.png" >
+
+		</div>
+
+		<div class="navbar-text" style="margin-top:0px;padding-top:0px">
+			<h3>Programming Lab Management System</h3>
+			<h5>King Mongkut's Institute of Technolygy Ladkrabang</h5>
+		</div>
+    
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav">
+
+
+			</ul>
+			<ul class="nav navbar-nav navbar-right" style="padding-top:15px;">
+				<li class="active"><a href="http://161.246.127.85/compro20s1/index.php/student/index">Home</a></li>
+				<li><a href="http://161.246.127.85/compro20s1/index.php/student/exercise_home">Exercise</a></li>
+				<li><a href="http://161.246.127.85/compro20s1/index.php/student/instruction" title="ข้อแนะนำการใช้งาน"><i class="icon-list"></i> How to use First step</a></li>
+				<li><a href="http://161.246.127.85/compro20s1/index.php/student/midterm_exam" title="การสอบกลางภาค"><i class="icon-list"></i> Midterm Examination</a></li>
+				<li><a href="http://161.246.127.85/compro20s1/index.php/student/faq" title="คำถามพบบ่อย">FAQ</a></li>
+				<li><a href="http://161.246.127.85/compro20s1/index.php/student/practice_exam" title="การสอบปฏิบัติ"><i class="icon-list"></i> Practice Examination</a></li>
+				<li><a href="http://161.246.127.85/compro20s1/index.php/student/edit_profile_form">Edit profile</a></li>
+				<li class="dropdown">
+					<a class="dropdown-toggle " data-toggle="dropdown" title="ความช่วยเหลือ">Help <b class="caret"></b></a>
+					<ul class="dropdown-menu dropbtn">			
+						
+						<li>
+							<a href="#"><i class="icon-support"></i> Useful link</a>
+						</li>
+						<li>
+							<a href="#"><i class="icon-support"></i> About</a>
+						</li>
+					</ul>
+				</li>
+				<li><a  class="btn btn-default btn-lg mr-4"  href="http://161.246.127.85/compro20s1/index.php/auth/logout"> 
+				<span class="glyphicon glyphicon-log-out"></span> Log out </a></li>
+			</ul>
+		</div>
+		
+  </div>
+  
+</div>
+<!-- /. NAV TOP  -->
+ 
+
+<!-- Page Contents -->
+<div class="container-fluid"  style="background-color:GhostWhite">	
+	<!-- row content -->
+	<div class="row content">
+<!-- nav_sideleft -->
+
+<div class="col-sm-2 sidenav  text-center" style="padding-top:10px;margin-top:100px;">
+	<div class="affix" style="background-color:Pink; min-width: 15%; "><!-- -->
+
+		<div class="panel panel-default" style="background-color:AliceBlue; height:1024px;">
+			<img src="http://161.246.127.85/compro20s1/student_data/avatar/user.png" style="width:180px;padding-top:20px">
+			
+			<div class="row" style="margin-top:10px">
+				<p>กลุ่มที่ : 99 </p>
+				<p>รหัสนักศึกษา : 99010099 </p>
+			</div>
+				
+
+			<div class="row">
+				
+					<p>นาย ทดสอบ  ได้ใจ					</p>
+			</div>
+			<div class="row">			
+				<p>   </p>
+			</div>
+
+			<div class="row">			
+				<p>อื่น ๆ</p>
+					<button id="online_students" class="btn btn-info">Student  onlines</button>
+			</div>
+			
+			
+			<!--
+			<div class="row">			
+				<p>student_data : <pre> Array
+(
+    [stu_id] => 99010099
+    [stu_gender] => male
+    [stu_firstname] => ทดสอบ
+    [stu_lastname] => ได้ใจ
+    [stu_nickname] => 
+    [stu_dob] => 
+    [stu_avatar] => 
+    [stu_email] => 
+    [stu_tel] => 
+    [stu_group] => 20010099
+    [note] => 
+    [stu_dept_id] => 99
+    [group_id] => 20010099
+    [group_no] => 99
+    [group_name] => อาทิตย์
+    [department] => 99
+    [lecturer] => 900009
+    [day_of_week] => Sunday
+    [time_start] => 07:00:00
+    [time_end] => 20:00:00
+    [year] => 2020
+    [semester] => 1
+    [allow_upload_pic] => yes
+    [allow_submit] => yes
+    [allow_login] => no
+    [allow_exercise] => yes
+    [supervisor_id] => 900009
+    [supervisor_firstname] => kanut2
+    [supervisor_lastname] => staff
+    [supervisor_nickname] => 
+    [supervisor_gender] => male
+    [supervisor_dob] => 
+    [supervisor_avatar] => image_kanut2_599abe2beaf62.jpg
+    [supervisor_email] => 
+    [supervisor_tel] => 
+    [supervisor_department] => วิศวกรรมคอมพิวเตอร์
+    [stu_dept_name] => อื่น ๆ
+)
+</pre></p>
+			</div>
+			<!---->
+			
+
+
+
+			
+		</div>
+	</div>
+
+	
+</div>
+<!-- nav_sideleft -->
+		
+		
+
+<!-- nav_body -->
+<div class="col-lg-10 col-md-10 col-sm-10 kpanel_body" style="margin-top:120px;">
+	<div class="row">
+		<div class="col-lg-1">
+		</div> 
+		<!-- <pre>Array
+(
+    [__ci_last_regenerate] => 1603849834
+    [username] => 99010099
+    [id] => 99010099
+    [role] => student
+    [added] => 2020-06-30 14:39:06
+    [last_login] => 2020-10-28 08:30:21
+    [last_seen] => 2020-10-28 08:30:21
+    [status] => online
+    [active] => yes
+    [added_by] => kanut2
+    [ci_session] => 1603848617
+    [session_id] => 937b82d2e91f9519bba21a82f6380b8401b68057
+    [logged_in] => 1
+    [stu_id] => 99010099
+    [stu_gender] => male
+    [stu_firstname] => ทดสอบ
+    [stu_lastname] => ได้ใจ
+    [stu_nickname] => 
+    [stu_dob] => 
+    [stu_avatar] => 
+    [stu_email] => 
+    [stu_tel] => 
+    [stu_group] => 20010099
+)
+</pre> --> 
+		
+		<div class="col-lg-10">
+			<div class="panel panel-primary" style="min-width:800px;">
+				<div class="panel-heading">
+					 <div class="row">
+						<div class="col-xs-1">
+							<div></div>
+						</div>
+
+						<div class="col-xs-7">
+							<h2>Chapter : 5 - item : 1 - ตัวเลขรูปสามเหลี่ยม</h2>
+						</div>
+						
+						<div class="col-xs-4">
+							<button class="btn btn-info btn-lg">คะแนน คะแนน : 2 / 2</button>
+							<p class="badge">ส่งมาแล้ว 2 ครั้ง</p>
+						</div>						
+
+					</div>
+				</div>
+
+				<div style="display:inline-block;"></div>
+
+				<div class="panel-body" style="text-align:left;">
+					<p>รับจำนวนเต็มบวก 1 จำนวน แล้วแสดงผล รูปสามเหลี่่ยมตามตัวอย่าง</p>
+				</div>
+								
+				
+			</div>
+		</div>
+		<div class="col-lg-1">
+		</div>
+	</div>
+	<!--- --->
+	<div class="row">
+				<form action="http://161.246.127.85/compro20s1/index.php/student/exercise_submission" method="post" accept-charset="utf-8" id="exercise_submission" enctype="multipart/form-data"  onsubmit="return checkSourceCode()"  >
+			<input type="hidden"	name="stu_id"		value="99010099" >
+			<input type="hidden"	name="chapter_id"	value="5" >
+			<input type="hidden"	name="item_id"		value="1" >
+			<input type="hidden"	name="exercise_id"	value="1301074" >
+			
+
+
+			<button class="btn btn-success btn-lg " readonly> You have got full mark !!! </button>			
+
+		</form>
+			</div>
+	
+
+
+  
+
+  <script type="text/javascript">
+	function checkSourceCode(){
+		//alert("checking source code");
+
+		var sourceCode = document.getElementById("userfile");
+		var sourceCodeName = sourceCode.value;
+		
+		if(sourceCodeName==""){
+			alert("คุณยังไม่ได้เลือกซอร์สโค้ดที่ต้องการส่ง");
+			return false;
+		}
+		var extension = sourceCodeName.split(".");
+		if(extension[1]!=document.getElementById("id_extension").value) {
+			alert("อนุญาตให้ส่งไฟล์สกุล ."+document.getElementById("id_extension").value+"เท่านั้น");
+			return false;
+		}
+		/*
+		var fileName = extension[0].split('\\');
+		if(/^[a-zA-Z0-9]+/.test(fileName[2]) == true) {
+			
+		} else {
+			alert("ชื่อไฟล์สามารถประกอบด้วย a-z,A-Z,0-9 เท่านั้น");
+			return false;
+		}
+		
+		var soruceCodeFileSize = parseInt(sourceCode.files[0].size);
+		if (sourceCodeFileSize > 4096) {
+			alert("File size is too big : "+sourceCodeFileSize+" bytes.");
+			return false;
+		}
+		*/
+		alert("File name : "+sourceCodeName+" "+soruceCodeFileSize);
+	}
+	var lab_chapter = 5;
+	var lab_item = 1;
+
+	
+	</script>
+<!-- $testcase_arraye <pre>Array
+(
+    [0] => Array
+        (
+            [testcase_id] => 646
+            [exercise_id] => 1301074
+            [testcase_content] => 0
+            [active] => yes
+            [show_to_student] => yes
+            [testcase_note] => 
+            [testcase_output] => input : 0
+
+0 is out of range !!!
+
+            [item_pass] => yes
+            [testcase_student] => input : 0                                                                                                                                                       0 is out of range !!!                                                           
+            [output_to_show] => input : 0
+
+0 is out of range !!!
+
+        )
+
+    [1] => Array
+        (
+            [testcase_id] => 647
+            [exercise_id] => 1301074
+            [testcase_content] => 5
+            [active] => yes
+            [show_to_student] => yes
+            [testcase_note] => 
+            [testcase_output] => input : 5
+
+5
+54
+543
+5432
+54321
+
+            [item_pass] => yes
+            [testcase_student] => input : 5                                                                                                                                                       5                                                                               54                                                                              543                                                                             5432                                                                            54321                                                                           
+            [output_to_show] => input : 5
+
+5
+54
+543
+5432
+54321
+
+        )
+
+    [2] => Array
+        (
+            [testcase_id] => 648
+            [exercise_id] => 1301074
+            [testcase_content] => 9
+            [active] => yes
+            [show_to_student] => yes
+            [testcase_note] => 
+            [testcase_output] => input : 9
+
+9
+98
+987
+9876
+98765
+987654
+9876543
+98765432
+987654321
+
+            [item_pass] => yes
+            [testcase_student] => input : 9                                                                                                                                                       9                                                                               98                                                                              987                                                                             9876                                                                            98765                                                                           987654                                                                          9876543                                                                         98765432                                                                        987654321                                                                       
+            [output_to_show] => input : 9
+
+9
+98
+987
+9876
+98765
+987654
+9876543
+98765432
+987654321
+
+        )
+
+    [3] => Array
+        (
+            [testcase_id] => 649
+            [exercise_id] => 1301074
+            [testcase_content] => 7
+            [active] => yes
+            [show_to_student] => yes
+            [testcase_note] => 
+            [testcase_output] => input : 7
+
+7
+76
+765
+7654
+76543
+765432
+7654321
+
+            [item_pass] => yes
+            [testcase_student] => input : 7                                                                                                                                                       7                                                                               76                                                                              765                                                                             7654                                                                            76543                                                                           765432                                                                          7654321                                                                         
+            [output_to_show] => input : 7
+
+7
+76
+765
+7654
+76543
+765432
+7654321
+
+        )
+
+)
+</pre>--><!-- status =passed<br/>--><!--- last submit -->
+<div class="row">
+	<div class="container">
+		<div class="panel panel-success" style="min-width:800px;text-align:left">
+			<div class="panel-heading">
+				 <div class="row">
+					 <div class="col-xs-8 text-left">							
+						<h2 style="color:blue;">Last submission :   </span></h2>
+					</div>
+					<div class="col-xs-4">
+						<h1 style="color:green;"><span class="glyphicon glyphicon-ok pull-right"></span> </h1>					</div>		
+				</div>
+			</div>
+
+			<div style="display:inline-block;"></div>
+
+			<div class="panel-body" style="text-align:left;">
+				<textarea id="sourcecode_content" style="height:50vh; width:100%; text-align:left;" readonly>/*
+ * กลุ่มที่  : 20010099
+ * 99010099 ทดสอบ ได้ใจ
+ * chapter : 5	item : 1	ครั้งที่ : 0002
+ * Assigned : Wednesday 1st of July 2020 03:45:17 PM --> Submission : Wednesday 1st of July 2020 04:16:53 PM	
+ * Elapsed time : 31 minutes.
+ * filename : lab_05_01_3.c
+ */
+#include<stdio.h>
+int main() {
+	int a,i,j;
+	printf("input : ");
+	scanf("%d",&a);
+	printf("\n");
+    if(a<1) {
+      printf("%d is out of range !!!\n",a);
+      return 0 ;
+     
+    }
+	for (i=0;i<a;i++){
+		for (j=0;j<i+1;j++){
+			printf("%d",a-j);
+		}
+		printf("\n");
+
+	}
+	return 0;
+}</textarea>
+			</div>				
+			
+		</div>
+	</div>
+</div>
+<!--- last submit -->
+
+
+<!--- Testcase -->
+	
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading " style="font-size:24px;color:blue;">Testcase student: #1/4 
+				<span style="font-size:20px;color:blue;">
+				</span><div style="color:green;" class="glyphicon glyphicon-ok pull-right"></div>
+			</div>	
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-6">
+						<div  style="font-family: Courier;font-size: 16px;border:2px blue;"><code><textarea cols="80" rows="6" style="background:black;color:white;" readonly>input : 0
+
+0 is out of range !!!
+</textarea></code>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div  style="font-family: Courier;font-size: 16px;border:2px blue;"><code><textarea cols="80" rows="6" style="background:black;color:white;" readonly>input : 0
+
+0 is out of range !!!
+</textarea></code>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>	
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading " style="font-size:24px;color:blue;">Testcase student: #2/4 
+				<span style="font-size:20px;color:blue;">
+				</span><div style="color:green;" class="glyphicon glyphicon-ok pull-right"></div>
+			</div>	
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-6">
+						<div  style="font-family: Courier;font-size: 16px;border:2px blue;"><code><textarea cols="80" rows="10" style="background:black;color:white;" readonly>input : 5
+
+5
+54
+543
+5432
+54321
+</textarea></code>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div  style="font-family: Courier;font-size: 16px;border:2px blue;"><code><textarea cols="80" rows="10" style="background:black;color:white;" readonly>input : 5
+
+5
+54
+543
+5432
+54321
+</textarea></code>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>	
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading " style="font-size:24px;color:blue;">Testcase student: #3/4 
+				<span style="font-size:20px;color:blue;">
+				</span><div style="color:green;" class="glyphicon glyphicon-ok pull-right"></div>
+			</div>	
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-6">
+						<div  style="font-family: Courier;font-size: 16px;border:2px blue;"><code><textarea cols="80" rows="14" style="background:black;color:white;" readonly>input : 9
+
+9
+98
+987
+9876
+98765
+987654
+9876543
+98765432
+987654321
+</textarea></code>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div  style="font-family: Courier;font-size: 16px;border:2px blue;"><code><textarea cols="80" rows="14" style="background:black;color:white;" readonly>input : 9
+
+9
+98
+987
+9876
+98765
+987654
+9876543
+98765432
+987654321
+</textarea></code>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>	
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading " style="font-size:24px;color:blue;">Testcase student: #4/4 
+				<span style="font-size:20px;color:blue;">
+				</span><div style="color:green;" class="glyphicon glyphicon-ok pull-right"></div>
+			</div>	
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-6">
+						<div  style="font-family: Courier;font-size: 16px;border:2px blue;"><code><textarea cols="80" rows="12" style="background:black;color:white;" readonly>input : 7
+
+7
+76
+765
+7654
+76543
+765432
+7654321
+</textarea></code>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div  style="font-family: Courier;font-size: 16px;border:2px blue;"><code><textarea cols="80" rows="12" style="background:black;color:white;" readonly>input : 7
+
+7
+76
+765
+7654
+76543
+765432
+7654321
+</textarea></code>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div><!-- 1301074 num_of_testcase:4<br/>testcase_array : <pre>Array
+(
+    [0] => Array
+        (
+            [testcase_id] => 646
+            [exercise_id] => 1301074
+            [testcase_content] => 0
+            [active] => yes
+            [show_to_student] => yes
+            [testcase_note] => 
+            [testcase_output] => input : 0
+
+0 is out of range !!!
+
+            [item_pass] => yes
+            [testcase_student] => input : 0                                                                                                                                                       0 is out of range !!!                                                           
+            [output_to_show] => input : 0
+
+0 is out of range !!!
+
+        )
+
+    [1] => Array
+        (
+            [testcase_id] => 647
+            [exercise_id] => 1301074
+            [testcase_content] => 5
+            [active] => yes
+            [show_to_student] => yes
+            [testcase_note] => 
+            [testcase_output] => input : 5
+
+5
+54
+543
+5432
+54321
+
+            [item_pass] => yes
+            [testcase_student] => input : 5                                                                                                                                                       5                                                                               54                                                                              543                                                                             5432                                                                            54321                                                                           
+            [output_to_show] => input : 5
+
+5
+54
+543
+5432
+54321
+
+        )
+
+    [2] => Array
+        (
+            [testcase_id] => 648
+            [exercise_id] => 1301074
+            [testcase_content] => 9
+            [active] => yes
+            [show_to_student] => yes
+            [testcase_note] => 
+            [testcase_output] => input : 9
+
+9
+98
+987
+9876
+98765
+987654
+9876543
+98765432
+987654321
+
+            [item_pass] => yes
+            [testcase_student] => input : 9                                                                                                                                                       9                                                                               98                                                                              987                                                                             9876                                                                            98765                                                                           987654                                                                          9876543                                                                         98765432                                                                        987654321                                                                       
+            [output_to_show] => input : 9
+
+9
+98
+987
+9876
+98765
+987654
+9876543
+98765432
+987654321
+
+        )
+
+    [3] => Array
+        (
+            [testcase_id] => 649
+            [exercise_id] => 1301074
+            [testcase_content] => 7
+            [active] => yes
+            [show_to_student] => yes
+            [testcase_note] => 
+            [testcase_output] => input : 7
+
+7
+76
+765
+7654
+76543
+765432
+7654321
+
+            [item_pass] => yes
+            [testcase_student] => input : 7                                                                                                                                                       7                                                                               76                                                                              765                                                                             7654                                                                            76543                                                                           765432                                                                          7654321                                                                         
+            [output_to_show] => input : 7
+
+7
+76
+765
+7654
+76543
+765432
+7654321
+
+        )
+
+)
+</pre>last_submit : <pre>Array
+(
+    [submission_id] => 24
+    [stu_id] => 99010099
+    [exercise_id] => 1301074
+    [sourcecode_filename] => 99010099_05_01_0002.c
+    [marking] => 2
+    [time_submit] => 2020-07-01 16:16:53
+    [inf_loop] => No
+    [output] => a:4:{i:0;a:1:{s:7:"student";s:33:"input : 0
+
+0 is out of range !!!
+";}i:1;a:1:{s:7:"student";s:31:"input : 5
+
+5
+54
+543
+5432
+54321
+";}i:2;a:1:{s:7:"student";s:65:"input : 9
+
+9
+98
+987
+9876
+98765
+987654
+9876543
+98765432
+987654321
+";}i:3;a:1:{s:7:"student";s:46:"input : 7
+
+7
+76
+765
+7654
+76543
+765432
+7654321
+";}}
+)
+</pre> status: passed --><!--- Testcase End -->
+
+
+	
+	<script>
+		var editor = CodeMirror.fromTextArea(document.getElementById("sourcecode_content"), {
+					lineNumbers: true,
+					matchBrackets: true,
+					indentUnit: 4,
+					readonly: true,
+					mode: "text/x-csrc"
+			});
+	</script>
+			
+
+
+
+			</div>
+			<!-- row content -->
+
+		</div>
+		<!-- Page content -->
+		
+		<div class="clearfix"></div>
+
+		<!-- footer start -->
+		<footer class="container-fluid" style="background-color:LightSteelBlue;border:2px blue;margin-left:320px;margin-right:15px;">
+		  <p>Page rendered in <strong>0.4237</strong> seconds. 
+				CodeIgniter Version <strong>3.1.2</strong> Wed Oct 28 08:53:49</p>
+		  
+		</footer>
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="assets/js/jquery.min.js"><\/script>')</script> -->
+	
+    
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+   
+		<script>
+			var baseurl = "http://161.246.127.85/compro20s1/";
+			var user_role  = "student";
+			var user_id  = "99010099";
+		</script>
+		<script src="http://161.246.127.85/compro20s1/assets/js/plms.js";></script>
+</body>
+
+<script src="http://161.246.127.85/compro20s1/assets/jquery/jquery-3.1.1.min.js"></script>
+<script src="http://161.246.127.85/compro20s1/assets/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://161.246.127.85/compro20s1/assets/codemirror-5.22.0/lib/codemirror.js"></script>
+<script type="text/javascript" src="http://161.246.127.85/compro20s1/assets/codemirror-5.22.0/mode/clike/clike.js"></script>
+</html>

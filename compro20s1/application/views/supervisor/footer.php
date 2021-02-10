@@ -22,11 +22,16 @@
 			</p>
 			
 			</div>
-		  <!-- <pre>
-			<?php echo print_r($_SESSION); ?>
-		  </pre> -->
+		  
 		</footer>
 		<!-- footer end -->
+		<script>
+			var baseURL = "<?php echo base_url(); ?>";
+			var baseurl = "<?php echo base_url(); ?>";
+			var user_role  = "<?php echo $_SESSION['role']; ?>";
+			var user_id  = "<?php echo $_SESSION['id']; ?>";
+		</script>
+		<script src="<?php echo base_url('/assets/js/plms.js'); ?>";></script>
 
 	
 	
@@ -34,7 +39,16 @@
 
 
 	</body>
-	<!-- <article style="margin-left:350px;text-align:left;">
-		<?php echo "<h3>". __METHOD__ ." : _SESSSION :</h3><pre>"; print_r($_SESSION); echo "</pre>"; ?>
-	</article> -->
+	 
+	
+	<!-- 	<?php echo "<h3>_SERVER</h3><pre>"; 	print_r($_SERVER); 	echo "</pre>"; ?>-->
+	<!-- 	<?php echo "<h3>_REQUEST</h3><pre>"; 	print_r($_REQUEST); echo "</pre>"; ?>-->
+	<!-- 	<?php echo "<h3>_POST</h3><pre>"; 		print_r($_POST); 	echo "</pre>"; ?>-->
+	<!-- 	<?php echo "<h3>_FILES</h3><pre>"; 		print_r($_FILES); 	echo "</pre>"; ?>-->
+	<!-- 	<?php echo "<h3>_ENV</h3><pre>"; 		print_r($_ENV); 	echo "</pre>"; ?>-->
+	<!-- 	<?php echo "<h3>_COOKIE</h3><pre>"; 	print_r($_COOKIE); 	echo "</pre>"; ?>-->
+	<!-- 	<?php echo "<h3>_SESSION</h3><pre>"; 	print_r($_SESSION); echo "</pre>"; ?> -->
+	
+		
+	
 </html>
