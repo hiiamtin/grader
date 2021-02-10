@@ -7,4 +7,6 @@
 
 .idea/
 
+.vscode/
+
 compro20s1/application/config/config.php
