@@ -10,3 +10,5 @@
 .vscode/
 
 compro20s1/application/config/config.php
+
+compro20s1/application/config/database.php
