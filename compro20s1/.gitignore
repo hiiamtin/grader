@@ -31,3 +31,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 ## C & exe file
 *.c
 *.exe
+
+## user image file
+/supervisor_data/avatar/*
+/student_data/avatar/*
