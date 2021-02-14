@@ -224,49 +224,56 @@
     </div>
     <div class="grid-room">
       <?php
+      function printOnlineSeatHtml($seatNum) {
+        echo "<input type='submit' class='grid-seat btn btn-warning' value='"
+                .$seatNum
+                ."' data-toggle='modal' data-target='#modalStuPreview' onclick='studentPreview(this.value)'>";
+      }
+      function printOfflineSeatHtml($seatNum) {
+        echo "<input type='submit' class='grid-seat btn btn-info' disabled value='"
+                .$seatNum
+                . "'>";
+      }
       $pcNumber = 0;
       if ($in_social_distancing == "checked") {
         for ($i = 0; $i < 90; $i++) {
           $seatNum = ($pcNumber % 4) * 10 + ceil(($pcNumber + 1) / 4);
           switch ($i % 9) {
-            case 2:
-            case 6:
+            case 2: case 6:
               echo "<div class='grid-way'></div>";
               break;
-            case 1:
-            case 4:
-            case 7:
+            case 1: case 4: case 7:
               echo "<input disabled type='submit' class='grid-seat btn btn-default' value='-'></button>";
               break;
             default:
-              $indexInSeatList = checkAnyoneSittingHere($seat_list, $seatNum);
+              $indexInSeatList = checkAlreadySeated($seat_list, $seatNum);
               if ($indexInSeatList >= 0) {
                 unset($seat_list[$indexInSeatList]);
                 $seat_list = array_values($seat_list);
-                echo "<input type='submit' class='grid-seat btn btn-warning' value='" . $seatNum . "' data-toggle='modal' data-target='#modalStuPreview' onclick='studentPreview(this.value)'>";
+                printOnlineSeatHtml($seatNum);
               } else {
-                echo "<input type='submit' class='grid-seat btn btn-info' disabled value='" . $seatNum . "'>";
+                printOfflineSeatHtml($seatNum);
               }
               $pcNumber++;
               break;
           }
         }
-      } else {
+      }
+      else {
         for ($i = 0; $i < 90; $i++) {
           $seatNum = ($pcNumber % 7) * 10 + ceil(($pcNumber + 1) / 7);
           switch ($i % 9) {
-            case 2:
-            case 6:
+            case 2: case 6:
               echo "<div class='grid-way'></div>";
               break;
             default:
-              $indexInSeatList = checkAnyoneSittingHere($seat_list, $seatNum);
+              $indexInSeatList = checkAlreadySeated($seat_list, $seatNum);
               if ($indexInSeatList >= 0) {
                 unset($seat_list[$indexInSeatList]);
                 $seat_list = array_values($seat_list);
-                echo "<input type='submit' class='grid-seat btn btn-warning' value='" . $seatNum . "' data-toggle='modal' data-target='#modalStuPreview' onclick='studentPreview(this.value)'>";
+                printOnlineSeatHtml($seatNum);
               } else {
-                echo "<input type='submit' class='grid-seat btn btn-info' disabled value='" . $seatNum . "'>";
+                printOfflineSeatHtml($seatNum);
               }
               $pcNumber++;
               break;
@@ -274,7 +281,7 @@
         }
       }
 
-      function checkAnyoneSittingHere($list, $seatNum)
+      function checkAlreadySeated($list, $seatNum)
       {
         for ($i = 0; $i < sizeof($list); $i++) {
           if ($list[$i]['seat_number'] == $seatNum) {
