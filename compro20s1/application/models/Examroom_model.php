@@ -120,13 +120,13 @@ class Examroom_model extends CI_Model
     $this->db->delete($this->TABLE_EXAM_SEAT);
   }
 
-  public function getAllSeatsData($roomNumber)
-  {
-    $this->db->select('*')
-        ->from($this->TABLE_EXAM_SEAT)
-        ->where('room_number', $roomNumber)
-        ->order_by("seat_number");
-    $query = $this->db->get();
+  public function getAllSeatsData($roomNumber) {
+    $classId = $this->getRoomData($roomNumber)['class_id'];
+    $sql = 'SELECT user_student.stu_id, user_student.stu_firstname, user_student.stu_avatar, exam_seat.seat_number, exam_seat.progress'
+        .' FROM user_student, exam_seat'
+        .' WHERE user_student.stu_group = '.$classId
+        .' AND exam_seat.stu_id = user_student.stu_id';
+    $query = $this->db->query($sql);
     return $query->result_array();
   }
 
@@ -243,6 +243,5 @@ class Examroom_model extends CI_Model
     $query = $this->db->get();
     return $query->result_array()[0]['dept_name'];
   }
-
 
 }//class Examroom_model
