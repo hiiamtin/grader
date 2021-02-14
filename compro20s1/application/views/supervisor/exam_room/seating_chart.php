@@ -2,20 +2,66 @@
   #seating-chart {
     margin-left: 30px;
     margin-top: 30px;
-    width: 90vw;
+    width: 94vw;
   }
 
   #seating-chart .grid-room {
     display: grid;
-    grid-template-columns: auto auto auto auto auto auto auto auto auto;
+    grid-template-columns: auto auto 2% auto auto auto 2% auto auto;
     padding: 4px;
   }
 
-  #seating-chart .grid-seat {
-    width: 96%;
+  #seating-chart .grid-seat-able {
     margin: 2px;
-    height: 48px;
-    text-align: center;
+    height: 64px;
+    width: 96%;
+    text-align: left;
+    position: relative;
+    display: grid;
+    grid-template-areas: 'num img text';
+    grid-template-columns: 28px 40px auto;
+    background-color: #efb45d;
+  }
+
+  #seating-chart .grid-seat-unable {
+    margin: 2px;
+    height: 64px;
+    width: 96%;
+    text-align: left;
+    position: relative;
+    display: grid;
+    grid-template-areas: 'num img text';
+    grid-template-columns: 28px 40px auto;
+    background-color: #7493a2;
+  }
+
+  #seating-chart img {
+    width: 40px;
+    height: 50px;
+    grid-area: img;
+  }
+
+  #seating-chart .seat-num {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-family: "Consolas", monospace;
+    font-weight: bold;
+    grid-area: num;
+  }
+
+  #seating-chart .seat-text {
+    padding-left: 10px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-family: "Consolas", monospace;
+    font-weight: bold;
+    grid-area: text;
   }
 
   #seating-chart .white-board {
@@ -28,6 +74,10 @@
 
   #seating-chart li {
     font-size: 18px;
+  }
+
+  #seating-chart .grid-way {
+    width: 1%;
   }
 
   span.emoji {
@@ -186,13 +236,13 @@
     <li>อาจารย์ผู้สอน: <?php echo $supervisor_info['supervisor_firstname']." ".$supervisor_info['supervisor_lastname']; ?></li>
     <li>จำนวนนักศึกษาเข้าสอบ: <?php echo sizeof($seat_list);?> / <?php echo $num_of_student;?></li>
   </ul>
-  <button class="btn btn-danger" id="btn-rotate" value="180deg" onclick="rotateScreen(this.value)">Click here to
-    rotate!
+  <button class="btn btn-success" id="btn-rotate" value="180deg" onclick="rotateScreen(this.value)">
+    <span class="emoji">&#8635;</span> สลับมุมมองอาจารย์-นักศึกษา
   </button>
   <?php
   if ($chapter_data != NULL) {
     echo '<form action="' . site_url('supervisor/exam_room_set_level_allow_access') . '" id="toggle_allow_access" method="post" style="display:inline">';
-    echo '<input type="submit" class="btn btn-primary" value="ตั้งค่าโจทย์">';
+    echo '<input type="submit" class="btn btn-danger" value="ตั้งค่าโจทย์">';
     echo '<input type="text" name="class_id" value="' . $chapter_data["class_id"] . '" hidden>';
     echo '<input type="text" name="chapter_id" value="' . $chapter_data["chapter_id"] . '" hidden>';
     echo '</form>';
@@ -201,7 +251,8 @@
     echo '<input type="text" id="chapter_id" placeholder="Please select chapter" disabled>';
   }
   ?>
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#centralModalInfo"><span class="emoji">&#9881;</span>
+  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#centralModalInfo">
+    <span class="emoji">&#9881;</span> ตั้งค่าชุดข้อสอบ และเวลาเปิด-ปิด
   </button>
   <label>Status : </label>
   <?php
@@ -224,33 +275,58 @@
     </div>
     <div class="grid-room">
       <?php
-      function printOnlineSeatHtml($seatNum) {
-        echo "<input type='submit' class='grid-seat btn btn-warning' value='"
-                .$seatNum
+      function printOnlineSeatHtml($seat) {
+        echo "<button class='grid-seat grid-seat-able btn' value='"
+                .$seat['seat_number']
                 ."' data-toggle='modal' data-target='#modalStuPreview' onclick='studentPreview(this.value)'>";
+        echo "<span class='seat-num'>"
+                .sprintf("%02d", $seat['seat_number'])
+                ."</span>";
+        echo "<img src='";
+        echo $seat['stu_avatar'] ? base_url(STUDENT_AVATAR_FOLDER.$seat['stu_avatar']) : base_url(STUDENT_AVATAR_FOLDER.'user.png');
+        echo "'>";
+        echo "<span class='seat-text'>"
+                .$seat['stu_id']
+                .'<br>'
+                .$seat['stu_firstname']
+                ."</span>";
+        echo "</button>";
       }
       function printOfflineSeatHtml($seatNum) {
-        echo "<input type='submit' class='grid-seat btn btn-info' disabled value='"
+        echo "<button class='grid-seat grid-seat-unable btn btn-default' disabled value='"
                 .$seatNum
                 . "'>";
+        echo "<span class='seat-num'>"
+                .sprintf("%02d", $seatNum)
+                ."</span>";
+        echo "<img src='"
+                .base_url('student_data/seat.png')
+                ."'>";
+        echo "</button>";
+      }
+      function checkAlreadySeated($list, $seatNum)
+      {
+        for ($i = 0; $i < sizeof($list); $i++) {
+          if ($list[$i]['seat_number'] == $seatNum) {
+            return $i;
+          }
+        }
+        return -1;
       }
       $pcNumber = 0;
       if ($in_social_distancing == "checked") {
         for ($i = 0; $i < 90; $i++) {
           $seatNum = ($pcNumber % 4) * 10 + ceil(($pcNumber + 1) / 4);
           switch ($i % 9) {
-            case 2: case 6:
+            case 2: case 6: case 1: case 4: case 7:
               echo "<div class='grid-way'></div>";
-              break;
-            case 1: case 4: case 7:
-              echo "<input disabled type='submit' class='grid-seat btn btn-default' value='-'></button>";
               break;
             default:
               $indexInSeatList = checkAlreadySeated($seat_list, $seatNum);
               if ($indexInSeatList >= 0) {
+                printOnlineSeatHtml($seat_list[$indexInSeatList]);
                 unset($seat_list[$indexInSeatList]);
                 $seat_list = array_values($seat_list);
-                printOnlineSeatHtml($seatNum);
               } else {
                 printOfflineSeatHtml($seatNum);
               }
@@ -269,9 +345,9 @@
             default:
               $indexInSeatList = checkAlreadySeated($seat_list, $seatNum);
               if ($indexInSeatList >= 0) {
+                printOnlineSeatHtml($seat_list[$indexInSeatList]);
                 unset($seat_list[$indexInSeatList]);
                 $seat_list = array_values($seat_list);
-                printOnlineSeatHtml($seatNum);
               } else {
                 printOfflineSeatHtml($seatNum);
               }
@@ -280,17 +356,6 @@
           }
         }
       }
-
-      function checkAlreadySeated($list, $seatNum)
-      {
-        for ($i = 0; $i < sizeof($list); $i++) {
-          if ($list[$i]['seat_number'] == $seatNum) {
-            return $i;
-          }
-        }
-        return -1;
-      }
-
       ?>
     </div>
   </div>
