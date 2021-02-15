@@ -63,12 +63,11 @@
                       sumMarking = sumMarking + parseInt(stuInfo.examItems[0].marking);
                       break;
                     }
-                    case "-1": {
+                    default: {
                       btn.setAttribute("class", "btn btn-danger");
                       btn.setAttribute("onclick", "codePreview("+stuInfo.stuId+","+stuInfo.examItems[0].exercise_id+")");
                       break;
                     }
-                    default: btn.setAttribute("class", "btn btn-warning");
                   }
                   problemName.innerHTML = stuInfo.examItems[0].name;
                   stuInfo.examItems.shift();
@@ -85,7 +84,7 @@
   }
 
   function codePreview(stuId, problemId) {
-    window.open("<?php echo site_url('supervisor/exam_room_stu_code_preview/'); ?>"+stuId+"/"+problemId);
+    window.open("<?php echo site_url('supervisor/exam_room_stu_code_preview/'); ?>"+stuId+"/"+problemId,"winname","directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no");
   }
 </script>
 

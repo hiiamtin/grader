@@ -2678,11 +2678,10 @@ class Supervisor extends MY_Controller {
 		$roomNum = intval($_POST['roomNum']);
 		$seatNum = intval($_POST['seatNum']);
 		$this->load->model('examroom_model');
-		$this->load->model('student_model');
 		$this->load->model('lab_model');
 
 		$seatData = $this->examroom_model->getSeatData($roomNum,$seatNum);
-		$stuData = $this->student_model->getBriefInfoByStuId($seatData['stu_id']);
+		$stuData = $this->examroom_model->getBriefInfoByStuId($seatData['stu_id']);
 		$examItems = $this->examroom_model->getExamProblemList($roomNum, $seatData['stu_id']);
 		for ($i=0; $i<sizeof($examItems); $i++) {
 			$examItems[$i]['name'] = $this->lab_model->get_lab_name($examItems[$i]['exercise_id']);
@@ -2700,17 +2699,19 @@ class Supervisor extends MY_Controller {
 
 	public function exam_room_stu_code_preview($stuId, $problemId) {
 		$this->load->model('examroom_model');
-		$this->load->model('student_model');
-		$path = $this->examroom_model->getSourceCodePath($stuId, $problemId);
-		$srcFile = fopen("student_data/c_files/".$path,"r") or die("File Error Krub!");
-		$scrStream = fread($srcFile, filesize("student_data/c_files/".$path));
-		fclose($srcFile);
-		$dataToShow = array(
-				'source_code' => $scrStream
-		);
+		$submissions = $this->examroom_model->getAllSourceCodePaths($stuId, $problemId);
+    if($submissions != null) {
+      for($i=0; $i<sizeof($submissions); $i++) {
+        $path = $submissions[$i]['sourcecode_filename'];
+        $srcFile = fopen("student_data/c_files/".$path,"r") or die("File Error Krub!");
+        $srcStream = fread($srcFile, filesize("student_data/c_files/".$path));
+        fclose($srcFile);
+        $submissions[$i]['source_code'] = $srcStream;
+      }
+    }
 		$this->load->view('supervisor/head');
 		$this->load->view('supervisor/nav_fixtop');
-		$this->load->view('supervisor/exam_room/code_preview', $dataToShow);
+		$this->load->view('supervisor/exam_room/code_preview', array('submissions' => $submissions));
 		$this->load->view('supervisor/footer');
 	}
 
@@ -2720,7 +2721,7 @@ class Supervisor extends MY_Controller {
 	}
 
 	public function testSth() {
-		// เอาไว้ Test Back-end Function
+
 	}
 
 	/* * *

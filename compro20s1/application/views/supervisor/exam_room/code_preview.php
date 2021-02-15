@@ -4,27 +4,57 @@
 
 <style>
     #student-code-preview {
-        margin-left: 30px;
-        margin-top: 30px;
-        width: 90vw;
+      margin-left: 15px;
+      margin-top: 30px;
+      width: 90vw;
+      display: grid;
+      grid-template-columns: auto 250px;
     }
 
-    .CodeMirror {
+    textarea {
+      width: 0;
+    }
+
+    .cm-s-default {
       font-size: 18px;
+      width: 75vw;
+      height: 75vh;
     }
 
 </style>
 
 <div id="student-code-preview">
-  <textarea id="stu-code-area">
-    <?php echo $source_code;?>
-  </textarea>
+  <div class="code-display">
+    <?php
+    foreach ($submissions as $srcCode) {
+      echo '<textarea hidden id="stu-code-area">';
+      echo $srcCode['source_code'];
+      echo '</textarea>';
+    }
+    ?>
+  </div>
+  <ul class="nav nav-pills nav-stacked">
+    <?php
+    $displayedTheLatest = false;
+    foreach ($submissions as $srcCode) {
+      if(!$displayedTheLatest) {
+
+      }
+
+    }
+    ?>
+
+  </ul>
+
 </div>
 
 <script>
-  let textArea = document.getElementById("stu-code-area");
-  let codeMirror = CodeMirror.fromTextArea(textArea, {
-    lineNumbers: true
-  });
-  codeMirror.setSize(900, 600);
+  function showSourceCode(id) {
+    let textArea = document.getElementById(id);
+    CodeMirror.fromTextArea(textArea, {
+      lineNumbers: true,
+      readOnly: true
+    });
+  }
+  showSourceCode("stu-code-area");
 </script>

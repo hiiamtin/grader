@@ -167,15 +167,16 @@ class Examroom_model extends CI_Model
     return $query->result_array();
   }
 
-  public function getSourceCodePath($stuId, $problemId) {
-    $this->db->select('sourcecode_filename')
+  public function getAllSourceCodePaths($stuId, $problemId)
+  {
+    $this->db->select('time_submit, sourcecode_filename')
         ->from('exercise_submission')
         ->where('stu_id', $stuId)
         ->where('exercise_id',$problemId)
         ->order_by('submission_id','DESC');
     $query = $this->db->get();
     if(sizeof($query->result_array())>0) {
-      return $query->result_array()[0]['sourcecode_filename'];
+      return $query->result_array();
     } else {
       return null;
     }
@@ -242,6 +243,15 @@ class Examroom_model extends CI_Model
         ->where('dept_id', $deptId);
     $query = $this->db->get();
     return $query->result_array()[0]['dept_name'];
+  }
+
+  public function getBriefInfoByStuId($stu_id)
+  {
+    $this->db->select('stu_firstname, stu_lastname, stu_avatar')
+        ->from('user_student')
+        ->where('stu_id', $stu_id);
+    $query = $this->db->get();
+    return $query->result_array()[0];
   }
 
 }//class Examroom_model
