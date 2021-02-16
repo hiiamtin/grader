@@ -289,7 +289,9 @@
                 .$seat['stu_id']
                 .'<br>'
                 .$seat['stu_firstname']
-                ."</span>";
+                .'<br>'
+                .$seat['progress']
+                ."%</span>";
         echo "</button>";
       }
       function printOfflineSeatHtml($seatNum) {

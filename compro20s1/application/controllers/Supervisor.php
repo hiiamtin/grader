@@ -2683,15 +2683,23 @@ class Supervisor extends MY_Controller {
 		$seatData = $this->examroom_model->getSeatData($roomNum,$seatNum);
 		$stuData = $this->examroom_model->getBriefInfoByStuId($seatData['stu_id']);
 		$examItems = $this->examroom_model->getExamProblemList($roomNum, $seatData['stu_id']);
+		$finishedWork = $this->examroom_model->getStudentFinishedWork($roomNum, $seatData['stu_id']);
 		for ($i=0; $i<sizeof($examItems); $i++) {
 			$examItems[$i]['name'] = $this->lab_model->get_lab_name($examItems[$i]['exercise_id']);
+      foreach ($finishedWork as $submission) {
+        if($submission['exercise_id']==$examItems[$i]['exercise_id']) {
+          $examItems[$i]['marking'] = '2';
+        }
+      }
 		}
+
 
 		$stuPreview = new stdClass();
 		$stuPreview->stuId = $seatData['stu_id'];
 		$stuPreview->stuFullname = $stuData['stu_firstname'].' '.$stuData['stu_lastname'];
 		$stuPreview->stuAvatar = $stuData['stu_avatar']?:'user.png';
 		$stuPreview->examItems = $examItems;
+		$stuPreview->progress = sizeof($finishedWork)*20;
 
 		echo json_encode($stuPreview);
 		
@@ -2721,7 +2729,8 @@ class Supervisor extends MY_Controller {
 	}
 
 	public function testSth() {
-
+    $this->load->model('examroom_model');
+    print_r($this->examroom_model->getStudentFinishedWork(704, 60010296));
 	}
 
 	/* * *
