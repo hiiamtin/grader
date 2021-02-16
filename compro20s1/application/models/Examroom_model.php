@@ -127,7 +127,11 @@ class Examroom_model extends CI_Model
         .' WHERE user_student.stu_group = '.$classId
         .' AND exam_seat.stu_id = user_student.stu_id';
     $query = $this->db->query($sql);
-    return $query->result_array();
+    $allData = $query->result_array();
+    for($i=0; $i<sizeof($allData); $i++) {
+      $allData[$i]['progress'] = sizeof($this->getStudentFinishedWork($roomNumber, $allData[$i]['stu_id']))*20;
+    }
+    return $allData;
   }
 
   public function getStudentData_exam_seat($stu_id)
@@ -245,13 +249,30 @@ class Examroom_model extends CI_Model
     return $query->result_array()[0]['dept_name'];
   }
 
-  public function getBriefInfoByStuId($stu_id)
+  public function getBriefInfoByStuId($stuId)
   {
     $this->db->select('stu_firstname, stu_lastname, stu_avatar')
         ->from('user_student')
-        ->where('stu_id', $stu_id);
+        ->where('stu_id', $stuId);
     $query = $this->db->get();
     return $query->result_array()[0];
+  }
+
+  public function getStudentFinishedWork($roomNum, $stuId) {
+    $chapterId = $this->getRoomData($roomNum)['chapter_id'];
+    $query = $this->db->query(
+        'SELECT *'
+        .' FROM student_assigned_chapter_item'
+        .' WHERE chapter_id = '.$chapterId
+        .' AND stu_id = '.$stuId
+        .' AND exercise_id IN ('
+        .'    SELECT exercise_id'
+        .'    FROM exercise_submission'
+        .'    WHERE stu_id = '.$stuId
+        .'    AND marking = 2'
+        .' )'
+    );
+    return $query->result_array();
   }
 
 }//class Examroom_model

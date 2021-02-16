@@ -48,7 +48,6 @@
               console.log(data);
               let stuInfo = JSON.parse(data);
               document.getElementById("info-name").innerHTML = "&#128512; " + stuInfo.stuId + " : " + stuInfo.stuFullname;
-              let sumMarking = 0;
               for (let i = 1; i <= 5; i++) {
                 let btn = document.getElementById("btn-level" + i);
                 let problemName = document.getElementById("info-level" + i);
@@ -60,7 +59,6 @@
                     case "2": {
                       btn.setAttribute("class", "btn btn-success");
                       btn.setAttribute("onclick", "codePreview("+stuInfo.stuId+","+stuInfo.examItems[0].exercise_id+")");
-                      sumMarking = sumMarking + parseInt(stuInfo.examItems[0].marking);
                       break;
                     }
                     default: {
@@ -78,7 +76,7 @@
               }
               let imgUrl = stuInfo.stuAvatar;
               document.getElementById("info-img").setAttribute("src", "<?php echo base_url(STUDENT_AVATAR_FOLDER); ?>"+imgUrl);
-              document.getElementById("info-progress").innerHTML = (sumMarking*10)+"%";
+              document.getElementById("info-progress").innerHTML = stuInfo.progress+'%';
             }
     );
   }
