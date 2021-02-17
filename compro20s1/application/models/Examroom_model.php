@@ -173,7 +173,7 @@ class Examroom_model extends CI_Model
 
   public function getAllSourceCodePaths($stuId, $problemId)
   {
-    $this->db->select('submission_id, time_submit, sourcecode_filename')
+    $this->db->select('submission_id, UNIX_TIMESTAMP(time_submit), sourcecode_filename')
         ->from('exercise_submission')
         ->where('stu_id', $stuId)
         ->where('exercise_id',$problemId)

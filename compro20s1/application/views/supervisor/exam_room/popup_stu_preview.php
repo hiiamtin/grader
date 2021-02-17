@@ -82,7 +82,7 @@
   }
 
   function codePreview(stuId, problemId) {
-    window.open("<?php echo site_url('supervisor/exam_room_stu_code_preview/'); ?>"+stuId+"/"+problemId,"winname","directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no");
+    window.open("<?php echo site_url('supervisor/exam_room_stu_code_preview/'); ?>"+stuId+"/"+problemId,"winname","directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,width=1200,height=700");
   }
 </script>
 

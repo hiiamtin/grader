@@ -47,4 +47,81 @@ class Time_model extends CI_Model {
 		}
 		return [$allow_access,$allow_submit];
 	}
+
+  public function unixTimeToRelativeFormat($ts)
+  {
+    if(!ctype_digit($ts))
+      $ts = strtotime($ts);
+
+    $diff = time() - $ts;
+    if($diff == 0)
+      return 'now';
+    elseif($diff > 0)
+    {
+      $day_diff = floor($diff / 86400);
+      if($day_diff == 0)
+      {
+        if($diff < 60) return 'just now';
+        if($diff < 120) return '1 minute ago';
+        if($diff < 3600) return floor($diff / 60) . ' minutes ago';
+        if($diff < 7200) return '1 hour ago';
+        if($diff < 86400) return floor($diff / 3600) . ' hours ago';
+      }
+      if($day_diff == 1) return 'Yesterday';
+      if($day_diff < 7) return $day_diff . ' days ago';
+      if($day_diff < 31) return ceil($day_diff / 7) . ' weeks ago';
+      if($day_diff < 60) return 'last month';
+      return date('F Y', $ts);
+    }
+    else
+    {
+      $diff = abs($diff);
+      $day_diff = floor($diff / 86400);
+      if($day_diff == 0)
+      {
+        if($diff < 120) return 'in a minute';
+        if($diff < 3600) return 'in ' . floor($diff / 60) . ' minutes';
+        if($diff < 7200) return 'in an hour';
+        if($diff < 86400) return 'in ' . floor($diff / 3600) . ' hours';
+      }
+      if($day_diff == 1) return 'Tomorrow';
+      if($day_diff < 4) return date('l', $ts);
+      if($day_diff < 7 + (7 - date('w'))) return 'next week';
+      if(ceil($day_diff / 7) < 4) return 'in ' . ceil($day_diff / 7) . ' weeks';
+      if(date('n', $ts) == date('n') + 1) return 'next month';
+      return date('F Y', $ts);
+    }
+  }
+
+  public function unixTimeToRelativeFormat2($time) {
+
+    $d[0] = array(1,"second");
+    $d[1] = array(60,"minute");
+    $d[2] = array(3600,"hour");
+    $d[3] = array(86400,"day");
+    $d[4] = array(604800,"week");
+    $d[5] = array(2592000,"month");
+    $d[6] = array(31104000,"year");
+
+    $w = array();
+
+    $return = "";
+    $now = time();
+    $diff = ($now-$time);
+    $secondsLeft = $diff;
+
+    for($i=6;$i>-1;$i--)
+    {
+      $w[$i] = intval($secondsLeft/$d[$i][0]);
+      $secondsLeft -= ($w[$i]*$d[$i][0]);
+      if($w[$i]!=0)
+      {
+        $return.= abs($w[$i]) . " " . $d[$i][1] . (($w[$i]>1)?'s':'') ." ";
+      }
+
+    }
+
+    $return .= ($diff>0)?"ago":"left";
+    return $return;
+  }
 }
