@@ -2707,6 +2707,7 @@ class Supervisor extends MY_Controller {
 
 	public function exam_room_stu_code_preview($stuId, $problemId) {
 		$this->load->model('examroom_model');
+		$this->load->model('time_model');
 		$submissions = $this->examroom_model->getAllSourceCodePaths($stuId, $problemId);
     if($submissions != null) {
       for($i=0; $i<sizeof($submissions); $i++) {
@@ -2715,10 +2716,11 @@ class Supervisor extends MY_Controller {
         $srcStream = fread($srcFile, filesize("student_data/c_files/".$path));
         fclose($srcFile);
         $submissions[$i]['source_code'] = $srcStream;
+        $submissions[$i]['time_submit'] = $this->time_model->unixTimeToRelativeFormat($submissions[$i]['UNIX_TIMESTAMP(time_submit)']);
       }
     }
 		$this->load->view('supervisor/head');
-		$this->load->view('supervisor/nav_fixtop');
+		//$this->load->view('supervisor/nav_fixtop');
 		$this->load->view('supervisor/exam_room/code_preview', array('submissions' => $submissions));
 		$this->load->view('supervisor/footer');
 	}

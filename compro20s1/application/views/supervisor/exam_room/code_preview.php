@@ -80,6 +80,7 @@
           echo '<script>showSourceCode(';
           echo $srcCode['submission_id'];
           echo ')</script>';
+          echo '<br>';
           $displayedTheLatest = true;
         } else {
           echo '<li><a class="btn btn-default" data-toggle="pill" onclick="switchSourceCode(';
