@@ -317,8 +317,10 @@
       }
       $pcNumber = 0;
       if ($in_social_distancing == "checked") {
-        for ($i = 0; $i < 90; $i++) {
-          $seatNum = ($pcNumber % 4) * 10 + ceil(($pcNumber + 1) / 4);
+        $elements = 99; // ถ้าเสริมโต๊ะให้ใช้ 99, ถ้าไม่เสริมให้ใช้ 90
+        $comInColumn = 11; // ถ้าเสริมโต๊ะใช้ 11, ถ้าไม่เสริมใช้ 10
+        for ($i = 0; $i < $elements; $i++) {
+          $seatNum = ($pcNumber % 4) * $comInColumn + ceil(($pcNumber + 1) / 4);
           switch ($i % 9) {
             case 2: case 6: case 1: case 4: case 7:
               echo "<div class='grid-way'></div>";
