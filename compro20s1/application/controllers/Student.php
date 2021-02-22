@@ -1821,7 +1821,7 @@ class Student extends MY_Controller {
 					'seat_data'			=> 	$seat_data
 				);
 
-		print_r($data["chapter_data"]);
+		//print_r($data["chapter_data"]);
         $this->load->view('student/stu_head');
         $this->load->view('student/nav_fixtop');
         $this->nav_sideleft();
@@ -1895,7 +1895,11 @@ class Student extends MY_Controller {
       // redirect
       $this->lab_exercise_action_v2($chapterId,$level);
     } else {
-      echo 'ใช้สิทธิ์ครบแล้ว เสียใจด้วย';
+      $data = array(
+          'chapter_id' => $chapterId,
+          'level' => $level
+      );
+      $this->load->view('student/exam_room/zero_helper', $data);
     }
   }
 

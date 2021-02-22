@@ -54,7 +54,11 @@
           <div class="grid-container">
 
             <div class="item-random">
-              <button class="btn btn-success btn-lg" onclick="requestNewProblem()">⏪ ขอเปลี่ยนโจทย์</button>
+              <?php
+                if($lab_chapter > 10) {
+                  echo '<button class="btn btn-success btn-lg" onclick="requestNewProblem()">⏪ ขอเปลี่ยนโจทย์</button>';
+                }
+              ?>
             </div>
             <div class="item-chapter">
               <h3>Chapter: <?php echo $lab_chapter; ?> &nbsp; Level: <?php echo $lab_item ?></h3>
