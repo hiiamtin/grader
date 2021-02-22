@@ -33,7 +33,7 @@
   }
 </style>
 
-<div class="col-lg-10 col-md-10 col-sm-10 kpanel_body" style="margin-top:120px;">
+<div class="col-lg-10 col-md-10 col-sm-10 kpanel_body" style="margin-top:180px;">
 	<div class="row">
 		<div class="col-lg-1">
 		</div> 
@@ -54,7 +54,7 @@
           <div class="grid-container">
 
             <div class="item-random">
-              <button class="btn btn-success btn-lg">⏪ ขอเปลี่ยนโจทย์</button>
+              <button class="btn btn-success btn-lg" onclick="requestNewProblem()">⏪ ขอเปลี่ยนโจทย์</button>
             </div>
             <div class="item-chapter">
               <h3>Chapter: <?php echo $lab_chapter; ?> &nbsp; Level: <?php echo $lab_item ?></h3>
@@ -64,7 +64,7 @@
             </div>
             <div class="item-allow">
               <?php if($group_permission[$lab_chapter]['allow_submit']=='no'  && $group_permission[$lab_chapter]['allow_access']=='yes')
-                echo '<button type="button" class="btn btn-danger btn-lg">ไม่สามารถส่งได้</button>';?>
+                echo '<button class="btn btn-danger btn-lg">ไม่สามารถส่งได้</button>';?>
             </div>
             <div class="item-name">
               <h3><?php echo $lab_name; ?></h3>
@@ -169,5 +169,14 @@
 	var lab_chapter = <?php echo $lab_chapter;?>;
 	var lab_item = <?php echo $lab_item;?>;
 
+
+	function requestNewProblem() {
+    if (confirm("นักศึกษาต้องการใช้สิทธิ์เปลี่ยนโจทย์ใช่หรือไม่?")) {
+      let url = "<?php echo site_url($_SESSION['role'].'/exam_room_request_new_problem'); ?>";
+      let chapter = "<?php echo $lab_chapter;?>";
+      let level = "<?php echo $lab_item;?>";
+      window.location.assign(url+"/"+chapter+"/"+level);
+    }
+  }
 	
 	</script>

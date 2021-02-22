@@ -12,23 +12,14 @@
     font-family: Consolas, Monaco, Courier New, Courier, monospace;
   }
 
-  #exam-room-gate img {
-    margin-left: 10px;
-    padding: 10px;
-    width: 75%;
-  }
-
   #exam-room-gate .alert-success {
-    margin-top: 20px;
-    width: 300px;
+    margin-top: 30px;
+    margin-left: 10px;
+    padding: 20px;
   }
 
   #exam-room-gate .panel-body b {
     margin-left: 10px;
-  }
-
-  #exam-room-gate #img-holder {
-    width: 400px;
   }
 
   #component-exam-room {
@@ -70,15 +61,19 @@
               . '</b></button>&nbsp;';
     }
     ?>
-    <div class="alert alert-success" role="alert">
-      <p>&#10060; ไม่อนุญาติให้นำเอกสารใดๆ เข้าห้องสอบ</p>
-      <p>&#10060; ห้ามทุจริตในการสอบเด็ดขาด หากฝ่าฝืนจะโดนฟาดที่กลางหลัง 1250 ที และหมดสิทธิ์สอบปลายภาควิชา Computer
-        Programming ในภาคการศึกษานี้</p>
-    </div>
+
   </div>
 
-  <div id="img-holder">
-    <img src="https://i.redd.it/es9fpe3llr3z.jpg">
+  <div class="alert alert-success" role="alert">
+      <p>1. นักศึกษาต้องมาทำการสอบ ที่ ภาควิชาวิศวกรรมคอมพิวเตอร์</p>
+      <p>2. นักศึกษาจะไม่สามารถเข้าดูประวัติการส่งงานได้</p>
+      <p>3. เว็บไซต์นี้จะไม่สามารถเข้าถึงได้จากเครือข่ายคอมพิวเตอร์นอกสถาบัน</p>
+      <p>4. เมื่อเข้าห้องแล้ว ให้ทดสอบโปรแกรม Microsoft Visual C++ 2008 ว่าทำงานปกติหรือไม่ อาจทดสอบด้วย helloworld</p>
+      <p>5. save file ที่ไดร์ฟ D</p>
+      <p>6. ห้ามนำเอกสารเข้าห้องสอบ</p>
+      <p>7. ห้ามพกอุปกรณ์อิเลกทรอนิกส์ติดตัว ให้ปิดเครื่อง และนำไปวางในที่ปลอดภัย</p>
+      <p>8. นำบัตรนักศึกษา ดินสอ ปากกา มาด้วย</p>
+      <p>9. ถ้าพบว่าทำการทุจริต จะลงโทษ ตามระเบียบของทางคณะวิศวกรรมศาสตร์</p>
   </div>
 
   <div class="modal fade" id="component-exam-room" role="dialog">

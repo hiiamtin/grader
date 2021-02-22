@@ -784,10 +784,6 @@ class Student extends MY_Controller {
 		$this->load->view('student/stu_footer');
 
 
-
-		return $exercise_id;
-
-
 	}//public function lab_exercise_v2($chapter_id,$item_id)
 
 
@@ -1864,7 +1860,7 @@ class Student extends MY_Controller {
     $result = $this->time_model->check_allow_access_and_submit($chapter_data['time_start'],$chapter_data['time_end']);
     $allow_access = $result[0];
     if($allow_access=='no') {
-      $this->show_message("You are not allowed to do exercise.");
+      $this->show_message("You are not allowed to do the exam.");
     } else {
       $examItemId = $this->lab_exercise_action_v2($chapterId, $level);
       /*
@@ -1875,6 +1871,58 @@ class Student extends MY_Controller {
       */
 
     }
+  }
+
+  public function exam_room_request_new_problem($chapterId, $level) {
+    $this->checkForInfiniteLoop();
+    $this->load->model('examroom_model');
+    $stuId = $_SESSION['stu_id'];
+    $credit = $this->examroom_model->getHelperCredit($stuId);
+    if($credit>0) {
+      $assigned = $this->examroom_model->getOldProblemId($stuId, $chapterId, $level);
+      // ลบข้อมูลของโจทย์เดิม
+      $this->examroom_model->removeStudentAssigned($stuId, $assigned);
+      $this->examroom_model->removeStudentSubmission($stuId, $assigned);
+      // สุ่ม ID โจทย์ใหม่
+      $newAssignment = $this->exam_room_random_new_problem_id($assigned, $chapterId, $level);
+      // ถ้าสุ่มแล้วได้โจทย์ใหม่ จะหักเครดิตตัวช่วย
+      if($newAssignment != $assigned) {
+        $this->examroom_model->setHelperCredit($stuId, $credit-1);
+      }
+      // อัพเดท database
+      $this->lab_model->update_student_exericse($stuId,$chapterId,$level,$newAssignment);
+      $this->update_student_data();
+      // redirect
+      $this->lab_exercise_action_v2($chapterId,$level);
+    } else {
+      echo 'ใช้สิทธิ์ครบแล้ว เสียใจด้วย';
+    }
+  }
+
+  private function exam_room_random_new_problem_id($oldProblemID, $chapterId, $level) {
+    $stuId = $_SESSION['stu_id'];
+    $stuGroup = $_SESSION['stu_group'];
+    $this->load->model('lab_model');
+    $this->load->model('examroom_model');
+    $exerciseList = $this->lab_model->setup_student_lab_data($stuId,$stuGroup)[$chapterId][$level]['exercise_id_list'];
+    $exerciseList = unserialize($exerciseList);
+    $exerciseId = $oldProblemID;
+    if(sizeof($exerciseList)==1) {
+      return $exerciseId;
+    } else {
+      do {
+        shuffle($exerciseList);
+        if( isset($exerciseList[0]) ) {
+          $exerciseId = $exerciseList[0];
+        }
+      }while($exerciseId == $oldProblemID);
+    }
+    return $exerciseId;
+  }
+
+  public function testSTH() {
+
+
   }
 
   /* * *
