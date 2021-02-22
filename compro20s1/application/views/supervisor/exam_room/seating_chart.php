@@ -243,7 +243,7 @@
   <?php
   if ($chapter_data != NULL) {
     echo '<form action="' . site_url('supervisor/exam_room_set_level_allow_access') . '" id="toggle_allow_access" method="post" style="display:inline">';
-    echo '<input type="submit" class="btn btn-danger" value="ตั้งค่าโจทย์">';
+    echo '<input type="submit" class="btn btn-danger" value="เพิ่ม/ลบ โจทย์">';
     echo '<input type="text" name="class_id" value="' . $chapter_data["class_id"] . '" hidden>';
     echo '<input type="text" name="chapter_id" value="' . $chapter_data["chapter_id"] . '" hidden>';
     echo '</form>';
@@ -253,8 +253,9 @@
   }
   ?>
   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#centralModalInfo">
-    <span class="emoji">&#9881;</span> ตั้งค่าชุดข้อสอบ และเวลาเปิด-ปิด
+    <span class="emoji">&#9881;</span> ตั้งค่าชุดข้อสอบ
   </button>
+  <a href="<?php echo site_url('supervisor/exam_room_extra_student/');?><?php echo $accessible_room;?>" class="btn btn-primary">ย้ายนักศึกษาชั่วคราว</a>
   <label>Status : </label>
   <?php
   if ($chapter_data != NULL) {

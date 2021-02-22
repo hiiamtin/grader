@@ -2730,9 +2730,44 @@ class Supervisor extends MY_Controller {
 		//WIP
 	}
 
+	public function exam_room_extra_student($roomNum) {
+
+    $this->load->view('supervisor/head');
+    $this->load->view('supervisor/nav_fixtop');
+    $this->load->view('supervisor/nav_sideleft');
+    $this->load->view('supervisor/exam_room/exam_room_extra_student');
+    $this->load->view('supervisor/footer');
+  }
+
+  public function exam_room_add_swap_student() {
+    $roomNum = intval($_POST['roomNum']);
+    $stuId = intval($_POST['stuId']);
+    $tempClassId = intval($_POST['tempClassId']);
+
+    $this->load->model('examroom_model');
+    $realClassId = intval($this->examroom_model->getRealStudentGroupId($stuId));
+    $this->examroom_model->insertExtraStudent($stuId, $roomNum, $realClassId);
+    $this->examroom_model->setStudentGroupId($stuId, $tempClassId);
+
+    $this->exam_room_extra_student($roomNum);
+  }
+
+  public function exam_room_revert_swap_student() {
+    $roomNum = intval($_POST['roomNum']);
+    $stuId = intval($_POST['stuId']);
+    $realClassId = intval($_POST['realClassId']);
+
+    $this->load->model('examroom_model');
+    $this->examroom_model->setStudentGroupId($stuId, $realClassId);
+    $this->examroom_model->removeExtraStudent($stuId);
+
+    $this->exam_room_extra_student($roomNum);
+  }
+
 	public function testSth() {
     $this->load->model('examroom_model');
-    print_r($this->examroom_model->getStudentFinishedWork(704, 60010296));
+    $data = "";
+    print_r($data);
 	}
 
 	/* * *

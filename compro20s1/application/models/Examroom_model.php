@@ -2,9 +2,10 @@
 
 class Examroom_model extends CI_Model
 {
-  private $TABLE_EXAM_ROOM = 'exam_room';
-  private $TABLE_EXAM_SEAT = 'exam_seat';
-  private $TABLE_EXAM_SUBMISSION = 'exam_answer_submission';
+  private $TABLE_ROOM = 'exam_room';
+  private $TABLE_SEAT = 'exam_seat';
+  private $TABLE_SUBMISSION = 'exam_answer_submission';
+  private $TABLE_SWAP = 'exam_student_swap';
 
   public function __construct()
   {
@@ -14,7 +15,7 @@ class Examroom_model extends CI_Model
   public function getAllExamRoom()
   {
     $this->db->select('*')
-        ->from($this->TABLE_EXAM_ROOM);
+        ->from($this->TABLE_ROOM);
     $query = $this->db->get();
 
     $query = $query->result_array();
@@ -31,11 +32,11 @@ class Examroom_model extends CI_Model
         'class_id' => $classId);
     $this->db->where('room_number', $roomNumber);
     $this->db->set($data);
-    $this->db->update($this->TABLE_EXAM_ROOM);
+    $this->db->update($this->TABLE_ROOM);
 
     if ($needToAllow == 'unchecked') {
       $this->db->where('room_number', $roomNumber);
-      $this->db->delete($this->TABLE_EXAM_SEAT);
+      $this->db->delete($this->TABLE_SEAT);
     }
   }
 
@@ -44,14 +45,14 @@ class Examroom_model extends CI_Model
     $data = array('allow_check_in' => $needToAllow);
     $this->db->where('room_number', $roomNumber);
     $this->db->set($data);
-    return $this->db->update($this->TABLE_EXAM_ROOM);
+    return $this->db->update($this->TABLE_ROOM);
   }
 
   public function setSocialDistancing($distancing, $roomNumber) {
     $data = array('in_social_distancing' => $distancing);
     $this->db->where('room_number', $roomNumber);
     $this->db->set($data);
-    return $this->db->update($this->TABLE_EXAM_ROOM);
+    return $this->db->update($this->TABLE_ROOM);
   }
 
   public function checkIn($roomNumber, $seatNumber, $stuId, $stuGroup)
@@ -64,7 +65,7 @@ class Examroom_model extends CI_Model
           'stu_id' => $stuId,
           'helper' => EXAM_HELPER_CREDIT,
           'progress' => 0);
-      $this->db->insert($this->TABLE_EXAM_SEAT, $data);
+      $this->db->insert($this->TABLE_SEAT, $data);
       return true;
     } else {
       return false;
@@ -75,7 +76,7 @@ class Examroom_model extends CI_Model
   public function getRoomData($roomNumber)
   {
     $this->db->select('*')
-        ->from($this->TABLE_EXAM_ROOM)
+        ->from($this->TABLE_ROOM)
         ->where('room_number', $roomNumber);
     $query = $this->db->get();
     return $query->result_array()[0];
@@ -90,7 +91,7 @@ class Examroom_model extends CI_Model
   public function getSeatData($roomNumber, $seatNumber)
   {
     $this->db->select('*')
-        ->from($this->TABLE_EXAM_SEAT)
+        ->from($this->TABLE_SEAT)
         ->where('room_number', $roomNumber)
         ->where('seat_number', $seatNumber);
     $query = $this->db->get();
@@ -104,7 +105,7 @@ class Examroom_model extends CI_Model
   public function hasAlreadyCheckIn($stuId)
   {
     $this->db->select('room_number')
-        ->from($this->TABLE_EXAM_SEAT)
+        ->from($this->TABLE_SEAT)
         ->where('stu_id', $stuId);
     $query = $this->db->get();
     $query = $query->result_array();
@@ -118,7 +119,7 @@ class Examroom_model extends CI_Model
   public function checkOut($stu_id)
   {
     $this->db->where('stu_id', $stu_id);
-    $this->db->delete($this->TABLE_EXAM_SEAT);
+    $this->db->delete($this->TABLE_SEAT);
   }
 
   public function getAllSeatsData($roomNumber) {
@@ -138,7 +139,7 @@ class Examroom_model extends CI_Model
   public function getStudentData_exam_seat($stu_id)
   {
     $this->db->select('*')
-        ->from($this->TABLE_EXAM_SEAT)
+        ->from($this->TABLE_SEAT)
         ->where('stu_id', $stu_id);
     $query = $this->db->get();
     return $query->result_array()[0];
@@ -149,12 +150,12 @@ class Examroom_model extends CI_Model
     $data = array('chapter_id' => $chapter_id);
     $this->db->where('room_number', $room_number);
     $this->db->set($data);
-    $this->db->update($this->TABLE_EXAM_ROOM);
+    $this->db->update($this->TABLE_ROOM);
   }
 
   public function notYetAssigned($stuId, $level) {
     $this->db->select('*')
-      ->from($this->TABLE_EXAM_SUBMISSION)
+      ->from($this->TABLE_SUBMISSION)
       ->where('stu_id', $stuId)
       ->where('level', $level);
     $query = $this->db->get();
@@ -227,7 +228,7 @@ class Examroom_model extends CI_Model
 
   public function getStudentAccessibleRoom($classId) {
     $this->db->select('*')
-        ->from($this->TABLE_EXAM_ROOM)
+        ->from($this->TABLE_ROOM)
         ->where('class_id', $classId);
     $query = $this->db->get();
     if(empty($query->result_array())){
@@ -289,7 +290,7 @@ class Examroom_model extends CI_Model
     $data = array('helper' => $credit);
     $this->db->where('stu_id', $stuId);
     $this->db->set($data);
-    return $this->db->update($this->TABLE_EXAM_SEAT);
+    return $this->db->update($this->TABLE_SEAT);
   }
 
   public function getOldProblemId($stuId, $chapterId, $level) {
@@ -321,6 +322,47 @@ class Examroom_model extends CI_Model
         .' AND exercise_id = '.$assigned
     );
     return $query;
+  }
+
+  public function getExtraStudentList($roomNum) {
+    $query = $this->db->query(
+        'SELECT *'
+        .' FROM '.$this->TABLE_SWAP
+        .' WHERE room_number = '.$roomNum
+    );
+    return $query->result_array();
+  }
+
+  public function insertExtraStudent($stuId, $roomNum, $classId) {
+    $data = array('room_number' => $roomNum,
+        'stu_id' => $stuId,
+        'stu_group' => $classId);
+    $this->db->insert($this->TABLE_SWAP, $data);
+  }
+
+  public function removeExtraStudent($stuId) {
+    $query = $this->db->query(
+        'DELETE'
+        .' FROM '.$this->TABLE_SWAP
+        .' WHERE stu_id = '.$stuId
+    );
+    return $query;
+  }
+
+  public function setStudentGroupId($stuId, $groupId) {
+    $data = array('stu_group' => $groupId);
+    $this->db->where('stu_id', $stuId);
+    $this->db->set($data);
+    return $this->db->update('user_student');
+  }
+
+  public function getRealStudentGroupId($stuId) {
+    $query = $this->db->query(
+        'SELECT stu_group'
+        .' FROM user_student'
+        .' WHERE stu_id = '.$stuId
+    );
+    return $query->result_array()[0]['stu_group'];
   }
 
 
