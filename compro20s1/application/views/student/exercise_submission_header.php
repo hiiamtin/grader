@@ -1,5 +1,39 @@
 <!-- nav_body -->
-<div class="col-lg-10 col-md-10 col-sm-10 kpanel_body" style="margin-top:120px;">
+<style>
+  .grid-container {
+    display: grid;
+    grid-template-areas:
+    'random chapter score'
+    'allow name subtime';
+    grid-template-columns: min-content auto min-content;
+  }
+  .grid-container > .item-random {
+    grid-area: random;
+    padding-top: 5px;
+  }
+  .grid-container > .item-chapter {
+    grid-area: chapter;
+    text-align: center;
+  }
+  .grid-container > .item-score {
+    grid-area: score;
+    padding-top: 5px;
+  }
+  .grid-container > .item-allow {
+    grid-area: allow;
+    padding-top: 5px;
+  }
+  .grid-container > .item-name {
+    grid-area: name;
+    text-align: center;
+  }
+  .grid-container > .item-subtime {
+    grid-area: subtime;
+    padding-top: 5px;
+  }
+</style>
+
+<div class="col-lg-10 col-md-10 col-sm-10 kpanel_body" style="margin-top:180px;">
 	<div class="row">
 		<div class="col-lg-1">
 		</div> 
@@ -17,22 +51,33 @@
 		<div class="col-lg-10">
 			<div class="panel panel-primary" style="min-width:800px;">
 				<div class="panel-heading">
-					 <div class="row">
-						<div class="col-xs-1">
-							<div><?php if($group_permission[$lab_chapter]['allow_submit']=='no'  && $group_permission[$lab_chapter]['allow_access']=='yes')
-										echo '<button type="button" class="btn btn-warning">ไม่สามารถส่งได้</button>';?></div>
-						</div>
+          <div class="grid-container">
 
-						<div class="col-xs-7">
-							<h2>Chapter : <?php echo $lab_chapter; ?> - item : <?php echo $lab_item ?> - <?php echo $lab_name; ?></h2>
-						</div>
-						
-						<div class="col-xs-4">
-							<button class="btn btn-info btn-lg">คะแนน คะแนน : <?php echo $marking,' / ',$full_mark; ?></button>
-							<p class="badge">ส่งมาแล้ว <?php echo $submitted_count; ?> ครั้ง</p>
-						</div>						
+            <div class="item-random">
+              <?php
+                if($lab_chapter > 10) {
+                  echo '<button class="btn btn-success btn-lg" onclick="requestNewProblem()">⏪ ขอเปลี่ยนโจทย์</button>';
+                }
+              ?>
+            </div>
+            <div class="item-chapter">
+              <h3>Chapter: <?php echo $lab_chapter; ?> &nbsp; Level: <?php echo $lab_item ?></h3>
+            </div>
+            <div class="item-score">
+              <button class="btn btn-info btn-lg">คะแนน : <?php echo $marking,' / ',$full_mark; ?></button>
+            </div>
+            <div class="item-allow">
+              <?php if($group_permission[$lab_chapter]['allow_submit']=='no'  && $group_permission[$lab_chapter]['allow_access']=='yes')
+                echo '<button class="btn btn-danger btn-lg">ไม่สามารถส่งได้</button>';?>
+            </div>
+            <div class="item-name">
+              <h3><?php echo $lab_name; ?></h3>
+            </div>
+            <div class="item-subtime">
+              <p class="badge">ส่งมาแล้ว <?php echo $submitted_count; ?> ครั้ง</p>
+            </div>
 
-					</div>
+          </div>
 				</div>
 
 				<div style="display:inline-block;"></div>
@@ -128,5 +173,14 @@
 	var lab_chapter = <?php echo $lab_chapter;?>;
 	var lab_item = <?php echo $lab_item;?>;
 
+
+	function requestNewProblem() {
+    if (confirm("นักศึกษาต้องการใช้สิทธิ์เปลี่ยนโจทย์ใช่หรือไม่?")) {
+      let url = "<?php echo site_url($_SESSION['role'].'/exam_room_request_new_problem'); ?>";
+      let chapter = "<?php echo $lab_chapter;?>";
+      let level = "<?php echo $lab_item;?>";
+      window.location.assign(url+"/"+chapter+"/"+level);
+    }
+  }
 	
 	</script>

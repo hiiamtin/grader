@@ -145,3 +145,6 @@ defined('INFINITE_LOOP')        			OR define('INFINITE_LOOP',"Infinite loop !!!"
 defined('IF_LIMIT')                  OR define('IF_LIMIT',10);
 defined('SWITCH_LIMIT')              OR define('SWITCH_LIMIT',1);
 defined('CASE_LIMIT')                OR define('CASE_LIMIT',5);
+
+//Exam Room
+defined('EXAM_HELPER_CREDIT')                OR define('EXAM_HELPER_CREDIT',3);

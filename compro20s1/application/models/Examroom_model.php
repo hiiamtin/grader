@@ -62,6 +62,7 @@ class Examroom_model extends CI_Model
       $data = array('room_number' => $roomNumber,
           'seat_number' => $seatNumber,
           'stu_id' => $stuId,
+          'helper' => EXAM_HELPER_CREDIT,
           'progress' => 0);
       $this->db->insert($this->TABLE_EXAM_SEAT, $data);
       return true;
@@ -274,5 +275,53 @@ class Examroom_model extends CI_Model
     );
     return $query->result_array();
   }
+
+  public function getHelperCredit($stuId) {
+    $query = $this->db->query(
+        'SELECT helper'
+        .' FROM exam_seat'
+        .' WHERE stu_id = '.$stuId
+    );
+    return intval($query->result_array()[0]['helper']);
+  }
+
+  public function setHelperCredit($stuId, $credit) {
+    $data = array('helper' => $credit);
+    $this->db->where('stu_id', $stuId);
+    $this->db->set($data);
+    return $this->db->update($this->TABLE_EXAM_SEAT);
+  }
+
+  public function getOldProblemId($stuId, $chapterId, $level) {
+    $query = $this->db->query(
+        'SELECT exercise_id'
+        .' FROM student_assigned_chapter_item'
+        .' WHERE stu_id = '.$stuId
+        .' AND chapter_id = '.$chapterId
+        .' AND item_id = '.$level
+    );
+    return intval($query->result_array()[0]['exercise_id']);
+  }
+
+  public function removeStudentAssigned($stuId, $assigned) {
+    $query = $this->db->query(
+        'DELETE'
+        .' FROM student_assigned_chapter_item'
+        .' WHERE stu_id = '.$stuId
+        .' AND exercise_id = '.$assigned
+    );
+    return $query;
+  }
+
+  public function removeStudentSubmission($stuId, $assigned) {
+    $query = $this->db->query(
+        'DELETE'
+        .' FROM exercise_submission'
+        .' WHERE stu_id = '.$stuId
+        .' AND exercise_id = '.$assigned
+    );
+    return $query;
+  }
+
 
 }//class Examroom_model
