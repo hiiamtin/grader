@@ -326,18 +326,29 @@ class Examroom_model extends CI_Model
 
   public function getExtraStudentList($roomNum) {
     $query = $this->db->query(
-        'SELECT *'
-        .' FROM '.$this->TABLE_SWAP
-        .' WHERE room_number = '.$roomNum
+        'SELECT u.stu_id, u.stu_firstname, u.stu_lastname, e.stu_group'
+        .' FROM user_student u, exam_student_swap e'
+        .' WHERE u.stu_id = e.stu_id'
     );
     return $query->result_array();
   }
 
-  public function insertExtraStudent($stuId, $roomNum, $classId) {
-    $data = array('room_number' => $roomNum,
-        'stu_id' => $stuId,
-        'stu_group' => $classId);
-    $this->db->insert($this->TABLE_SWAP, $data);
+  public function insertExtraStudent($stuId, $roomNum, $classId)
+  {
+    // Check if student were swapped
+    $query = $this->db->query(
+        'SELECT stu_id'
+        . ' FROM ' . $this->TABLE_SWAP
+        . ' WHERE stu_id = ' . $stuId
+    );
+    if (sizeof($query->result_array()) == 0) {
+      $data = array('room_number' => $roomNum,
+          'stu_id' => $stuId,
+          'stu_group' => $classId);
+      $this->db->insert($this->TABLE_SWAP, $data);
+      return true;
+    }
+    return false;
   }
 
   public function removeExtraStudent($stuId) {

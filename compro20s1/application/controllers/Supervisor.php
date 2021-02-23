@@ -2651,7 +2651,13 @@ class Supervisor extends MY_Controller {
 		$classId = $_POST['classId'];
 		$this->load->model('examroom_model');
 		$this->examroom_model->setAllowAccess($needToAllow,$roomNumber,$classId);
-
+		if($needToAllow=='unchecked') {
+      $extraStuList = $this->examroom_model->getExtraStudentList($roomNumber);
+      foreach ($extraStuList as $exStu) {
+        $this->examroom_model->setStudentGroupId($exStu['stu_id'], $exStu['stu_group']);
+        $this->examroom_model->removeExtraStudent($exStu['stu_id']);
+      }
+    }
 	}
 
 	public function exam_room_ajax_allow_check_in() {
@@ -2726,16 +2732,22 @@ class Supervisor extends MY_Controller {
 	}
 
 	public function exam_room_create_room() {
-		echo "กำลังทำครับ";
+		echo "Under Construction";
 		//WIP
 	}
 
 	public function exam_room_extra_student($roomNum) {
+    $this->load->model('examroom_model');
 
+	  $data = array(
+	      'room_num' => $roomNum,
+        'temp_class_id' => $this->examroom_model->getRoomData($roomNum)['class_id'],
+        'stu_list' => $this->examroom_model->getExtraStudentList($roomNum)
+    );
     $this->load->view('supervisor/head');
     $this->load->view('supervisor/nav_fixtop');
     $this->load->view('supervisor/nav_sideleft');
-    $this->load->view('supervisor/exam_room/exam_room_extra_student');
+    $this->load->view('supervisor/exam_room/extra_student',$data);
     $this->load->view('supervisor/footer');
   }
 
@@ -2746,10 +2758,12 @@ class Supervisor extends MY_Controller {
 
     $this->load->model('examroom_model');
     $realClassId = intval($this->examroom_model->getRealStudentGroupId($stuId));
-    $this->examroom_model->insertExtraStudent($stuId, $roomNum, $realClassId);
-    $this->examroom_model->setStudentGroupId($stuId, $tempClassId);
-
-    $this->exam_room_extra_student($roomNum);
+    if($realClassId!=0) {
+      $this->examroom_model->insertExtraStudent($stuId, $roomNum, $realClassId);
+      $this->examroom_model->setStudentGroupId($stuId, $tempClassId);
+    }
+    redirect(site_url("supervisor/exam_room_extra_student/".$roomNum));
+    die();
   }
 
   public function exam_room_revert_swap_student() {
@@ -2761,7 +2775,8 @@ class Supervisor extends MY_Controller {
     $this->examroom_model->setStudentGroupId($stuId, $realClassId);
     $this->examroom_model->removeExtraStudent($stuId);
 
-    $this->exam_room_extra_student($roomNum);
+    redirect(site_url("supervisor/exam_room_extra_student/".$roomNum));
+    die();
   }
 
 	public function testSth() {

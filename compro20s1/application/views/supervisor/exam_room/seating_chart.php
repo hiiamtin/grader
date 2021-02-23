@@ -230,13 +230,13 @@
 <?php date_default_timezone_set("Asia/Bangkok"); ?>
 
 <div id="seating-chart">
-  <label id="timer">Loading...</label><br>
   <ul>
     <li>ห้องสอบ ECC: <a><?php echo $accessible_room;?></a></li>
     <li>กลุ่มที่สอบ: <a><?php echo $group_number; ?> - ภาควิชา<?php echo $department ?></a></li>
     <li>อาจารย์ผู้สอน: <a><?php echo $supervisor_info['supervisor_firstname']." ".$supervisor_info['supervisor_lastname']; ?></a></li>
     <li>จำนวนนักศึกษาเข้าสอบ: <a><?php echo sizeof($seat_list);?> / <?php echo $num_of_student;?></a></li>
   </ul>
+  <label id="timer">Loading...</label><br>
   <button class="btn btn-success" id="btn-rotate" value="180deg" onclick="rotateScreen(this.value)">
     <span class="emoji">&#8635;</span> สลับมุมมองอาจารย์-นักศึกษา
   </button>
