@@ -230,20 +230,20 @@
 <?php date_default_timezone_set("Asia/Bangkok"); ?>
 
 <div id="seating-chart">
-  <label id="timer">Loading...</label><br>
   <ul>
     <li>ห้องสอบ ECC: <a><?php echo $accessible_room;?></a></li>
     <li>กลุ่มที่สอบ: <a><?php echo $group_number; ?> - ภาควิชา<?php echo $department ?></a></li>
     <li>อาจารย์ผู้สอน: <a><?php echo $supervisor_info['supervisor_firstname']." ".$supervisor_info['supervisor_lastname']; ?></a></li>
     <li>จำนวนนักศึกษาเข้าสอบ: <a><?php echo sizeof($seat_list);?> / <?php echo $num_of_student;?></a></li>
   </ul>
+  <label id="timer">Loading...</label><br>
   <button class="btn btn-success" id="btn-rotate" value="180deg" onclick="rotateScreen(this.value)">
     <span class="emoji">&#8635;</span> สลับมุมมองอาจารย์-นักศึกษา
   </button>
   <?php
   if ($chapter_data != NULL) {
     echo '<form action="' . site_url('supervisor/exam_room_set_level_allow_access') . '" id="toggle_allow_access" method="post" style="display:inline">';
-    echo '<input type="submit" class="btn btn-danger" value="ตั้งค่าโจทย์">';
+    echo '<input type="submit" class="btn btn-danger" value="เพิ่ม/ลบ โจทย์">';
     echo '<input type="text" name="class_id" value="' . $chapter_data["class_id"] . '" hidden>';
     echo '<input type="text" name="chapter_id" value="' . $chapter_data["chapter_id"] . '" hidden>';
     echo '</form>';
@@ -253,8 +253,9 @@
   }
   ?>
   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#centralModalInfo">
-    <span class="emoji">&#9881;</span> ตั้งค่าชุดข้อสอบ และเวลาเปิด-ปิด
+    <span class="emoji">&#9881;</span> ตั้งค่าชุดข้อสอบ
   </button>
+  <a href="<?php echo site_url('supervisor/exam_room_extra_student/');?><?php echo $accessible_room;?>" class="btn btn-primary">ย้ายนักศึกษาชั่วคราว</a>
   <label>Status : </label>
   <?php
   if ($chapter_data != NULL) {
