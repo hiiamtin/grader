@@ -142,6 +142,10 @@
     color: #888888;
   }
 
+  footer {
+    visibility: hidden;
+  }
+
 </style>
 
 <script>
