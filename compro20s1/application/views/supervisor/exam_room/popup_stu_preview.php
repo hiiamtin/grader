@@ -1,90 +1,5 @@
-<style>
-  #modalStuPreview .modal-content {
-    width: 600px;
-  }
-
-  #modalStuPreview .modal-body {
-    display: grid;
-    grid-template-areas:
-        'image status status status status status';
-  }
-
-  #modalStuPreview .modal-body > .image {
-    height: 188px;
-    width: 150px;
-    background-color: blue;
-  }
-
-  #modalStuPreview .modal-body table, td, th {
-    padding: 4px;
-  }
-
-  #modalStuPreview .modal-body td {
-    width: 250px;
-  }
-
-  #modalStuPreview .information {
-    margin-left: 10px;
-
-  }
-
-  #modalStuPreview #info-name {
-    font-family: monospace;
-  }
-
-
-</style>
-
-<script>
-  function studentPreview(seatNum) {
-    document.getElementById("info-seatnum").innerHTML = seatNum;
-    jQuery.post("<?php echo site_url('supervisor/exam_room_ajax_stu_preview'); ?>",
-            {
-              seatNum: seatNum,
-              roomNum: <?php echo $room_number; ?>
-            },
-            function (data, status) {
-              console.log("Fetching data: "+status);
-              console.log(data);
-              let stuInfo = JSON.parse(data);
-              document.getElementById("info-name").innerHTML = "&#128512; " + stuInfo.stuId + " : " + stuInfo.stuFullname;
-              for (let i = 1; i <= 5; i++) {
-                let btn = document.getElementById("btn-level" + i);
-                let problemName = document.getElementById("info-level" + i);
-                if (stuInfo.examItems.length === 0) {
-                  btn.setAttribute("class", "btn");
-                  problemName.innerHTML = "<i>~ No Assignment</i>";
-                } else if (stuInfo.examItems[0].item_id == i) {
-                  switch (stuInfo.examItems[0].marking) {
-                    case "2": {
-                      btn.setAttribute("class", "btn btn-success");
-                      btn.setAttribute("onclick", "codePreview("+stuInfo.stuId+","+stuInfo.examItems[0].exercise_id+")");
-                      break;
-                    }
-                    default: {
-                      btn.setAttribute("class", "btn btn-danger");
-                      btn.setAttribute("onclick", "codePreview("+stuInfo.stuId+","+stuInfo.examItems[0].exercise_id+")");
-                      break;
-                    }
-                  }
-                  problemName.innerHTML = stuInfo.examItems[0].name;
-                  stuInfo.examItems.shift();
-                } else {
-                  btn.setAttribute("class", "btn");
-                  problemName.innerHTML = "<i>~ No Assignment</i>";
-                }
-              }
-              let imgUrl = stuInfo.stuAvatar;
-              document.getElementById("info-img").setAttribute("src", "<?php echo base_url(STUDENT_AVATAR_FOLDER); ?>"+imgUrl);
-              document.getElementById("info-progress").innerHTML = stuInfo.progress+'%';
-            }
-    );
-  }
-
-  function codePreview(stuId, problemId) {
-    window.open("<?php echo site_url('supervisor/exam_room_stu_code_preview/'); ?>"+stuId+"/"+problemId,"winname","directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,width=1200,height=700");
-  }
-</script>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/exam_room_supervisor.css')?>">
+<script type="text/javascript" src="<?php echo base_url('assets/js/exam_room_supervisor.js')?>"></script>
 
 <div class="modal fade bd-example-modal-lg" id="modalStuPreview" tabindex="-1" role="dialog"
      aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -110,7 +25,7 @@
               echo '"></th><td id="info-level';
               echo $level;
               echo '">Loading ..</td>';
-              echo '<th></th></tr>';
+              echo '</tr>';
             }
             ?>
           </table>
