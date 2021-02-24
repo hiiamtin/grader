@@ -75,7 +75,7 @@
       }
     }
     ?>
-    <a class="room-controller" id="add-new-room" href="<?php echo site_url($_SESSION["role"]."/exam_room_create_room/"); ?>">
+    <a class="room-controller" id="add-new-room" onclick="createNewRoom()">
       <h2>Create New Room</h2>
       <div class="circle"><b>+</b></div>
     </a>

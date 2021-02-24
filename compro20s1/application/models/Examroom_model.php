@@ -386,5 +386,16 @@ class Examroom_model extends CI_Model
     return (sizeof($query->result_array())!=0);
   }
 
+  public function createNewRoom($roomNum) {
+    $data = array('room_number' => $roomNum,
+        'class_id' => 0,
+        'allow_access' => "unchecked",
+        'allow_check_in' => "unchecked",
+        'in_social_distancing' => "unchecked",
+        'is_active' => "no",
+        'chapter_id' => 11);
+    $this->db->insert($this->TABLE_ROOM, $data);
+  }
+
 
 }//class Examroom_model

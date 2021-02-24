@@ -70,6 +70,16 @@ function toggleSocialDistancing(id) {
     }
 }
 
+function createNewRoom() {
+    var num = prompt("ใส่เลขห้อง:", "");
+    if (num == null || num == "") {
+        return 0;
+    } else {
+        window.location.href = baseurl+"index.php/supervisor/exam_room_create_room/"+num;
+    }
+    return 1;
+}
+
 
 // popup_group_selector
 
@@ -170,7 +180,4 @@ function studentPreview(roomNum, seatNum) {
 function codePreview(stuId, problemId) {
     window.open(baseurl+"index.php/supervisor/exam_room_stu_code_preview/"+stuId+"/"+problemId,"winname","directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,width=1200,height=700");
 }
-
-
-// seating_chart
 

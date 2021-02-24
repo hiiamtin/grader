@@ -2731,9 +2731,11 @@ class Supervisor extends MY_Controller {
 		$this->load->view('supervisor/footer');
 	}
 
-	public function exam_room_create_room() {
-		echo "Under Construction";
-		//WIP
+	public function exam_room_create_room($roomNum) {
+    $this->load->model('examroom_model');
+	  $this->examroom_model->createNewRoom($roomNum);
+    redirect(site_url("supervisor/exam_room_panel"));
+    die();
 	}
 
 	public function exam_room_extra_student($roomNum) {
