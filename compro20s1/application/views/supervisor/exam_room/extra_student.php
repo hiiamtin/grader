@@ -1,31 +1,4 @@
-<style>
-  #extra-student {
-    margin-left: 250px;
-    margin-top: 30px;
-    width: 82vw;
-  }
-  input[type='text'] {
-    font-family: "Consolas", monospace;
-    font-size: 18px;
-  }
-  #student-list {
-    margin: 10px;
-  }
-  table {
-    font-family: "Consolas", monospace;
-  }
-  td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
-
-</style>
-
-<script>
-
-
-</script>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/exam_room_supervisor.css')?>">
 
 <div id="extra-student">
   <h4>ECC: <?php echo $room_num; ?> เพิ่มชื่อนักศึกษาที่ย้ายมาสอบเวลานี้</h4>

@@ -17,7 +17,7 @@
             <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
             <div class="form-group">
               <label for="sel1">Select Chapter (select one):</label>
-              <select class="form-control" name="chapter_id" id="selecter" onchange="change_chapter()">
+              <select class="form-control" name="chapter_id" id="selecter" onchange="change_chapter(<?php echo json_encode($group_permission); ?>)">
                 <?php
                   $count = 1;
 						        foreach ($group_permission as $row) {
@@ -55,20 +55,6 @@
             </div>
           </div>
         </div>
-        <script language="javascript">
-          function change_chapter(){
-            let x = document.getElementById("selecter").value;
-            let row = <?php echo json_encode($group_permission); ?>[x];
-            console.log(x,row);
-            let time_start = row["time_start"].substring(0,10)+"T"+row["time_start"].substring(11,16);
-            let time_end = row["time_end"].substring(0,10)+"T"+row["time_end"].substring(11,16);
-            document.getElementById("time_start").value = time_start;
-            document.getElementById("time_end").value = time_end;
-            stop_time = true;
-            time_counter = set_time_counter(Date.parse(row["time_start"])/10000,Date.parse(row["time_end"])/10000,"time_chapter");
-            time_counter_main = set_time_counter(Date.parse(row["time_start"])/10000,Date.parse(row["time_end"])/10000,"time_chapter_main");
-          }
-        </script>
         <!--Footer-->
         <div class="modal-footer justify-content-center">
           <input type="submit" class="btn btn-primary" value="Save">

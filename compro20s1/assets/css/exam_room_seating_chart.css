@@ -1,0 +1,79 @@
+#seating-chart {
+    margin-left: 30px;
+    margin-top: 30px;
+    width: 94vw;
+}
+#seating-chart .grid-room {
+    display: grid;
+    grid-template-columns: auto auto 2% auto auto auto 2% auto auto;
+    padding: 4px;
+}
+#seating-chart .grid-seat-able {
+    margin: 2px;
+    height: 64px;
+    width: 96%;
+    text-align: left;
+    position: relative;
+    display: grid;
+    grid-template-areas: 'num img text';
+    grid-template-columns: 28px 40px auto;
+    background-color: #efb45d;
+}
+#seating-chart .grid-seat-unable {
+    margin: 2px;
+    height: 64px;
+    width: 96%;
+    text-align: left;
+    position: relative;
+    display: grid;
+    grid-template-areas: 'num img text';
+    grid-template-columns: 28px 40px auto;
+    background-color: #7493a2;
+}
+#seating-chart img {
+    width: 40px;
+    height: 50px;
+    grid-area: img;
+}
+#seating-chart .seat-num {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-family: "Consolas", monospace;
+    font-weight: bold;
+    grid-area: num;
+}
+#seating-chart .seat-text {
+    padding-left: 10px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-family: "Consolas", monospace;
+    font-weight: bold;
+    grid-area: text;
+}
+#seating-chart .white-board {
+    border-style: double;
+    background-color: #ffffff;
+    height: 24px;
+    text-align: center;
+    width: parent;
+}
+#seating-chart li {
+    font-size: 18px;
+}
+#seating-chart .grid-way {
+    width: 1%;
+}
+#seating-chart span.emoji {
+    font-size: 30px;
+    vertical-align: middle;
+    line-height: 0;
+}
+#global-footer {
+    visibility: collapse;
+}

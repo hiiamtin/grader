@@ -1,0 +1,204 @@
+footer {
+    visibility: hidden;
+}
+
+/* code_preview */
+#student-code-preview {
+    margin-left: 15px;
+    margin-top: 30px;
+    width: 90vw;
+    display: grid;
+    grid-template-columns: auto 250px;
+}
+#student-code-preview textarea {
+    width: 0;
+}
+#student-code-preview .cm-s-default {
+    font-size: 16px;
+    width: 75vw;
+    height: 75vh;
+}
+#student-code-preview a {
+    font-family: "Consolas", monospace;
+    font-weight: bold;
+}
+#student-code-preview ul {
+    margin: 10px;
+}
+
+/* extra_student */
+#extra-student {
+    margin-left: 250px;
+    margin-top: 30px;
+    width: 82vw;
+}
+#extra-student input[type='text'] {
+    font-family: "Consolas", monospace;
+    font-size: 18px;
+}
+#extra-student #student-list {
+    margin: 10px;
+}
+#extra-student table {
+    font-family: "Consolas", monospace;
+}
+#extra-student td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+/* panel */
+#exam-room-panel {
+    margin-left: 250px;
+    margin-top: 30px;
+    width: 82vw;
+}
+#exam-room-panel .flex-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+#exam-room-panel .room-controller {
+    background-color: #c0e5e5;
+    width: 350px;
+    height: 400px;
+    margin: 10px;
+    padding: 10px;
+}
+#exam-room-panel h2 {
+    font-family: "Consolas", monospace;
+    font-size: x-large;
+    text-align: center;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+#exam-room-panel .list-group * {
+    font-size: x-large;
+}
+#exam-room-panel .list-group .badge {
+    background-color: white;
+}
+#exam-room-panel .list-group a {
+    width: 100%;
+    display: block;
+}
+#exam-room-panel .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+#exam-room-panel .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+#exam-room-panel .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+#exam-room-panel .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+#exam-room-panel input:checked + .slider {
+    background-color: #e98e05;
+}
+#exam-room-panel input:focus + .slider {
+    box-shadow: 0 0 1px #e98e05;
+}
+#exam-room-panel input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+#exam-room-panel .room-controller .btn {
+    width: 100%;
+    font-size: x-large;
+}
+#exam-room-panel .status {
+    font-size: large;
+    margin: 15px;
+    font-family: Consolas, Monaco, Courier New, Courier, monospace;
+}
+#exam-room-panel .status a {
+    font-weight: bold;
+    color: #7d0dff;
+}
+#exam-room-panel #add-new-room {
+    position: relative;
+}
+#exam-room-panel .circle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background: #c0e5e5;
+    border-style: double;
+    border-color: #888888;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+#exam-room-panel .circle b {
+    font-size: xxx-large;
+    color: #888888;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+#exam-room-panel #add-new-room h2 {
+    color: #888888;
+}
+
+/* popup_group_selector */
+#group-selector .btn-default {
+    width: 100%;
+    text-align: left;
+}
+
+/* popup_stu_preview */
+#modalStuPreview .modal-content {
+    width: 600px;
+}
+#modalStuPreview .modal-body {
+    display: grid;
+    grid-template-areas:
+        'image status status status status status';
+}
+#modalStuPreview .modal-body > .image {
+    height: 188px;
+    width: 150px;
+    background-color: blue;
+}
+#modalStuPreview .modal-body table, td, th {
+    padding: 4px;
+}
+#modalStuPreview .modal-body td {
+    width: 250px;
+}
+#modalStuPreview .information {
+    margin-left: 10px;
+}
+#modalStuPreview #info-name {
+    font-family: monospace;
+}

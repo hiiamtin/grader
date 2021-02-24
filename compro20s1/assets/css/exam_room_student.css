@@ -1,0 +1,51 @@
+#exam-room-gate {
+    margin-left: 200px;
+    margin-top: 150px;
+    display: flex;
+    flex-wrap: wrap;
+}
+#exam-room-gate > form > * {
+    font-family: Consolas, Monaco, Courier New, Courier, monospace;
+    margin: 12px;
+}
+
+#exam-room-gate > form > .btn {
+    width: 400px;
+}
+
+#exam-room-gate img {
+    margin-left: 10px;
+    padding: 5px;
+    width: 75%;
+}
+
+.alert-success {
+    width: 400px;
+}
+
+.container {
+    width: 80vw;
+}
+
+#component-exam-room {
+    width: 90vw;
+}
+
+#component-exam-room .grid-room {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto;
+    padding: 4px;
+}
+
+#component-exam-room .grid-seat {
+    width: 96%;
+    margin: 2px;
+    height: 48px;
+    text-align: center;
+    font-size: larger;
+    font-weight: bolder;
+}
+
+#component-exam-room .modal-instruction {
+    text-align: center;
+}

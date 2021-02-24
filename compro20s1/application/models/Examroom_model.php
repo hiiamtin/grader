@@ -2,7 +2,7 @@
 
 class Examroom_model extends CI_Model
 {
-  private $TABLE_ROOM = 'exam_room';
+  private $TABLE_ROOM = 'exam_room_info';
   private $TABLE_SEAT = 'exam_seat';
   private $TABLE_SUBMISSION = 'exam_answer_submission';
   private $TABLE_SWAP = 'exam_student_swap';
@@ -124,7 +124,7 @@ class Examroom_model extends CI_Model
 
   public function getAllSeatsData($roomNumber) {
     $classId = $this->getRoomData($roomNumber)['class_id'];
-    $sql = 'SELECT user_student.stu_id, user_student.stu_firstname, user_student.stu_avatar, exam_seat.seat_number, exam_seat.progress'
+    $sql = 'SELECT user_student.stu_id, user_student.stu_firstname, user_student.stu_avatar, exam_seat.seat_number, exam_seat.progress, exam_seat.room_number'
         .' FROM user_student, exam_seat'
         .' WHERE user_student.stu_group = '.$classId
         .' AND exam_seat.stu_id = user_student.stu_id';

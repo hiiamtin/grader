@@ -2,53 +2,8 @@
 <script type="text/javascript" src="<?php echo base_url('assets/codemirror-5.22.0/lib/codemirror.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/codemirror-5.22.0/mode/clike/clike.js')?>"></script>
 
-<style>
-    #student-code-preview {
-      margin-left: 15px;
-      margin-top: 30px;
-      width: 90vw;
-      display: grid;
-      grid-template-columns: auto 250px;
-    }
-
-    textarea {
-      width: 0;
-    }
-
-    .cm-s-default {
-      font-size: 16px;
-      width: 75vw;
-      height: 75vh;
-    }
-
-    #student-code-preview a {
-      font-family: "Consolas", monospace;
-      font-weight: bold;
-    }
-
-    #student-code-preview ul {
-      margin: 10px;
-    }
-
-</style>
-
-<script>
-  function switchSourceCode(id) {
-    let container = document.getElementById("codemirror-container");
-    let child = container.getElementsByClassName("CodeMirror")[0];
-    container.removeChild(child);
-    showSourceCode(id);
-  }
-
-  function showSourceCode(id) {
-    let textArea = document.getElementById(id);
-    CodeMirror.fromTextArea(textArea, {
-      lineNumbers: true,
-      readOnly: true
-    });
-  }
-
-</script>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/exam_room_supervisor.css')?>">
+<script type="text/javascript" src="<?php echo base_url('assets/js/exam_room_supervisor.js')?>"></script>
 
 <div id="student-code-preview">
   <div id="codemirror-container">
