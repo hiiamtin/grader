@@ -13,7 +13,11 @@ CREATE TABLE `exam_room` (
 
 INSERT INTO `exam_room` (`room_number`, `class_id`, `allow_access`, `allow_check_in`, `in_social_distancing`, `is_active`, `chapter_id`) VALUES
 (704, 20020041, 'checked', 'checked', 'checked', 'no', 11),
-(706, 0, 'unchecked', 'unchecked', 'unchecked', 'no', 11);
+(706, 0, 'unchecked', 'unchecked', 'unchecked', 'no', NULL);
+
+ALTER TABLE `exam_room`
+    ADD PRIMARY KEY (`room_number`);
+COMMIT;
 
 
 --
@@ -27,6 +31,11 @@ CREATE TABLE `exam_seat` (
                              `helper` int(2) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+ALTER TABLE `exam_seat`
+    ADD PRIMARY KEY (`room_number`,`seat_number`);
+COMMIT;
+
+
 
 --
 -- Table structure for table `exam_student_swap`
@@ -36,3 +45,7 @@ CREATE TABLE `exam_student_swap` (
                                      `room_number` int(3) NOT NULL,
                                      `stu_group` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `exam_student_swap`
+    ADD PRIMARY KEY (`stu_id`);
+COMMIT;
