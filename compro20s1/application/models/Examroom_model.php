@@ -329,6 +329,7 @@ class Examroom_model extends CI_Model
         'SELECT u.stu_id, u.stu_firstname, u.stu_lastname, e.stu_group'
         .' FROM user_student u, exam_student_swap e'
         .' WHERE u.stu_id = e.stu_id'
+        .' AND room_number = '.$roomNum
     );
     return $query->result_array();
   }
@@ -374,6 +375,15 @@ class Examroom_model extends CI_Model
         .' WHERE stu_id = '.$stuId
     );
     return $query->result_array()[0]['stu_group'];
+  }
+
+  public function isThisGroupInExam($classId) {
+    $query = $this->db->query(
+        'SELECT class_id'
+        .' FROM '.$this->TABLE_ROOM
+        .' WHERE class_id = '.$classId
+    );
+    return (sizeof($query->result_array())!=0);
   }
 
 

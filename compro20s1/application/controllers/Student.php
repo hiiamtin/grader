@@ -197,6 +197,17 @@ class Student extends MY_Controller {
 
 
 	public function exercise_home() {
+
+	  // ถ้าอยู่ในการสอบ ไม่อนุญาติให้ทำแบบฝึกหัด
+	  $this->load->model('examroom_model');
+	  if($this->examroom_model->isThisGroupInExam($_SESSION['stu_group'])) {
+	    echo 'ในระหว่างการสอบไม่อนุญาติให้เปิดแบบฝึกหัดดูนะครับ<br>';
+      echo '<a href="';
+      echo site_url("student/index");
+      echo '">Click ที่นี่ เพื่อกลับไปยังหน้าแรก</a>';
+	    die();
+    }
+
 		$this->checkForInfiniteLoop();
 		$this->update_student_data();
 		/*
