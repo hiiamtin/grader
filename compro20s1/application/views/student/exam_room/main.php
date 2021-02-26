@@ -6,7 +6,7 @@
 	date_default_timezone_set("Asia/Bangkok");
 	#echo '<p id="timer"></p>';
 ?>
-<div class="col-12 col-lg-0 col-md-0 col-sm-1 col-xs-0"></div>
+<div class="col-12 col-lg-0 col-md-0 col-sm-1 col-xs-4"></div>
 <main class="col-12 col-lg-10 col-md-10 col-sm-9 col-xs-8 " style="margin-top:50px;min-height:75vh;padding-left:60px;" >
 	<p id="timer_server"></p>
 	<div class="table-responsive col-xs">

@@ -7,10 +7,12 @@ body {
     background-color: rgb(255, 230, 255);
 }
 
+/*
 body nav {
     background-color: ghostwhite;
     max-height: 90px;
 }
+*/
 
 nav div h3 {
     min-width: 520px;
