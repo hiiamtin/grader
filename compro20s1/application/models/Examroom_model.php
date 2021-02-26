@@ -123,10 +123,9 @@ class Examroom_model extends CI_Model
   }
 
   public function getAllSeatsData($roomNumber) {
-    $classId = $this->getRoomData($roomNumber)['class_id'];
     $sql = 'SELECT user_student.stu_id, user_student.stu_firstname, user_student.stu_avatar, exam_seat.seat_number, exam_seat.progress, exam_seat.room_number'
         .' FROM user_student, exam_seat'
-        .' WHERE user_student.stu_group = '.$classId
+        .' WHERE exam_seat.room_number = '.$roomNumber
         .' AND exam_seat.stu_id = user_student.stu_id';
     $query = $this->db->query($sql);
     $allData = $query->result_array();
@@ -336,11 +335,12 @@ class Examroom_model extends CI_Model
 
   public function insertExtraStudent($stuId, $roomNum, $classId)
   {
-    // Check if student were swapped
+    // Check if student were swapped or checked in
     $query = $this->db->query(
-        'SELECT stu_id'
-        . ' FROM ' . $this->TABLE_SWAP
-        . ' WHERE stu_id = ' . $stuId
+        'SELECT *'
+        . ' FROM ' . $this->TABLE_SWAP . ' swap ,' . $this->TABLE_SEAT . ' seat'
+        . ' WHERE swap.stu_id = ' . $stuId
+        . ' OR seat.stu_id = '. $stuId
     );
     if (sizeof($query->result_array()) == 0) {
       $data = array('room_number' => $roomNum,
