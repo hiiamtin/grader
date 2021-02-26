@@ -62,10 +62,10 @@ function set_time_server() {
         minutes = date.getUTCMinutes();
         seconds = date.getUTCSeconds();
         //document.getElementById("timer").innerHTML = "Server time is : " + hours + ':' + minutes + ':' + seconds;
-        document.getElementById("timer").innerHTML = "Server time is : " + date.toLocaleString() +
+        document.getElementById("timer").innerHTML = "Server time is : " + date.toLocaleString('en-US') +
             " (Last sync : " + new Date(expected).toLocaleString() + ")";
         //console.log(nextInterval, dt); //Click away to another tab and check the logs after a while
-        now = performance.now();
+        now = performance.now('en-US');
         setTimeout(step, Math.max(0, nextInterval)); // take into account drift
     }
 }

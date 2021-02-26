@@ -2539,7 +2539,7 @@ class Supervisor extends MY_Controller {
 		$this->load->view('supervisor/exam_room/seating_chart',$seatData);
 		$this->load->view('supervisor/exam_room/popup_setting1',$roomData);
 		$this->load->view('supervisor/exam_room/popup_stu_preview',$roomData);
-		$this->load->view('supervisor/footer');
+		//$this->load->view('supervisor/footer');
 	}
 
 	public function exam_room_setting() {

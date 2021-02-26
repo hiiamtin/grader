@@ -49,3 +49,22 @@
 #component-exam-room .modal-instruction {
     text-align: center;
 }
+
+#timer_server_progress {
+    width: 100%;
+    margin-right: 70px;
+    margin-top: 10px;
+    position: relative;
+    
+}
+
+#timer_server_bar {
+    width: 0;
+}
+
+#timer_server_progress p{
+    position: absolute;
+    display: block;
+    width: 100%;
+    color: black;
+}

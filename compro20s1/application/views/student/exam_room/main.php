@@ -6,7 +6,6 @@
 	date_default_timezone_set("Asia/Bangkok");
 	#echo '<p id="timer"></p>';
 ?>
-
 <div class="col-lg-10 col-md-10 col-sm-10" style="margin-top:100px;">
 	<div class="row">
 		<div class="container">
@@ -16,10 +15,10 @@
 						<tr>
 							<!-- <th style="text-align:center;">Chapter</th> 
 							<th style="text-align:center;">Title</th> -->
-							<th style="text-align:center;">Status</th>
-							<th style="text-align:center;">Full Mark</th>
-							<th style="text-align:center;">Items</th>
-							<th style="text-align:center;">Your mark</th>
+							<th style="text-align:center;width:30%">Status</th>
+							<th style="text-align:center;width:10%">Full Mark</th>
+							<th style="text-align:center;width:50%">Items</th>
+							<th style="text-align:center;width:10%">Your mark</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -50,18 +49,30 @@
 											?>
 										</td>-->
 
-										<td style="text-align:center; ;width-max:600px;">
+										<td style="text-align:center;width-max:600px;">
 											<?php 
 											$time_start = strtotime($chapter_data['time_start']);
 											$time_end = strtotime($chapter_data['time_end']);
-												if ($chapter_data['allow_access']=='yes')
-													echo '<button class="btn btn-success btn-sm">'.' open '.'</button>';
-												else
-													echo '<button class="btn btn-danger btn-sm">'.' closed '.'</button>';
-												echo '<p id="time_counter"></p>';
+												if ($chapter_data['allow_access']=='yes'){
+													if($chapter_data['allow_submit']=='yes'){
+														echo '<button class="btn btn-success btn-sm" style="width:100%;">'.'Open : ส่งข้อสอบได้'.'</button>';
+													}else{
+														echo '<button class="btn btn-danger btn-sm" style="width:100%;">'.'Closed : หมดเวลาส่งข้อสอบ'.'</button>';
+													}
+												}
+												else{
+													echo '<button class="btn btn-danger btn-sm" style="width:100%;">'.'Closed : ยังไม่เริ่มสอบ'.'</button>';
+												}
+												echo '<div class="progress" id="timer_server_progress">
+														<div class="progress-bar progress-bar-striped active" role="progressbar" id="timer_server_bar"
+												  			aria-valuemin="0" aria-valuenow="0" aria-valuemax="100">
+												  			<p id="time_counter"></p>
+														</div>
+										  			</div>';
 												echo '<script>
 														set_time_counter('.$time_start.','.$time_end.',"time_counter");
 													  </script>';
+													  
 											?>
 										</td>
 										

@@ -389,10 +389,10 @@ class Student extends MY_Controller {
 			$saved_filename = "image_".$_SESSION['stu_id'].'_'.uniqid().".".$ext;//ชื่อไฟล์
 
 			$upload_path = APPPATH.STUDENT_AVATAR_FOLDER;
-			echo "Orignal filename : ".$imageupload_name."<br>";
+			echo "<!--Orignal filename : ".$imageupload_name."<br>";
 			echo "New filename : $saved_filename<br>";
 			echo "upload_filename : $upload_filename<br>";
-			echo  "upoad_folder : ".$upload_path."<br>";
+			echo  "upoad_folder : ".$upload_path."<br>!-->";
 
 
 			//create directory if not exist
