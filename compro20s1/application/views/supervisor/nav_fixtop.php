@@ -5,11 +5,19 @@
   .navbar-toggle {
     min-height: 70px;
   }
-  #top-menu{
+  .navbar-nav{
     font-weight: bold;
   }
-
 </style>
+
+<script>
+  // No implementation yet
+  function activeMenu(index) {
+    let ul = document.getElementById("top-menu");
+    let li = ul.children[index].setAttribute("class","active");
+  }
+</script>
+
 
 <nav class="navbar navbar-inverse" >
   <div class="container-fluid">
@@ -26,18 +34,17 @@
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
       <ul class="nav navbar-nav" id="top-menu">
-        <li class="active" id="home-btn">
+        <li id="home-btn" class="active">
           <a href="<?php echo site_url('supervisor/index'); ?>">Programming Lab<br>Management System<br>KMITL<span class="sr-only">(current)</span>
           </a>
         </li>
-        <li><br><a href="<?php echo site_url($_SESSION['role'].'/group_management'); ?>" title="Group Mangement"> Group Management </a></li>
-        <li><br><a href="<?php echo site_url($_SESSION['role'].'/exam_room_panel'); ?>">Exam Room</a></li>
-        <li><br><a href="<?php echo site_url($_SESSION['role'].'/edit_profile_form'); ?>">Edit Profile</a></li>
+        <li><a href="<?php echo site_url($_SESSION['role'].'/group_management'); ?>" title="Group Mangement"><br>Group Management<br>&nbsp;</a></li>
+        <li><a href="<?php echo site_url($_SESSION['role'].'/exam_room_panel'); ?>"><br>Exam Room<br>&nbsp;</a></li>
+        <li><a href="<?php echo site_url($_SESSION['role'].'/edit_profile_form'); ?>"><br>Edit Profile<br>&nbsp;</a></li>
       </ul>
 
-      <ul class="nav navbar-nav navbar-right" id="top-menu">
+      <ul class="nav navbar-nav navbar-right">
         <br>
         <li><a href="<?php echo site_url("auth/logout") ?>">Log Out</a></li>
       </ul>
