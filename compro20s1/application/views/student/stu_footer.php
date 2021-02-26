@@ -7,7 +7,7 @@
 		<div class="clearfix"></div>
 
 		<!-- footer start -->
-		<footer class="container-fluid" style="background-color:LightSteelBlue;border:2px blue;margin-left:320px;margin-right:15px;">
+		<footer class="container-fluid" style="background-color:LightSteelBlue;border:2px blue;margin-left:200px;margin-right:0px;padding-left:320px;">
 		  <p>Page rendered in <strong>{elapsed_time}</strong> seconds. 
 				<?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong> '. date('D M j h:i:s') : '' ; ?></p>
 		  

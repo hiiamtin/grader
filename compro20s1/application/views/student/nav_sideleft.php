@@ -1,6 +1,6 @@
 <!-- nav_sideleft -->
 
-<div class="col-sm-2 sidenav  text-center" style="padding-top:10px; background-color: ghostwhite ">
+<div class="col-sm-2 sidenav  text-center" style="padding-top:0px;margin-left:-20px; background-color: ghostwhite ">
 	<div class="affix" style="background-color:Pink; min-width: 15%; "><!-- -->
 
 		<div class="panel panel-default" style="background-color:AliceBlue; height:1024px;">
@@ -44,7 +44,7 @@
 			<div class="row">			
 				<p><?php echo "student_data : <pre> ";print_r($student_data);echo "</pre>"; ?></p>
 			</div>
-			<!---->
+			!-->
 			
 
 

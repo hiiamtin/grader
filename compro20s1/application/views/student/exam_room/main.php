@@ -6,7 +6,7 @@
 	date_default_timezone_set("Asia/Bangkok");
 	#echo '<p id="timer"></p>';
 ?>
-<div class="col-lg-10 col-md-10 col-sm-10" style="margin-top:100px;">
+<div class="col-lg-10 col-md-10 col-sm-10" style="margin-top:50px;min-height: 75vh;" >
 	<div class="row">
 		<div class="container">
 			<div class="table-responsive">
@@ -27,7 +27,8 @@
 							$all_chapters_mark = 0;
 							if($chapter_data==NULL){?>
 								<h1>ข้อสอบยังไม่ถูกกำหนด</h1>
-								<button type="button" onclick="roomCheckOut()" class="btn btn-danger">Check-out</button>
+								<button type="button" onclick="roomCheckOut()" class="btn btn-danger" 
+									style="margin-bottom:50px;">Check-out</button>
 							<?php
 							}else{
 								for ($x = 0; $x <= 0; $x++) {
@@ -37,7 +38,8 @@
 									$chapter_mark = 0;
 									$no_items = $chapter_data['no_items'];
 									echo '<h1>'.$chapter_name.'</h1>'; ?>
-									<button type="button" onclick="roomCheckOut()" class="btn btn-danger">Check-out</button>
+									<button type="button" onclick="roomCheckOut()" class="btn btn-danger"
+										style="margin-bottom:50px;">Check-out</button>
 									<tr>
 										<!-- <td style="text-align:center;">
 											<?php echo $chapter_id; ?>
