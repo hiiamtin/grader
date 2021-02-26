@@ -2760,9 +2760,11 @@ class Supervisor extends MY_Controller {
 
     $this->load->model('examroom_model');
     $realClassId = intval($this->examroom_model->getRealStudentGroupId($stuId));
-    if($realClassId!=0) {
-      $this->examroom_model->insertExtraStudent($stuId, $roomNum, $realClassId);
-      $this->examroom_model->setStudentGroupId($stuId, $tempClassId);
+    if($realClassId!=0 && $tempClassId!=$realClassId) {
+      $swappable = $this->examroom_model->insertExtraStudent($stuId, $roomNum, $realClassId);
+      if($swappable) {
+        $this->examroom_model->setStudentGroupId($stuId, $tempClassId);
+      }
     }
     redirect(site_url("supervisor/exam_room_extra_student/".$roomNum));
     die();
