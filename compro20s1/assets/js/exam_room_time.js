@@ -63,8 +63,6 @@ function get_time_server() {
     return Date.parse(x.split(" (Last sync : ")[0].split("Server time is : ")[1]);
 }
 
-var time_update = "";
-
 function set_time_counter(a, b, c) {
     var localTime = get_time_server();
     var now = performance.now();
@@ -72,6 +70,9 @@ function set_time_counter(a, b, c) {
     var dt = 0;
     var nextInterval = interval = 1000;
     var distance, open_or_close;
+    var time_update = "";
+    var timetotol = (300)*1000;
+    var stop_time = false;
     setTimeout(step, interval);
 
     function step() {
@@ -83,7 +84,9 @@ function set_time_counter(a, b, c) {
         var process_bar_color;
         //console.log(b,localTime);
         if (a > b) {
+            open_or_close = "ERROR";
             distance = -1;
+            stop_time = true;
         } else if (localTime < a * 1000) {
             distance = a * 1000 - localTime;
             open_or_close = "Open in : ";
@@ -95,6 +98,7 @@ function set_time_counter(a, b, c) {
             open_or_close = "Close in : ";
             if (time_update == "") {
                 time_update = open_or_close;
+                timetotol = (b-a)*1000;
             }
         }else{
             distance = -1;
@@ -105,7 +109,9 @@ function set_time_counter(a, b, c) {
         }
         if (time_update != open_or_close) {
             time_update = open_or_close;
-            window.location.reload(false);
+            if(!stop_time){
+                window.location.reload(false);
+            }
         }
         // Time calculations for days, hours, minutes and seconds
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -151,28 +157,16 @@ function set_time_counter(a, b, c) {
                 document.getElementById(c).innerHTML = "EXPIRED";
             }
         } else {
-            setTimeout(step, Math.max(0, nextInterval)); // take into account drift
+            if (!stop_time) {
+                //console.log(d,stop_time);
+                setTimeout(step, Math.max(0, nextInterval)); // take into account drift
+            } else {
+                //console.log(d,stop_time);
+                time_update = open_or_close;
+                stop_time = false;
+            }
         }
     }
 }
 
 set_time_server();
-
-function move(a,b) {
-    var i = 0;
-      if (i == 0) {
-        i = 1;
-        var elem = document.getElementById("timer_server_bar");
-        var width = 1;
-        var id = setInterval(frame, 10);
-        function frame() {
-              if (width >= 100) {
-                clearInterval(id);
-                i = 0;
-              } else {
-                width++;
-                elem.style.width = width + "%";
-              }
-        }
-      }
-}

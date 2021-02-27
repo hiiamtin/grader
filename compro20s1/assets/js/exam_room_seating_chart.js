@@ -76,9 +76,6 @@ function get_time_server() {
     return Date.parse(x.split(" (Last sync : ")[0].split("Server time is : ")[1]);
 }
 
-var stop_time = false;
-var time_update = "";
-
 function set_time_counter(a, b, c, d) {
     var localTime = get_time_server();
     var now = performance.now();
@@ -86,7 +83,10 @@ function set_time_counter(a, b, c, d) {
     var dt = 0;
     var nextInterval = interval = 1000;
     var distance, open_or_close;
-    console.log(c);
+    var time_update = "";
+    var timetotol = (300)*1000;
+    var stop_time = false;
+    //console.log(c);
 
     function step() {
         then = now;
@@ -97,18 +97,22 @@ function set_time_counter(a, b, c, d) {
         var process_bar_color;
         //console.log(a,b,localTime);
         if (a > b) {
+            open_or_close = "ERROR";
             distance = -1;
+            stop_time = true;
         } else if (localTime < a * 1000) {
             distance = a * 1000 - localTime;
             open_or_close = "Open in : ";
             if (time_update == "") {
                 time_update = open_or_close;
             }
+            
         } else if (localTime < b * 1000 && localTime > a * 1000){
             distance = b * 1000 - localTime;
             open_or_close = "Close in : ";
             if (time_update == "") {
                 time_update = open_or_close;
+                timetotol = (b-a)*1000;
             }
         }else{
             distance = -1;
@@ -119,16 +123,17 @@ function set_time_counter(a, b, c, d) {
         }
         if (time_update != open_or_close) {
             time_update = open_or_close;
-            window.location.reload(false);
+            if(!stop_time){
+                window.location.reload(false);
+            }
         }
         // Time calculations for days, hours, minutes and seconds
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        var timetotol = (b-a)*1000;
         var progressBarWidth = (distance*100/timetotol);
-     
+        //console.log(progressBarWidth)
         // check color progress bar
         if(progressBarWidth>80){
             process_bar_color = "progress-bar progress-bar-striped active";
@@ -157,6 +162,7 @@ function set_time_counter(a, b, c, d) {
         document.getElementById(d).style.width = progressBarWidth+"%";
         now = performance.now();
         if (distance < 0) {
+            time_update = open_or_close;
             if (a > b) {
                 document.getElementById(c).innerHTML = "TIME ERROR,This lab will close.";
             } else {
@@ -164,16 +170,15 @@ function set_time_counter(a, b, c, d) {
             }
         } else {
             if (!stop_time) {
+                //console.log(d,stop_time);
                 setTimeout(step, Math.max(0, nextInterval)); // take into account drift
             } else {
+                //console.log(d,stop_time);
+                time_update = open_or_close;
                 stop_time = false;
             }
         }
     }
 
     return setTimeout(step, interval);
-}
-
-function change_chapter(a){
-    console.log(a);
 }

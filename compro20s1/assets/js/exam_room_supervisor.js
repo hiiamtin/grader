@@ -116,7 +116,7 @@ function toggleAllowAccess(id) {
 
 // popup_setting1
 
-function change_chapter(jsonGroupPermission){
+function change_chapter_NOT_WORK(jsonGroupPermission){
     let x = document.getElementById("selecter").value;
     let row = jsonGroupPermission[x];
     console.log(x,row);
@@ -124,9 +124,9 @@ function change_chapter(jsonGroupPermission){
     let time_end = row["time_end"].substring(0,10)+"T"+row["time_end"].substring(11,16);
     document.getElementById("time_start").value = time_start;
     document.getElementById("time_end").value = time_end;
-    stop_time = true;
-    time_counter = set_time_counter(Date.parse(row["time_start"])/10000,Date.parse(row["time_end"])/10000,"time_chapter");
-    time_counter_main = set_time_counter(Date.parse(row["time_start"])/10000,Date.parse(row["time_end"])/10000,"time_chapter_main");
+    //stop_time = true;
+    //time_counter = set_time_counter(Date.parse(row["time_start"])/10000,Date.parse(row["time_end"])/10000,"time_chapter","time_server_bar");
+    //time_counter_main = set_time_counter(Date.parse(row["time_start"])/10000,Date.parse(row["time_end"])/10000,"time_chapter_main","time_server_bar");
 }
 
 
