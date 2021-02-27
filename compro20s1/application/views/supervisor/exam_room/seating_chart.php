@@ -14,26 +14,43 @@
   <button class="btn btn-success" id="btn-rotate" value="180deg" onclick="rotateScreen(this.value)">
     <span class="emoji">&#8635;</span> สลับมุมมองอาจารย์-นักศึกษา
   </button>
+  <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#centralModalInfo">
+    <span class="emoji">&#9881;</span> ตั้งค่าชุดข้อสอบ
+  </button>
   <?php
   if ($chapter_data != NULL) {
+    echo '<input type="text" id="chapter_id" placeholder="' . $chapter_data["chapter_id"] . ') ' . $chapter_data["chapter_name"] . '" disabled>';
     echo '<form action="' . site_url('supervisor/exam_room_set_level_allow_access') . '" id="toggle_allow_access" method="post" style="display:inline">';
-    echo '<input type="submit" class="btn btn-danger" value="เพิ่ม/ลบ โจทย์">';
+    echo '<input type="submit" class="btn btn-warning " value="เพิ่ม/ลบ โจทย์">';
     echo '<input type="text" name="class_id" value="' . $chapter_data["class_id"] . '" hidden>';
     echo '<input type="text" name="chapter_id" value="' . $chapter_data["chapter_id"] . '" hidden>';
     echo '</form>';
-    echo '<input type="text" id="chapter_id" placeholder="' . $chapter_data["chapter_id"] . ') ' . $chapter_data["chapter_name"] . '" disabled>';
   } else {
     echo '<input type="text" id="chapter_id" placeholder="Please select chapter" disabled>';
   }
   ?>
-  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#centralModalInfo">
-    <span class="emoji">&#9881;</span> ตั้งค่าชุดข้อสอบ
-  </button>
+  
   <a href="<?php echo site_url('supervisor/exam_room_extra_student/');?><?php echo $accessible_room;?>" class="btn btn-primary">ย้ายนักศึกษาชั่วคราว</a>
   <label>Status : </label>
   <?php
   if ($chapter_data != NULL) {
-    ?><label id="time_chapter_main">Loading...</label><?php
+    if ($chapter_data['allow_access']=='yes'){
+      if($chapter_data['allow_submit']=='yes'){
+        echo '<button class="btn btn-success btn-sm" id="status_bt">'.'Open : ส่งข้อสอบได้'.'</button>';
+      }else{
+        echo '<button class="btn btn-danger btn-sm" id="status_bt">'.'Closed : หมดเวลาส่งข้อสอบ'.'</button>';
+      }
+    }
+    else{
+      echo '<button class="btn btn-danger btn-sm" id="status_bt">'.'Closed : ยังไม่เริ่มสอบ'.'</button>';
+    }?>
+    <div class="progress" id="timer_server_progress">
+      <div class="progress-bar progress-bar-striped active" role="progressbar" id="timer_server_bar"
+        aria-valuemin="0" aria-valuenow="0" aria-valuemax="100">
+        <label id="time_chapter_main">Loading...</label>
+      </div>
+    </div>
+    <?php
   } else {
     ?><label id="">Waiting...</label><?php
   }

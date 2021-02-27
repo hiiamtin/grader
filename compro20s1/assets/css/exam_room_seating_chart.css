@@ -77,3 +77,43 @@
 #global-footer {
     visibility: collapse;
 }
+
+#timer_server_progress {
+    width: 100%;
+    margin-right: 70px;
+    margin-top: 5px;
+    position: relative;
+}
+
+#timer_server_bar {
+    width: 0;
+}
+
+#timer_server_progress label{
+    position: absolute;
+    display: block;
+    width: 100%;
+    color: black;
+}
+
+#timer_server_progress_in_setting {
+    width: 100%;
+    margin-right: 70px;
+    margin-top: 5px;
+    position: relative;
+}
+
+#timer_server_bar_in_setting {
+    width: 0;
+}
+
+#timer_server_progress_in_setting p{
+    position: absolute;
+    display: block;
+    width: 100%;
+    color: black;
+}
+
+#status_bt {
+    width: fit-content;
+}

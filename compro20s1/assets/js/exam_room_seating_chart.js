@@ -63,7 +63,7 @@ function set_time_server() {
         seconds = date.getUTCSeconds();
         //document.getElementById("timer").innerHTML = "Server time is : " + hours + ':' + minutes + ':' + seconds;
         document.getElementById("timer").innerHTML = "Server time is : " + date.toLocaleString('en-US') +
-            " (Last sync : " + new Date(expected).toLocaleString() + ")";
+            " (Last sync : " + new Date(expected).toLocaleString('en-US') + ")";
         //console.log(nextInterval, dt); //Click away to another tab and check the logs after a while
         now = performance.now('en-US');
         setTimeout(step, Math.max(0, nextInterval)); // take into account drift
@@ -77,14 +77,14 @@ function get_time_server() {
 }
 
 var stop_time = false;
+var time_update = "";
 
-function set_time_counter(a, b, c) {
+function set_time_counter(a, b, c, d) {
     var localTime = get_time_server();
     var now = performance.now();
     var then = now;
     var dt = 0;
     var nextInterval = interval = 1000;
-    var date, year, month, hours, minutes, seconds;
     var distance, open_or_close;
     console.log(c);
 
@@ -94,24 +94,67 @@ function set_time_counter(a, b, c) {
         dt = now - then - nextInterval;
         nextInterval = interval - dt;
         localTime = get_time_server();
+        var process_bar_color;
+        //console.log(a,b,localTime);
         if (a > b) {
             distance = -1;
         } else if (localTime < a * 1000) {
             distance = a * 1000 - localTime;
             open_or_close = "Open in : ";
-        } else {
+            if (time_update == "") {
+                time_update = open_or_close;
+            }
+        } else if (localTime < b * 1000 && localTime > a * 1000){
             distance = b * 1000 - localTime;
             open_or_close = "Close in : ";
+            if (time_update == "") {
+                time_update = open_or_close;
+            }
+        }else{
+            distance = -1;
+            open_or_close = "EXPIRED";
+            if (time_update == "") {
+                time_update = open_or_close;
+            }
+        }
+        if (time_update != open_or_close) {
+            time_update = open_or_close;
+            window.location.reload(false);
         }
         // Time calculations for days, hours, minutes and seconds
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        var timetotol = (b-a)*1000;
+        var progressBarWidth = (distance*100/timetotol);
+     
+        // check color progress bar
+        if(progressBarWidth>80){
+            process_bar_color = "progress-bar progress-bar-striped active";
+        }else if(progressBarWidth>60){
+            process_bar_color = "progress-bar progress-bar-info \
+            progress-bar-striped active";
+        }else if(progressBarWidth>40){
+            process_bar_color = "progress-bar progress-bar-success \
+            progress-bar-striped active";
+        }else if(progressBarWidth>20){
+            process_bar_color = "progress-bar progress-bar-warning \
+            progress-bar-striped active";
+        }else{
+            process_bar_color = "progress-bar progress-bar-danger \
+            progress-bar-striped active";
+        }
+        if(document.getElementById(d).className!=process_bar_color){
+            document.getElementById(d).className = process_bar_color;
+        }
 
         // Output
         document.getElementById(c).innerHTML = open_or_close + days + "d " + hours + "h "
             + minutes + "m " + seconds + "s ";
+
+            
+        document.getElementById(d).style.width = progressBarWidth+"%";
         now = performance.now();
         if (distance < 0) {
             if (a > b) {
@@ -129,4 +172,8 @@ function set_time_counter(a, b, c) {
     }
 
     return setTimeout(step, interval);
+}
+
+function change_chapter(a){
+    console.log(a);
 }

@@ -90,9 +90,15 @@ function set_time_counter(a, b, c) {
             if (time_update == "") {
                 time_update = open_or_close;
             }
-        } else {
+        } else if (localTime < b * 1000 && localTime > a * 1000){
             distance = b * 1000 - localTime;
             open_or_close = "Close in : ";
+            if (time_update == "") {
+                time_update = open_or_close;
+            }
+        }else{
+            distance = -1;
+            open_or_close = "EXPIRED";
             if (time_update == "") {
                 time_update = open_or_close;
             }

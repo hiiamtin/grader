@@ -2509,6 +2509,7 @@ class Supervisor extends MY_Controller {
 
 		$this->load->model('examroom_model');
 		$this->load->model('lab_model');
+		$this->load->model('time_model');
 		$roomData = $this->examroom_model->getRoomData($roomNum);
 		$class_id = $roomData["class_id"];
 		$chapter_id = $roomData["chapter_id"];
@@ -2516,6 +2517,9 @@ class Supervisor extends MY_Controller {
 
 		if($chapter_id!=NULL){
 			$chapter_data = $group_permission[$chapter_id];
+			$result = $this->time_model->check_allow_access_and_submit($chapter_data['time_start'],$chapter_data['time_end']);
+			$chapter_data["allow_access"] = $result[0];
+			$chapter_data["allow_submit"] = $result[1];
 		}else{
 			$chapter_data = NULL;
 		}

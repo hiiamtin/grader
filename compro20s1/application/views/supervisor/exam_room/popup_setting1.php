@@ -44,11 +44,16 @@
                 echo '<br><label for="time_end">เวลาปิด</label>';
                 echo '<input type="datetime-local" id="time_end" name="time_end" value="'.$time_end_str.'">';
                 echo '<input type="text" name="class_id" value="'.$row["class_id"].'"hidden>';
-                echo '<p id="time_chapter"></p>';
+                echo '<div class="progress" id="timer_server_progress_in_setting">
+                        <div class="progress-bar progress-bar-striped active" role="progressbar" id="timer_server_bar_in_setting"
+                          aria-valuemin="0" aria-valuenow="0" aria-valuemax="100">
+                          <p id="time_chapter"></p>
+                        </div>
+                      </div>';
                 echo '<script>
                         set_time_server();
-                        var time_counter = set_time_counter('.$time_start.','.$time_end.',"time_chapter");
-                        var time_counter_main = set_time_counter('.$time_start.','.$time_end.',"time_chapter_main");
+                        var time_counter = set_time_counter('.$time_start.','.$time_end.',"time_chapter","timer_server_bar_in_setting");
+                        var time_counter_main = set_time_counter('.$time_start.','.$time_end.',"time_chapter_main","timer_server_bar");
 								      </script>';
               ?>
               <input type="text" name="room_number" value="<?php echo $room_number; ?>" hidden>
