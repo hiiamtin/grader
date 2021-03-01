@@ -222,4 +222,21 @@ document.addEventListener("DOMContentLoaded", function() {
     
 });
 
+$(document).ready(function()
+    {
+      var siteUrl = baseurl+"index.php/"+user_role+"/exam_room_seating_chart_dashboard/"+roomNum;
+      $('#dashboard').load(siteUrl);
+      refresh();
+    });
+
+function refresh()
+{
+    setTimeout(function()
+    {
+    var siteUrl = baseurl+"index.php/"+user_role+"/exam_room_seating_chart_dashboard/"+roomNum;
+    $('#dashboard').load(siteUrl);
+    //console.log(siteUrl)
+    refresh();
+    }, 10000);
+}
 //<?php echo sizeof($seat_list);?> / <?php echo $num_of_student;?>
