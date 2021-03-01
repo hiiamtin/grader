@@ -1795,15 +1795,10 @@ class Student extends MY_Controller {
   public function exam_room_student_main() {
 		$this->checkForInfiniteLoop();
 		$this->update_student_data();
+    $this->exam_room_check_status();
 		$this->load->model('examroom_model');
-		$stu_id = $_SESSION['stu_id'];
-        $enteredRoomNumber = $this->examroom_model->hasAlreadyCheckIn($stu_id);
-        if ($enteredRoomNumber == null) {
-            redirect('student/exam_room_gate','refresh');
-            return;
-		}
 
-		$seat_data = $this->examroom_model->getStudentData_exam_seat($stu_id);
+		$seat_data = $this->examroom_model->getStudentData_exam_seat($_SESSION['stu_id']);
 		$roomNumber = $seat_data['room_number'];
 		$room_data = $this->examroom_model->getRoomData($roomNumber);
 		$this->load->model('lab_model');
@@ -1865,6 +1860,7 @@ class Student extends MY_Controller {
 	public function exam_room_problem_select($chapterId, $level) {
     $this->checkForInfiniteLoop();
     $this->update_student_data();
+    $this->exam_room_check_status();
     $this->load->model('time_model');
     $this->load->model('examroom_model');
     $chapter_data = $this->_group_permission[$chapterId];
@@ -1886,6 +1882,7 @@ class Student extends MY_Controller {
 
   public function exam_room_request_new_problem($chapterId, $level) {
     $this->checkForInfiniteLoop();
+    $this->exam_room_check_status();
     $this->load->model('examroom_model');
     $stuId = $_SESSION['stu_id'];
     $credit = $this->examroom_model->getHelperCredit($stuId);
@@ -1935,7 +1932,17 @@ class Student extends MY_Controller {
     return $exerciseId;
   }
 
-  public function testSTH() {
+  private function exam_room_check_status() {
+    $this->load->model('examroom_model');
+    $stu_id = $_SESSION['stu_id'];
+    $enteredRoomNumber = $this->examroom_model->hasAlreadyCheckIn($stu_id);
+    if ($enteredRoomNumber == null) {
+      redirect('student/exam_room_gate','refresh');
+      die();
+    }
+  }
+
+  private function testSTH() {
 
 
   }
