@@ -8,8 +8,8 @@
     <link href="<?php echo base_url(); ?>assets/css/auth_custom.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/codemirror-5.22.0/lib/codemirror.css') ?>" >    
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/plms.css') ?>" >
-    <script src="http://localhost:41062/compro20s1/assets/bootstrap-3.3.7/js/bootstrap.min.js" ></script>
-    <script type="text/javascript" src="http://localhost:41062/compro20s1/assets/jquery/jquery.tablesorter.min.js"></script>
+    <script src="<?php echo base_url('assets/bootstrap-3.3.7/js/bootstrap.min.js') ?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('assets/jquery/jquery.tablesorter.min.js')?>"></script>
 </head>
 
 <body>

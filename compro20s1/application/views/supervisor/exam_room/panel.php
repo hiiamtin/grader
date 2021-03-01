@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/exam_room_supervisor.css')?>">
 <script type="text/javascript" src="<?php echo base_url('assets/js/exam_room_supervisor.js')?>"></script>
-
+<div id="exam-room-panel-menubar">test</div>
 <div id="exam-room-panel">
   <div class="flex-container">
     <?php

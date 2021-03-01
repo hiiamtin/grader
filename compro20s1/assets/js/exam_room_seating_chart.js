@@ -105,6 +105,7 @@ function set_time_counter(a, b, c, d) {
             open_or_close = "Open in : ";
             if (time_update == "") {
                 time_update = open_or_close;
+                timetotol = (300)*1000;
             }
             
         } else if (localTime < b * 1000 && localTime > a * 1000){
@@ -160,6 +161,8 @@ function set_time_counter(a, b, c, d) {
 
             
         document.getElementById(d).style.width = progressBarWidth+"%";
+
+
         now = performance.now();
         if (distance < 0) {
             time_update = open_or_close;
@@ -182,3 +185,41 @@ function set_time_counter(a, b, c, d) {
 
     return setTimeout(step, interval);
 }
+
+function update_online_student_exam() {
+    let URL_ = baseurl+"index.php/plms_json/get_online_student_exam/"+roomNum;
+    //console.log(URL_);
+    fetch(URL_)
+    .then( (res) => res.json() )
+    .then( (data) => {
+        //console.log(data);
+        let online_students = 0;
+        for( row of data['online_student']) {
+            online_students += 1;
+        }
+        let check_in__students = 0;
+        for( row of data['check_in']) {
+            check_in__students += 1;
+        }
+        //console.log("online students : "+ online_students+" "+ (new Date()));
+        document.querySelector("#online_students").innerHTML = `${check_in__students}/${num_of_student} (online:${online_students}คน)`;
+    });
+   
+
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    //setTimeout(update_online_student,1000);
+    //setInterval(update_online_student,60000);
+    update_online_student_exam();
+    if (user_role == "student") {
+        setInterval(update_online_student_exam,300000);
+    } else if (user_role == "supervisor") { 
+        setInterval(update_online_student_exam,5000);
+    } else {
+        setInterval(update_online_student_exam,100000);
+    }
+    
+});
+
+//<?php echo sizeof($seat_list);?> / <?php echo $num_of_student;?>

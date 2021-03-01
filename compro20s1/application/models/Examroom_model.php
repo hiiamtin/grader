@@ -397,5 +397,27 @@ class Examroom_model extends CI_Model
     $this->db->insert($this->TABLE_ROOM, $data);
   }
 
+  public function get_online_student_exam($roomNum) {
+    $class_id = $this->getRoomData($roomNum)['class_id'];
+
+		$query = $this->db->query('SELECT `T1`.`stu_id` AS `student_id` 
+						FROM `user_student` AS `T1` 
+						LEFT JOIN `user` AS `T2` ON `T1`.`stu_id` = `T2`.`id` 
+						WHERE `status`="online" AND `stu_group` = '.$class_id);
+    
+
+		
+		return $query->result_array();
+	
+	}
+
+  public function getAllStudentIDSeatsData($roomNumber) {
+    $sql = 'SELECT stu_id'
+        .' FROM exam_seat'
+        .' WHERE room_number = '.$roomNumber;
+    $query = $this->db->query($sql);
+    $allData = $query->result_array();
+    return $allData;
+  }
 
 }//class Examroom_model

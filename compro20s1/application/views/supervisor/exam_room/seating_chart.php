@@ -2,13 +2,12 @@
 <script type="text/javascript" src="<?php echo base_url('assets/js/exam_room_seating_chart.js')?>"></script>
 
 <?php date_default_timezone_set("Asia/Bangkok"); ?>
-
 <div id="seating-chart">
   <ul>
     <li>ห้องสอบ ECC: <a><?php echo $accessible_room;?></a></li>
     <li>กลุ่มที่สอบ: <a><?php echo $group_number; ?> - ภาควิชา<?php echo $department ?></a></li>
     <li>อาจารย์ผู้สอน: <a><?php echo $supervisor_info['supervisor_firstname']." ".$supervisor_info['supervisor_lastname']; ?></a></li>
-    <li>จำนวนนักศึกษาเข้าสอบ: <a><?php echo sizeof($seat_list);?> / <?php echo $num_of_student;?></a></li>
+    <li>จำนวนนักศึกษาเข้าสอบ: <a id="online_students"></a></li>
   </ul>
   <label id="timer">Loading...</label><br>
   <button class="btn btn-success" id="btn-rotate" value="180deg" onclick="rotateScreen(this.value)">
@@ -19,7 +18,8 @@
   </button>
   <?php
   if ($chapter_data != NULL) {
-    echo '<input type="text" id="chapter_id" placeholder="' . $chapter_data["chapter_id"] . ') ' . $chapter_data["chapter_name"] . '" disabled>';
+    echo '<input type="text" id="chapter_id" style="min-width:260px;margin-right:5px;"
+            value="' . $chapter_data["chapter_id"] . ') ' . $chapter_data["chapter_name"] . '" disabled>';
     echo '<form action="' . site_url('supervisor/exam_room_set_level_allow_access') . '" id="toggle_allow_access" method="post" style="display:inline">';
     echo '<input type="submit" class="btn btn-warning " value="เพิ่ม/ลบ โจทย์">';
     echo '<input type="text" name="class_id" value="' . $chapter_data["class_id"] . '" hidden>';

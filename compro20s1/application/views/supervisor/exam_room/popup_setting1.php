@@ -20,12 +20,14 @@
               <select class="form-control" name="chapter_id" id="selecter" onchange="change_chapter()">
                 <?php
                   $count = 1;
-						        foreach ($group_permission as $row) {
-                    echo '<option value="'.$count.'"';
-                    if($chapter_id==$row["chapter_id"]){
+						      foreach ($group_permission as $row) {
+                    if($count>10){
+                      echo '<option value="'.$count.'"';
+                      if($chapter_id==$row["chapter_id"]){
                         echo ' selected';
+                      }
+                      echo '>'.$row['chapter_id'].') '.$row['chapter_name']."</option>";
                     }
-                    echo '>'.$row['chapter_id'].') '.$row['chapter_name']."</option>";
                     $count+=1;
                   }
                 ?>

@@ -53,7 +53,7 @@ function update_online_student () {
     fetch(URL_)
     .then( (res) => res.json() )
     .then( (data) => {
-        //console.log(data);
+        console.log(data);
         let online_students = 0;
         for( row of data) {
             //console.log(row);

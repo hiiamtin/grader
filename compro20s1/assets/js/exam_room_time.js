@@ -92,6 +92,7 @@ function set_time_counter(a, b, c) {
             open_or_close = "Open in : ";
             if (time_update == "") {
                 time_update = open_or_close;
+                timetotol = (300)*1000;
             }
         } else if (localTime < b * 1000 && localTime > a * 1000){
             distance = b * 1000 - localTime;
@@ -118,7 +119,6 @@ function set_time_counter(a, b, c) {
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        var timetotol = (b-a)*1000;
         var progressBarWidth = (distance*100/timetotol);
      
         // check color progress bar

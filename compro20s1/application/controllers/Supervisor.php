@@ -2507,9 +2507,11 @@ class Supervisor extends MY_Controller {
 		/// หน้าแสดงแผนผังที่นั่งห้องสอบ
 		/// Url จะเป็น exam_room_seating_chart/{เลขห้อง}
 
+		$this->load->model('supervisor_model');
 		$this->load->model('examroom_model');
 		$this->load->model('lab_model');
 		$this->load->model('time_model');
+		$supervisor_data = array('supervisor_data'	=> $this->supervisor_model->get_supervisor_data());
 		$roomData = $this->examroom_model->getRoomData($roomNum);
 		$class_id = $roomData["class_id"];
 		$chapter_id = $roomData["chapter_id"];
@@ -2543,7 +2545,7 @@ class Supervisor extends MY_Controller {
 		$this->load->view('supervisor/exam_room/seating_chart',$seatData);
 		$this->load->view('supervisor/exam_room/popup_setting1',$roomData);
 		$this->load->view('supervisor/exam_room/popup_stu_preview',$roomData);
-		//$this->load->view('supervisor/footer');
+		$this->load->view('supervisor/exam_room/exam_footer');
 	}
 
 	public function exam_room_setting() {

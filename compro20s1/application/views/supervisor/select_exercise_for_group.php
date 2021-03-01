@@ -66,6 +66,7 @@
 					<?php 
 						$no_of_items = sizeof($lab_list);
 						$level = 1;
+						#level 1-5
 						foreach ($lab_list as $lab_level) {
 					?>
 					<td>						
@@ -82,9 +83,11 @@
 									echo '<input type="text" name="chapter" value="'.$lab_no.'" hidden >';
 									echo '<input type="text" name="level" value="'.$level.'" hidden >';
 									$i=1;
+									#check_box(item) each level
 									foreach($lab_level as $row) {
 										$exercise_id = $row['exercise_id'];										
 										echo '<input type="checkbox" name="selected_id_'.$i.'" value="'.$exercise_id.'" ';
+										#item in chekbox
 										foreach($group_lab_list as $list) { 
 											foreach($list as $item) {
 												if($exercise_id==$item) {
