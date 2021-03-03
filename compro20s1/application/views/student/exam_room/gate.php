@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/exam_room_student.css') ?>" >
-<div id="exam-room-gate" class="panel panel-default">
+<div id="exam-room-gate" class="panel panel-default col-md-8">
 
   <div class="panel-body">
     <h2>Exam Room Check-in</h2>
