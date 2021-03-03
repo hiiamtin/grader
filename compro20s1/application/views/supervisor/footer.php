@@ -30,6 +30,14 @@
 			var baseurl = "<?php echo base_url(); ?>";
 			var user_role  = "<?php echo $_SESSION['role']; ?>";
 			var user_id  = "<?php echo $_SESSION['id']; ?>";
+
+      var infoForTracking = {
+        id: "<?php echo $_SESSION['id']; ?>",
+        name: "<?php echo $_SESSION['supervisor_firstname']; ?>",
+        path: "<?php echo $_SERVER['PATH_INFO']?>",
+        requestTime: <?php echo $_SERVER['REQUEST_TIME_FLOAT'];?>
+      };
+
 		</script>
 		<script src="<?php echo base_url('/assets/js/plms.js'); ?>";></script>
 

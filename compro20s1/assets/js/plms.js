@@ -66,6 +66,9 @@ function update_online_student () {
 
 }
 document.addEventListener("DOMContentLoaded", function() {
+
+    trackEntryPoint();
+
     //setTimeout(update_online_student,1000);
     //setInterval(update_online_student,60000);
     update_online_student();
@@ -252,4 +255,19 @@ function removeComments(str) {
     
     return str.join('').slice(2, -2);
     
+}
+
+function trackEntryPoint() {
+    let loadingTime = ((Date.now()/1000.0) - infoForTracking.requestTime).toFixed(3);
+    jQuery.post(baseurl+"index.php/analytic/track_entry_point",
+        {
+            id: infoForTracking.id,
+            name: infoForTracking.name,
+            path: infoForTracking.path,
+            time: loadingTime
+        },
+        function (result) {
+            console.log(result);
+        }
+    );
 }

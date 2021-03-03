@@ -2815,9 +2815,16 @@ class Supervisor extends MY_Controller {
   }
 
 	public function testSth() {
-    $this->load->model('examroom_model');
-    $data = "";
-    print_r($data);
+    echo '<h2>BASEPATH = '. BASEPATH .'</h2>';
+    echo '<h2>FCPATH = '. FCPATH .'</h2>';
+    echo '<h2>APPPATH = '. APPPATH .'</h2>';
+    echo '<h2>__FILE__ = '. __FILE__ .'</h2>';
+    echo '<h2>__DIR__ = '. __DIR__ .'</h2>';
+    echo '<h2>__FUNCTION__ = '. __FUNCTION__ .'</h2>';
+    echo '<h2>__CLASS__ = '. __CLASS__ .'</h2>';
+    echo '<h2>__TRAIT__ = '. __TRAIT__ .'</h2>';
+    echo '<h2>__METHOD__ = '. __METHOD__ .'</h2>';
+    echo '<h2>__NAMESPACE__ = '. __NAMESPACE__ .'</h2>';
 	}
 
 	/* * *
