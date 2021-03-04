@@ -1,7 +1,9 @@
-<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/exam_room_supervisor.css')?>">
-<script type="text/javascript" src="<?php echo base_url('assets/js/exam_room_supervisor.js')?>"></script>
-<div id="exam-room-panel-menubar">test</div>
-<div id="exam-room-panel">
+<div id="exam-room-panel" class="col-lg-8 col-md-8 col-sm-8">
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/exam_room_supervisor.css')?>">
+  <script type="text/javascript" src="<?php echo base_url('assets/js/exam_room_supervisor.js')?>"></script>
+  <div id="global-menubar">
+    <input type="button" value="Create New Room" class="btn btn-default" onclick="createNewRoom()">
+  </div>
   <div class="flex-container">
     <?php
     if (!empty($exam_rooms)) {
@@ -75,9 +77,5 @@
       }
     }
     ?>
-    <a class="room-controller" id="add-new-room" onclick="createNewRoom()">
-      <h2>Create New Room</h2>
-      <div class="circle"><b>+</b></div>
-    </a>
   </div>
 </div>

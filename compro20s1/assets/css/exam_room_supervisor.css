@@ -50,13 +50,13 @@ footer {
 
 /* panel */
 #exam-room-panel {
-    margin-left: 250px;
-    margin-top: 30px;
-    width: 82vw;
+    margin-left: 40px;
+    margin-top: 10px;
 }
 #exam-room-panel .flex-container {
     display: flex;
     flex-wrap: wrap;
+    width: 75vw;
 }
 #exam-room-panel .room-controller {
     background-color: #c0e5e5;
@@ -169,6 +169,12 @@ footer {
 #exam-room-panel #add-new-room h2 {
     color: #888888;
 }
+#exam-room-panel #global-menubar {
+    padding: 10px;
+    width: 72vw;
+    margin-left: 10px;
+    background-color: #0a6bf7;
+}
 
 /* popup_group_selector */
 #group-selector .btn-default {
@@ -197,7 +203,7 @@ footer {
     width: 250px;
 }
 #modalStuPreview .information {
-    margin-left: 10px;
+    margin: 10px;
 }
 #modalStuPreview #info-name {
     font-family: monospace;
