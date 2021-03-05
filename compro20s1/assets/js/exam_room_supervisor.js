@@ -19,7 +19,7 @@ function showSourceCode(id) {
 // panel
 
 function ajaxSetAllowCheckIn(needToAllow, roomNumber) {
-    jQuery.post(baseurl+"index.php/supervisor/exam_room_ajax_allow_check_in",
+    jQuery.post(baseurl+"index.php/ExamSupervisor/ajax_allow_check_in",
         {
             roomNumber: roomNumber,
             needToAllow: needToAllow
@@ -31,7 +31,7 @@ function ajaxSetAllowCheckIn(needToAllow, roomNumber) {
 }
 
 function ajaxSetSocialDistancing(value, roomNumber) {
-    jQuery.post(baseurl+"index.php/supervisor/exam_room_ajax_social_distancing",
+    jQuery.post(baseurl+"index.php/ExamSupervisor/ajax_social_distancing",
         {
             roomNumber: roomNumber,
             value: value
@@ -75,7 +75,7 @@ function createNewRoom() {
     if (num == null || num == "") {
         return 0;
     } else {
-        window.location.href = baseurl+"index.php/supervisor/exam_room_create_room/"+num;
+        window.location.href = baseurl+"index.php/ExamSupervisor/create_room/"+num;
     }
     return 1;
 }
@@ -85,7 +85,7 @@ function createNewRoom() {
 
 function ajaxSetAllowAccess(needToAllow, classId) {
     let roomNumber = document.getElementById("room-number").getAttribute("value");
-    jQuery.post(baseurl+"index.php/supervisor/exam_room_ajax_allow_access",
+    jQuery.post(baseurl+"index.php/ExamSupervisor/ajax_allow_access",
         {
             roomNumber: roomNumber,
             needToAllow: needToAllow,
@@ -134,7 +134,7 @@ function change_chapter_NOT_WORK(jsonGroupPermission){
 
 function studentPreview(roomNum, seatNum) {
     document.getElementById("info-seatnum").innerHTML = seatNum;
-    jQuery.post(baseurl+"index.php/supervisor/exam_room_ajax_stu_preview",
+    jQuery.post(baseurl+"index.php/ExamSupervisor/ajax_stu_preview",
         {
             seatNum: seatNum,
             roomNum: roomNum
@@ -178,6 +178,6 @@ function studentPreview(roomNum, seatNum) {
 }
 
 function codePreview(stuId, problemId) {
-    window.open(baseurl+"index.php/supervisor/exam_room_stu_code_preview/"+stuId+"/"+problemId,"winname","directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,width=1200,height=700");
+    window.open(baseurl+"index.php/ExamSupervisor/stu_code_preview/"+stuId+"/"+problemId,"winname","directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,width=1200,height=700");
 }
 

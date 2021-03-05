@@ -20,7 +20,7 @@
   if ($chapter_data != NULL) {
     echo '<input type="text" id="chapter_id" style="min-width:260px;margin-right:5px;"
             value="' . $chapter_data["chapter_id"] . ') ' . $chapter_data["chapter_name"] . '" disabled>';
-    echo '<form action="' . site_url('supervisor/exam_room_set_level_allow_access') . '" id="toggle_allow_access" method="post" style="display:inline">';
+    echo '<form action="' . site_url('ExamSupervisor/set_level_allow_access') . '" id="toggle_allow_access" method="post" style="display:inline">';
     echo '<input type="submit" class="btn btn-warning " value="เพิ่ม/ลบ โจทย์">';
     echo '<input type="text" name="class_id" value="' . $chapter_data["class_id"] . '" hidden>';
     echo '<input type="text" name="chapter_id" value="' . $chapter_data["chapter_id"] . '" hidden>';
@@ -30,7 +30,7 @@
   }
   ?>
   
-  <a href="<?php echo site_url('supervisor/exam_room_extra_student/');?><?php echo $accessible_room;?>" class="btn btn-primary">ย้ายนักศึกษาชั่วคราว</a>
+  <a href="<?php echo site_url('ExamSupervisor/extra_student/');?><?php echo $accessible_room;?>" class="btn btn-primary">ย้ายนักศึกษาชั่วคราว</a>
   <label>Status : </label>
   <?php
   if ($chapter_data != NULL) {

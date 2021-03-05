@@ -22,7 +22,7 @@
         echo '<td>'.$stu['stu_id'].'</td>';
         echo '<td>'.$stu['stu_firstname'].' '.$stu['stu_lastname'].'</td>';
         echo '<td>'.substr($stu['stu_group'],6).'</td>';
-        echo '<td><form method="post" action="'.site_url('supervisor/exam_room_revert_swap_student').'">'
+        echo '<td><form method="post" action="'.site_url('ExamSupervisor/revert_swap_student').'">'
                 .'<input type="text" name="roomNum" value="'.$room_num.'" hidden>'
                 .'<input type="text" name="stuId" value="'.$stu['stu_id'].'" hidden>'
                 .'<input type="text" name="realClassId" value="'.$stu['stu_group'].'" hidden>'
@@ -33,7 +33,7 @@
     ?>
   </table>
 
-  <form id="add-swap" method="post" action="<?php echo site_url('supervisor/exam_room_add_swap_student'); ?>">
+  <form id="add-swap" method="post" action="<?php echo site_url('ExamSupervisor/add_swap_student'); ?>">
     <input type="text" name="roomNum" value="<?php echo $room_num;?>" hidden>
     <input type="text" name="tempClassId" value="<?php echo $temp_class_id?>" hidden>
     <label>ใส่รหัสนักศึกษา </label>
