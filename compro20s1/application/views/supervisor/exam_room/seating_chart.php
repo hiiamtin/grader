@@ -36,22 +36,16 @@
   if ($chapter_data != NULL) {
     if ($chapter_data['allow_access']=='yes'){
       if($chapter_data['allow_submit']=='yes'){
-        echo '<button class="btn btn-success" id="status_bt">'.'Open : ส่งข้อสอบได้'.'</button>';
+        echo '<button class="btn btn-success" id="status_bt" data-toggle="modal"
+              data-target="#change_time_model">'.'Open : ส่งข้อสอบได้'.'</button>';
       }else{
         echo '<button class="btn btn-danger " id="status_bt" data-toggle="modal"
-              data-target="#change_time_model">'.'Closed : หมดเวลาส่งข้อสอบ'.'</button>
-              <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="status_bt">
-                <li><a class="dropdown-item" href="#">เพิ่มเวลา</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li class="divider"></li>
-                <li>
-                  <a class="dropdown-item" href="#">ยกเลิก</a>
-                <li>
-              </ul>';
+              data-target="#change_time_model">'.'Closed : หมดเวลาส่งข้อสอบ'.'</button>';
       }
     }
     else{
-      echo '<button class="btn btn-danger" id="status_bt">'.'Closed : ยังไม่เริ่มสอบ'.'</button>';
+      echo '<button class="btn btn-danger" id="status_bt" data-toggle="modal"
+            data-target="#change_time_model">'.'Closed : ยังไม่เริ่มสอบ'.'</button>';
     }?>
     <div class="progress" id="timer_server_progress">
       <div class="progress-bar progress-bar-striped active" role="progressbar" id="timer_server_bar"
