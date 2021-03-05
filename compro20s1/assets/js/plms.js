@@ -49,11 +49,11 @@ function get_header_content(strip_comment) {
 // 30 Aug 2020
 function update_online_student () {
     let URL_ = baseurl+"index.php/plms_json/get_online_student/"+user_id+"/"+user_role;
-    console.log(URL_);
+    //console.log(URL_);
     fetch(URL_)
     .then( (res) => res.json() )
     .then( (data) => {
-        console.log(data);
+        //console.log(data);
         let online_students = 0;
         for( row of data) {
             //console.log(row);

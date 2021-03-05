@@ -129,7 +129,7 @@
 	
 	
 
-	<script>
+	<!-- <script>
 		$(document).ready(function() {
 			$('#summernote').summernote({
 				height: 500,                 // set editor height
@@ -140,10 +140,10 @@
 				airmode: true
 			});
 		});
-	</script>
+	</script> -->
 </main>
 
-
+<!-- 
 <?php
 	echo '<!-- ';
 	echo 'lab_classinfo<pre>'; print_r($lab_classinfo); echo '</pre>';
@@ -152,4 +152,4 @@
 	echo 'lab_data<pre>'; print_r($lab_data); echo '</pre>';
 	echo 'student_data<pre>'; print_r($student_data); echo '</pre>';
 	echo ' -->';
-?>
+?> -->

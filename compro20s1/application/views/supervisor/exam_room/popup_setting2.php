@@ -1,17 +1,17 @@
 
  <!-- Central Modal Medium Info -->
- <div class="modal fade" id="centralModalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+ <div class="modal" id="change_time_model" tabindex="-1" role="dialog" aria-labelledby="change_time"
    aria-hidden="true">
-   <div class="modal-dialog modal-notify modal-info" role="document">
+   <div class="modal-dialog modal-notify modal-info modal-sm" role="document">
      <!--Content-->
      <div class="modal-content">
        <!--Header-->
        <div class="modal-header">
-         <p class="heading lead">Setting</p>
+         <p class="heading lead">เปลี่ยนเวลา</p>
          </button>
        </div>
        
-       <form action="<?php echo site_url('ExamSupervisor/setting'); ?>" id="setting" method="post">
+       <form action="<?php echo site_url('ExamSupervisor/change_time'); ?>" id="change_time" method="post">
        <!--Body-->
        <div class="modal-body">
          <div class="text-center">

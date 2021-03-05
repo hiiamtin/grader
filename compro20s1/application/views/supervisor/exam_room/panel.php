@@ -1,10 +1,11 @@
-<div id="exam-room-panel" class="col-lg-8 col-md-8 col-sm-8">
+<div class="col-12 col-lg-1 col-md-0 col-sm-1 col-xs-6"></div>
+<div id="exam-room-panel" class="col-12 col-lg-9 col-md-8 col-sm-8 col-xs-4">
   <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/exam_room_supervisor.css')?>">
   <script type="text/javascript" src="<?php echo base_url('assets/js/exam_room_supervisor.js')?>"></script>
+  <div class="flex-container">
   <div id="global-menubar">
     <input type="button" value="Create New Room" class="btn btn-default" onclick="createNewRoom()">
   </div>
-  <div class="flex-container">
     <?php
     if (!empty($exam_rooms)) {
       foreach ($exam_rooms as $room) {

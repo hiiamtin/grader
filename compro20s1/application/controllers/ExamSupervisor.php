@@ -66,7 +66,8 @@ class ExamSupervisor extends MY_Controller {
     $this->load->view('supervisor/nav_fixtop');
     $this->load->view('supervisor/exam_room/seating_chart',$seatData);
     $this->load->view('supervisor/exam_room/popup_setting1',$roomData);
-    $this->load->view('supervisor/exam_room/popup_stu_preview',$roomData);
+    $this->load->view('supervisor/exam_room/popup_setting2');
+    $this->load->view('supervisor/exam_room/popup_stu_preview');
     $this->load->view('supervisor/exam_room/exam_footer');
   }
 
@@ -312,6 +313,18 @@ class ExamSupervisor extends MY_Controller {
 
     redirect(site_url($this->MODULE_PATH."extra_student/".$roomNum));
     die();
+  }
+
+  public function get_online_student_exam($roomNum) {
+    //echo __METHOD__;
+    $this->load->model('examroom_model');
+    $check_in = $this->examroom_model->getAllStudentIDSeatsData($roomNum);
+    $online_student = $this->examroom_model->get_online_student_exam($roomNum);
+    $check_in = 
+    //echo "<pre/>"; print_r($online_student); echo "</pre>";
+    $data = array('online_student' => $online_student,
+                  'check_in' => $check_in);
+    echo json_encode($data);
   }
 
 }

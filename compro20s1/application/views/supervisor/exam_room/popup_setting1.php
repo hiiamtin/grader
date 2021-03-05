@@ -1,5 +1,5 @@
  <!-- Central Modal Medium Info -->
-<div class="modal fade" id="centralModalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div class="modal fade" id="setting_model" tabindex="-1" role="dialog" aria-labelledby="setting"
   aria-hidden="true">
   <div class="modal-dialog modal-notify modal-info" role="document">
     <!--Content-->

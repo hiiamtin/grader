@@ -31,7 +31,7 @@
 <script src="<?php echo base_url('assets/bootstrap-3.3.7/js/bootstrap.min.js') ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/codemirror-5.22.0/lib/codemirror.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/codemirror-5.22.0/mode/clike/clike.js')?>"></script>
-<script>
+<!--<script>
 	var editor = CodeMirror.fromTextArea(document.getElementById("sourcecode_content"), {
 				lineNumbers: true,
 				matchBrackets: true,
@@ -39,5 +39,5 @@
 				readonly: true,
 				mode: "text/x-csrc"
 		});
-</script>
+</script>--->
 </html>

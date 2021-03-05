@@ -1,6 +1,6 @@
 
 <!-- nav_sideleft -->
-<div class="col-lg-2 col-md-2 col-sm-2 sidenav" style="background-color:HoneyDew;">
+<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 sidenav" style="background-color:HoneyDew;">
 	<div class="affix" style="background-color:Pink; min-width: 15%; "><!-- -->
 		<div class="panel panel-default" style="background-color:AliceBlue;text-align: center; " >
 			<img src="<?php echo $_SESSION['supervisor_avatar'] ? base_url(SUPERVISOR_AVATAR_FOLDER.$_SESSION['supervisor_avatar']) : base_url(SUPERVISOR_AVATAR_FOLDER.'user.png'); ?>" style="width:200px;height:250px;margin-left:20px;padding-top:20px">

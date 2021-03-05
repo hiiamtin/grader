@@ -161,7 +161,7 @@ function set_time_counter(a, b, c, d) {
 
             
         document.getElementById(d).style.width = progressBarWidth+"%";
-
+        //console.log(document.getElementById("status_bt").style);
 
         now = performance.now();
         if (distance < 0) {
@@ -187,7 +187,7 @@ function set_time_counter(a, b, c, d) {
 }
 
 function update_online_student_exam() {
-    let URL_ = baseurl+"index.php/plms_json/get_online_student_exam/"+roomNum;
+    let URL_ = baseurl+"index.php/ExamSupervisor/get_online_student_exam/"+roomNum;
     //console.log(URL_);
     fetch(URL_)
     .then( (res) => res.json() )
