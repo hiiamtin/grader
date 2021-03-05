@@ -33,7 +33,7 @@
           </a>
         </li>
         <li><br><a href="<?php echo site_url($_SESSION['role'].'/group_management'); ?>" title="Group Mangement"> Group Management </a></li>
-        <li><br><a href="<?php echo site_url($_SESSION['role'].'/exam_room_panel'); ?>">Exam Room</a></li>
+        <li><br><a href="<?php echo site_url("ExamSupervisor"); ?>">Exam Room</a></li>
         <li><br><a href="<?php echo site_url($_SESSION['role'].'/edit_profile_form'); ?>">Edit Profile</a></li>
       </ul>
 

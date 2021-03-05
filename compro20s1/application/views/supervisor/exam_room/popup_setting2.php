@@ -11,7 +11,7 @@
          </button>
        </div>
        
-       <form action="<?php echo site_url('supervisor/exam_room_setting'); ?>" id="setting" method="post">
+       <form action="<?php echo site_url('ExamSupervisor/setting'); ?>" id="setting" method="post">
        <!--Body-->
        <div class="modal-body">
          <div class="text-center">

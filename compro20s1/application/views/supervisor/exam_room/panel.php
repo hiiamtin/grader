@@ -64,7 +64,7 @@
           echo '<p>Student Group: <a>' . '-' . '</a></p>';
           echo '<p>Is in Exam: <a>' . '-' . '</a></p>';
         } else {
-          $siteUrl = site_url($_SESSION["role"] . "/exam_room_seating_chart/") . $room['room_number'];
+          $siteUrl = site_url("ExamSupervisor/seating_chart/") . $room['room_number'];
           echo '<a href="'
                   . $siteUrl
                   . '" class="btn btn-success">Seating Chart</a>';
