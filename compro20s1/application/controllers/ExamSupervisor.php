@@ -269,7 +269,7 @@ class ExamSupervisor extends MY_Controller {
 
   public function create_room($roomNum) {
     $this->examroom_model->createNewRoom($roomNum);
-    redirect(site_url($this->MODULE_PATH."exam_room_panel"));
+    redirect(site_url($this->MODULE_PATH."index"));
     die();
   }
 
