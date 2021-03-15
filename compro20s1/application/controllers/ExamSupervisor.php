@@ -17,13 +17,15 @@ class ExamSupervisor extends MY_Controller {
     $data = array('supervisor_data'	=> $this->supervisor_model->get_supervisor_data());
     $exam_data = array(
         'exam_rooms' => $this->examroom_model->getAllExamRoom(),
-        'class_list' => $this->examroom_model->getClassListWithSupervisorName()
+        'class_list' => $this->examroom_model->getClassListWithSupervisorName(),
+        'group_permission' => $this->examroom_model->getAllExamChapter()
     );
     $this->load->view('supervisor/head');
     $this->load->view('supervisor/nav_fixtop');
     $this->load->view('supervisor/nav_sideleft',$data);
     $this->load->view('supervisor/exam_room/panel',$exam_data);
     $this->load->view('supervisor/exam_room/popup_group_select');
+    $this->load->view('supervisor/exam_room/popup_group_select_score');
     $this->load->view('supervisor/footer');
   }
 
@@ -325,6 +327,38 @@ class ExamSupervisor extends MY_Controller {
     $data = array('online_student' => $online_student,
                   'check_in' => $check_in);
     echo json_encode($data);
+  }
+
+  public function display_score() {
+    $classId = $_POST['group'];
+    $examListId = $_POST['exam'];
+    $data = array(
+        'student_list' => $this->examroom_model->getStudentNameListByClass($classId),
+        'score_list' => $this->examroom_model->getScoreFromExaminees($classId, $examListId),
+        'info' => array(
+            'class_id' => $classId,
+            'exam_list_id' => $examListId,
+            'supervisor' => $this->examroom_model->getSupervisor($classId)
+        )
+    );
+    $this->load->view('supervisor/head');
+    $this->load->view('supervisor/nav_fixtop');
+    $this->load->view('supervisor/nav_sideleft');
+    $this->load->view('supervisor/exam_room/display_score',$data);
+    $this->load->view('supervisor/footer');
+  }
+
+  public function export_score_pdf() {
+
+  }
+
+  public function export_score_csv() {
+
+  }
+
+  public function test() {
+    $data = json_encode($this->examroom_model->getAllExamChapter());
+    echo $data;
   }
 
 }

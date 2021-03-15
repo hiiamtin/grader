@@ -5,6 +5,7 @@
   <div class="flex-container">
   <div id="global-menubar">
     <input type="button" value="Create New Room" class="btn btn-default" onclick="createNewRoom()">
+    <input type="button" value="Group Score" class="btn btn-default" onclick="getGroupScore()">
   </div>
     <?php
     if (!empty($exam_rooms)) {

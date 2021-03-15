@@ -19,7 +19,7 @@ function showSourceCode(id) {
 // panel
 
 function ajaxSetAllowCheckIn(needToAllow, roomNumber) {
-    jQuery.post(baseurl+"index.php/ExamSupervisor/ajax_allow_check_in",
+    jQuery.post(baseurl + "index.php/ExamSupervisor/ajax_allow_check_in",
         {
             roomNumber: roomNumber,
             needToAllow: needToAllow
@@ -31,7 +31,7 @@ function ajaxSetAllowCheckIn(needToAllow, roomNumber) {
 }
 
 function ajaxSetSocialDistancing(value, roomNumber) {
-    jQuery.post(baseurl+"index.php/ExamSupervisor/ajax_social_distancing",
+    jQuery.post(baseurl + "index.php/ExamSupervisor/ajax_social_distancing",
         {
             roomNumber: roomNumber,
             value: value
@@ -75,7 +75,7 @@ function createNewRoom() {
     if (num == null || num == "") {
         return 0;
     } else {
-        window.location.href = baseurl+"index.php/ExamSupervisor/create_room/"+num;
+        window.location.href = baseurl + "index.php/ExamSupervisor/create_room/" + num;
     }
     return 1;
 }
@@ -85,7 +85,7 @@ function createNewRoom() {
 
 function ajaxSetAllowAccess(needToAllow, classId) {
     let roomNumber = document.getElementById("room-number").getAttribute("value");
-    jQuery.post(baseurl+"index.php/ExamSupervisor/ajax_allow_access",
+    jQuery.post(baseurl + "index.php/ExamSupervisor/ajax_allow_access",
         {
             roomNumber: roomNumber,
             needToAllow: needToAllow,
@@ -116,12 +116,12 @@ function toggleAllowAccess(id) {
 
 // popup_setting1
 
-function change_chapter_NOT_WORK(jsonGroupPermission){
+function change_chapter_NOT_WORK(jsonGroupPermission) {
     let x = document.getElementById("selecter").value;
     let row = jsonGroupPermission[x];
-    console.log(x,row);
-    let time_start = row["time_start"].substring(0,10)+"T"+row["time_start"].substring(11,16);
-    let time_end = row["time_end"].substring(0,10)+"T"+row["time_end"].substring(11,16);
+    console.log(x, row);
+    let time_start = row["time_start"].substring(0, 10) + "T" + row["time_start"].substring(11, 16);
+    let time_end = row["time_end"].substring(0, 10) + "T" + row["time_end"].substring(11, 16);
     document.getElementById("time_start").value = time_start;
     document.getElementById("time_end").value = time_end;
     //stop_time = true;
@@ -134,13 +134,13 @@ function change_chapter_NOT_WORK(jsonGroupPermission){
 
 function studentPreview(roomNum, seatNum) {
     document.getElementById("info-seatnum").innerHTML = seatNum;
-    jQuery.post(baseurl+"index.php/ExamSupervisor/ajax_stu_preview",
+    jQuery.post(baseurl + "index.php/ExamSupervisor/ajax_stu_preview",
         {
             seatNum: seatNum,
             roomNum: roomNum
         },
         function (data, status) {
-            console.log("Fetching data: "+status);
+            console.log("Fetching data: " + status);
             console.log(data);
             let stuInfo = JSON.parse(data);
             document.getElementById("info-name").innerHTML = "&#128512; " + stuInfo.stuId + " : " + stuInfo.stuFullname;
@@ -154,12 +154,12 @@ function studentPreview(roomNum, seatNum) {
                     switch (stuInfo.examItems[0].marking) {
                         case "2": {
                             btn.setAttribute("class", "btn btn-success");
-                            btn.setAttribute("onclick", "codePreview("+stuInfo.stuId+","+stuInfo.examItems[0].exercise_id+")");
+                            btn.setAttribute("onclick", "codePreview(" + stuInfo.stuId + "," + stuInfo.examItems[0].exercise_id + ")");
                             break;
                         }
                         default: {
                             btn.setAttribute("class", "btn btn-danger");
-                            btn.setAttribute("onclick", "codePreview("+stuInfo.stuId+","+stuInfo.examItems[0].exercise_id+")");
+                            btn.setAttribute("onclick", "codePreview(" + stuInfo.stuId + "," + stuInfo.examItems[0].exercise_id + ")");
                             break;
                         }
                     }
@@ -171,13 +171,35 @@ function studentPreview(roomNum, seatNum) {
                 }
             }
             let imgUrl = stuInfo.stuAvatar;
-            document.getElementById("info-img").setAttribute("src", baseurl+"student_data/avatar/"+imgUrl);
-            document.getElementById("info-progress").innerHTML = stuInfo.progress+'%';
+            document.getElementById("info-img").setAttribute("src", baseurl + "student_data/avatar/" + imgUrl);
+            document.getElementById("info-progress").innerHTML = stuInfo.progress + '%';
         }
     );
 }
 
 function codePreview(stuId, problemId) {
-    window.open(baseurl+"index.php/ExamSupervisor/stu_code_preview/"+stuId+"/"+problemId,"winname","directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,width=1200,height=700");
+    window.open(baseurl + "index.php/ExamSupervisor/stu_code_preview/" + stuId + "/" + problemId, "winname", "directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,width=1200,height=700");
 }
 
+
+// display_score
+
+function beautifyScoreTable() {
+    $("#score_table").DataTable({
+        "paging": false,
+        columnDefs: [{
+            targets: [0],
+            orderData: [0, 1]
+        }, {
+            targets: [1],
+            orderData: [1, 0]
+        }, {
+            targets: [3],
+            orderData: [3, 0]
+        }]
+    });
+}
+
+function getGroupScore() {
+    jQuery("#modalGroupSelectorScore").modal("show");
+}
