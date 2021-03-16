@@ -333,8 +333,7 @@ class ExamSupervisor extends MY_Controller {
     $classId = $_POST['group'];
     $examListId = $_POST['exam'];
     $data = array(
-        'student_list' => $this->examroom_model->getStudentNameListByClass($classId),
-        'score_list' => $this->examroom_model->getScoreFromExaminees($classId, $examListId),
+        'student_list' => $this->fetch_exam_score($classId, $examListId),
         'info' => array(
             'class_id' => $classId,
             'exam_list_id' => $examListId,
@@ -348,17 +347,55 @@ class ExamSupervisor extends MY_Controller {
     $this->load->view('supervisor/footer');
   }
 
-  public function export_score_pdf() {
+  private function fetch_exam_score($classId, $chapterId) {
+    $scoreList = $this->examroom_model->getScoreFromExaminees($classId, $chapterId);
+    $studentList = $this->examroom_model->getStudentNameListByClass($classId);
+    for($i=0; $i<sizeof($studentList); $i++) {
+      if(sizeof($scoreList)>0 &&  $studentList[$i]['stu_id']==$scoreList[0]['stu_id']) {
+        $studentList[$i]['score'] = $scoreList[0]['SUM(a.marking)'];
+        array_shift($scoreList);
+      } else {
+        $studentList[$i]['score'] = '0';
+      }
+    }
+    return $studentList;
+  }
 
+  public function export_score_json() {
+    $classId = $_POST['group'];
+    $chapterId = $_POST['exam'];
+    $data = json_encode($this->fetch_exam_score($classId, $chapterId) , JSON_PRETTY_PRINT);
+    $fileName = 'exam_lab_'.$classId.'.json';
+    header("Content-Description: File Transfer");
+    header("Content-Disposition: attachment; filename=$fileName");
+    header("Content-Type: application/json;");
+    $file = fopen('php://output', 'w');
+    fwrite($file, $data);
+    fclose($file);
+    exit;
   }
 
   public function export_score_csv() {
-
+    $classId = $_POST['group'];
+    $chapterId = $_POST['exam'];
+    $data = $this->fetch_exam_score($classId, $chapterId);
+    $fileName = 'exam_lab_'.$classId.'.csv';
+    header("Content-Description: File Transfer");
+    header("Content-Disposition: attachment; filename=$fileName");
+    header("Content-Type: application/csv;");
+    $file = fopen('php://output', 'w');
+    $header = array("รหัสนักศึกษา", "ชื่อ", "นามสกุล", "คะแนนสอบ");
+    fputcsv($file, $header);
+    foreach ($data as $row)
+    {
+      fputcsv($file, $row);
+    }
+    fclose($file);
+    exit;
   }
 
   public function test() {
-    $data = json_encode($this->examroom_model->getAllExamChapter());
-    echo $data;
+
   }
 
 }

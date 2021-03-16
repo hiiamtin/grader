@@ -170,10 +170,9 @@ footer {
     color: #888888;
 }
 #exam-room-panel #global-menubar {
-    padding: 10px;
-    width: 75vw ;
+    padding-top: 10px;
+    width: 100%;
     margin-left: 10px;
-    background-color: #0a6bf7;
 }
 
 /* popup_group_selector */

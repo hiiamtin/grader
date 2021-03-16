@@ -6,16 +6,32 @@
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
   <script>$(document).ready(beautifyScoreTable);</script>
   <div>
-    <b>กลุ่ม : <?php echo substr($info['class_id'],6) ?></b>
-    <br>
-    <b>อาจารย์ผู้สอน :
-      <?php echo $info['supervisor']['supervisor_firstname']?>
-      <?php echo $info['supervisor']['supervisor_lastname']?>
-    </b>
-    <br>
-    <?php
-
-    ?>
+    <table>
+      <tr>
+        <td>กลุ่ม : <?php echo substr($info['class_id'],6) ?></td>
+        <td>
+          <form action="<?php echo site_url("ExamSupervisor/export_score_csv")?>" method="post">
+            <input hidden type="text" name="exam" value="<?php echo $info['exam_list_id'] ?>">
+            <input hidden type="text" name="group" value="<?php echo $info['class_id'] ?>">
+            <input type="submit" class="" value="Save as CSV">
+          </form>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          อาจารย์ผู้สอน :
+          <?php echo $info['supervisor']['supervisor_firstname']?>
+          <?php echo $info['supervisor']['supervisor_lastname']?>
+        </td>
+        <td>
+          <form action="<?php echo site_url("ExamSupervisor/export_score_json")?>" method="post">
+            <input hidden type="text" name="exam" value="<?php echo $info['exam_list_id'] ?>">
+            <input hidden type="text" name="group" value="<?php echo $info['class_id'] ?>">
+            <input type="submit" class="" value="Save as JSON">
+          </form>
+        </td>
+      </tr>
+    </table>
   </div>
   <table id="score_table" class="display">
     <thead>
@@ -33,13 +49,7 @@
       echo '<td>'.$student['stu_id'].'</td>';
       echo '<td>'.$student['stu_firstname'].'</td>';
       echo '<td>'.$student['stu_lastname'].'</td>';
-      // check ว่าแต่ละรหัสนักศึกษามีคะแนนรึเปล่า
-      if (sizeof($score_list)>0 && strcmp($student['stu_id'], $score_list[0]['stu_id'])==0) {
-        echo '<td>'.$score_list[0]['SUM(a.marking)'].'</td>';
-        array_shift($score_list);
-      } else {
-        echo '<td>0</td>';
-      }
+      echo '<td>'.$student['score'].'</td>';
       echo '</tr>';
     }
     ?>
