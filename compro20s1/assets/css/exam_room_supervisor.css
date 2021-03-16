@@ -50,7 +50,7 @@ footer {
 
 /* panel */
 #exam-room-panel {
-    margin-left: 40px;
+    margin-left: 5px;
     margin-top: 10px;
 }
 #exam-room-panel .flex-container {
@@ -170,10 +170,9 @@ footer {
     color: #888888;
 }
 #exam-room-panel #global-menubar {
-    padding: 10px;
-    width: 100% ;
+    padding-top: 10px;
+    width: 100%;
     margin-left: 10px;
-    background-color: #0a6bf7;
 }
 
 /* popup_group_selector */
@@ -207,4 +206,9 @@ footer {
 }
 #modalStuPreview #info-name {
     font-family: monospace;
+}
+
+/* display_score */
+#score_table {
+    width: 90%;
 }

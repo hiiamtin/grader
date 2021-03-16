@@ -2,10 +2,17 @@
 <div id="exam-room-panel" class="col-12 col-lg-9 col-md-8 col-sm-8 col-xs-4">
   <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/exam_room_supervisor.css')?>">
   <script type="text/javascript" src="<?php echo base_url('assets/js/exam_room_supervisor.js')?>"></script>
-  <div class="flex-container">
   <div id="global-menubar">
-    <input type="button" value="Create New Room" class="btn btn-default" onclick="createNewRoom()">
+    <button class="btn btn-danger" onclick="createNewRoom()">
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+      Create New Room
+    </button>
+    <button class="btn btn-primary" onclick="getGroupScore()">
+      <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+      Export Group Score
+    </button>
   </div>
+  <div class="flex-container">
     <?php
     if (!empty($exam_rooms)) {
       foreach ($exam_rooms as $room) {

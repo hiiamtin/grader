@@ -420,4 +420,38 @@ class Examroom_model extends CI_Model
     return $allData;
   }
 
+  public function getScoreFromExaminees($classId, $examListId) {
+    $sql = 'SELECT a.stu_id, b.stu_firstname, b.stu_lastname, SUM(a.marking)'
+        .' FROM exercise_submission a, user_student b'
+        .' WHERE a.stu_id = b.stu_id'
+        .' AND b.stu_group = '.$classId
+        .' AND a.exercise_id IN ('
+        .'    SELECT exercise_id'
+        .'    FROM lab_exercise'
+        .'    WHERE lab_chapter = '.$examListId
+        .' )'
+        .' GROUP BY b.stu_id'
+        .' ORDER BY a.stu_id';
+    $query = $this->db->query($sql);
+    return $query->result_array();
+  }
+
+  public function getStudentNameListByClass($classId) {
+    $sql = 'SELECT stu_id, stu_firstname, stu_lastname'
+        .' FROM user_student'
+        .' WHERE stu_group = '.$classId
+        .' ORDER BY stu_id';
+    $query = $this->db->query($sql);
+    return $query->result_array();
+  }
+
+  public function getAllExamChapter() {
+    $sql = 'SELECT *'
+        .' FROM lab_classinfo'
+        //.' WHERE chapter_id > 10'
+        .' ORDER BY chapter_id';
+    $query = $this->db->query($sql);
+    return $query->result_array();
+  }
+
 }//class Examroom_model
