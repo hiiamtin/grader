@@ -117,5 +117,44 @@
 #status_bt {
     width: fit-content;
     height: auto;
+    
 }
 
+/*popup2*/
+.quick-time-set .form-control{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: inline;
+    margin-right: 10px;
+    width: 80px;
+}
+
+
+.quick-time-set-value input{
+    display: inline;
+    margin-right: 10px;
+    width:80px;
+}
+
+.quick-time-set-value label,.quick-time-set label{
+    display: inline;
+    margin-right: 10px;
+}
+.modal-footer label{
+    float: left;
+    margin-right: 10px;
+}
+.modal-footer input{
+    float: left;
+}
+.quickopen,.quickclose {
+    width:95%;
+    height: 50px;
+    margin-bottom: 10px;
+    
+}
+.addtime{
+    width:160px;
+    margin: 5px;
+    
+}

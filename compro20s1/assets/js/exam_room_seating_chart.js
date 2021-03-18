@@ -162,7 +162,7 @@ function set_time_counter(a, b, c, d) {
             
         document.getElementById(d).style.width = progressBarWidth+"%";
         //console.log(document.getElementById("status_bt").style);
-
+        
         now = performance.now();
         if (distance < 0) {
             time_update = open_or_close;
@@ -186,6 +186,56 @@ function set_time_counter(a, b, c, d) {
     return setTimeout(step, interval);
 }
 
+
+function addHourAndMinutes(date, hour,minutes) {
+    return new Date(date.getTime()+(hour*3600000)+(minutes*60000));
+}
+
+function toLocalISOString_with_timezone(time) {
+
+    var d = new Date(time)
+        , pad = function (n){return n<10 ? '0'+n : n;}
+        , tz = d.getTimezoneOffset() // mins
+        , tzs = (tz>0?"-":"+") + pad(parseInt(Math.abs(tz/60)));
+
+    if (tz%60 != 0)
+        tzs += pad(Math.abs(tz%60));
+
+    if (tz === 0) // Zulu time == UTC
+        tzs = 'Z';
+
+     return d.getFullYear()+'-'
+          + pad(d.getMonth()+1)+'-'
+          + pad(d.getDate())+'T'
+          + pad(d.getHours())+':'
+          + pad(d.getMinutes())+':'
+          + pad(d.getSeconds()) + tzs;
+};
+
+
+function quicktimeset(){
+    var localTime = get_time_server();
+    var hour = document.getElementById("quick-time-set-value-hour").value;
+    var minute = document.getElementById("quick-time-set-value-minute").value;
+    var new_date = addHourAndMinutes(new Date(localTime),hour,minute);
+    var isoStr = toLocalISOString_with_timezone(new_date.getTime());
+    var isoStr_now = toLocalISOString_with_timezone(new Date(localTime));
+    document.getElementById("quick-time-starttime").value = isoStr_now.substring(0,isoStr.length-6);
+    var show_time = document.getElementById("quick-time-endtime");
+    show_time.value = isoStr.substring(0,isoStr.length-6);
+    //console.log(new_date,isoStr);
+}
+
+function quicktimeset_addtime(time_end,minutes){
+    var new_date = addHourAndMinutes(new Date(time_end*1000),0,minutes);
+    var isoStr = toLocalISOString_with_timezone(new_date.getTime());
+    console.log(time_end*1000   ,new Date(time_end*1000));
+    console.log(new_date);
+    var show_time = document.getElementById("quick-time-endtime");
+    show_time.value = isoStr.substring(0,isoStr.length-6);
+    
+}
+
 function update_online_student_exam() {
     let URL_ = baseurl+"index.php/ExamSupervisor/get_online_student_exam/"+roomNum;
     //console.log(URL_);
@@ -207,6 +257,10 @@ function update_online_student_exam() {
    
 
 }
+
+// $('#change_time_model').on('loaded.bs.modal', function (e){
+//     quicktimeset();
+//   });
 
 document.addEventListener("DOMContentLoaded", function() {
     //setTimeout(update_online_student,1000);

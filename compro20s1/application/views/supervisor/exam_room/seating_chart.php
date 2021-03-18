@@ -9,11 +9,11 @@
     <li>อาจารย์ผู้สอน: <a><?php echo $supervisor_info['supervisor_firstname']." ".$supervisor_info['supervisor_lastname']; ?></a></li>
     <li>จำนวนนักศึกษาเข้าสอบ: <a id="online_students"></a></li>
   </ul>
-  <label id="timer">Loading...</label><br>
+  <label id="timer" >Loading...</label><br>
   <button class="btn btn-success" id="btn-rotate" value="180deg" onclick="rotateScreen(this.value)">
     <span class="emoji">&#8635;</span> สลับมุมมองอาจารย์-นักศึกษา
   </button>
-  <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#setting_model">
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#setting_model">
     <span class="emoji">&#9881;</span> ตั้งค่าชุดข้อสอบ
   </button>
   <?php
@@ -21,7 +21,7 @@
     echo '<input type="text" id="chapter_id" style="min-width:260px;margin-right:5px;"
             value="' . $chapter_data["chapter_id"] . ') ' . $chapter_data["chapter_name"] . '" disabled>';
     echo '<form action="' . site_url('ExamSupervisor/set_level_allow_access') . '" id="toggle_allow_access" method="post" style="display:inline">';
-    echo '<input type="submit" class="btn btn-warning " value="เพิ่ม/ลบ โจทย์">';
+    echo '<input type="submit" class="btn btn-primary " value="เพิ่ม/ลบ โจทย์">';
     echo '<input type="text" name="class_id" value="' . $chapter_data["class_id"] . '" hidden>';
     echo '<input type="text" name="chapter_id" value="' . $chapter_data["chapter_id"] . '" hidden>';
     echo '</form>';
@@ -40,7 +40,7 @@
               data-target="#change_time_model">'.'Open : ส่งข้อสอบได้'.'</button>';
       }else{
         echo '<button class="btn btn-danger " id="status_bt" data-toggle="modal"
-              data-target="#change_time_model">'.'Closed : หมดเวลาส่งข้อสอบ'.'</button>';
+              data-target="#change_time_model" onclick="quicktimeset()">'.'Closed : หมดเวลาส่งข้อสอบ'.'</button>';
       }
     }
     else{

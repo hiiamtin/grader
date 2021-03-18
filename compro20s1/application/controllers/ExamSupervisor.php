@@ -117,6 +117,19 @@ class ExamSupervisor extends MY_Controller {
     redirect(site_url($this->MODULE_PATH.'seating_chart/'.$room_number));
   }
 
+  public function change_time() {
+    //print_r($_POST);
+    $this->load->model("time_model");
+    $room_number = $_POST['room_number'];
+    $time_start = $_POST["quick-time-starttime"];
+    $time_end = $_POST["quick-time-endtime"];
+    $data = $this->examroom_model->getRoomData($room_number);
+    $class_id = $data["class_id"];
+    $chapter_id = $data["chapter_id"];
+    $status = $this->time_model->set_time_open_close($class_id, $chapter_id, $time_start, $time_end);
+    redirect(site_url($this->MODULE_PATH.'seating_chart/'.$room_number));
+  }
+
   public function set_level_allow_access() {
     $this->load->model('supervisor_model');
     $supervisor_data = array(
@@ -392,10 +405,6 @@ class ExamSupervisor extends MY_Controller {
     }
     fclose($file);
     exit;
-  }
-
-  public function test() {
-
   }
 
 }
