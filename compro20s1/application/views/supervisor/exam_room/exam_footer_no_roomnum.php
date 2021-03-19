@@ -30,8 +30,6 @@
 			var baseurl = "<?php echo base_url(); ?>";
 			var user_role  = "<?php echo $_SESSION['role']; ?>";
 			var user_id  = "<?php echo $_SESSION['id']; ?>";
-            var roomNum = "<?php echo $accessible_room; ?>";
-            var num_of_student ="<?php echo $num_of_student;?>";
 		</script>
 
 	
