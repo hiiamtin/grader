@@ -213,6 +213,7 @@ function toLocalISOString_with_timezone(time) {
 };
 
 
+
 function quicktimeset(){
     var localTime = get_time_server();
     var hour = document.getElementById("quick-time-set-value-hour").value;
@@ -258,9 +259,11 @@ function update_online_student_exam() {
 
 }
 
-// $('#change_time_model').on('loaded.bs.modal', function (e){
-//     quicktimeset();
-//   });
+function remove_navtop_style(e){
+    document.getElementById(e).className = "navbar navbar-inverse";
+    document.getElementsByTagName("body")[0].style.padding = null;
+  }
+
 
 document.addEventListener("DOMContentLoaded", function() {
     //setTimeout(update_online_student,1000);

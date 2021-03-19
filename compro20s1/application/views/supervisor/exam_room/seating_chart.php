@@ -1,6 +1,8 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/exam_room_seating_chart.css')?>">
 <script type="text/javascript" src="<?php echo base_url('assets/js/exam_room_seating_chart.js')?>"></script>
-
+<script>
+   remove_navtop_style("nav-top");
+</script>
 <?php date_default_timezone_set("Asia/Bangkok"); ?>
 <div id="seating-chart">
   <ul>
