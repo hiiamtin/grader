@@ -197,7 +197,7 @@ class ExamSupervisor extends MY_Controller {
     $this->load->view('supervisor/nav_fixtop');
     $this->load->view('supervisor/nav_sideleft',$supervisor_data);
     $this->load->view('supervisor/exam_room/exam_select_for_group',$data);
-    $this->load->view('supervisor/footer');
+    $this->load->view('supervisor/exam_room/exam_footer_no_roomnum');
   }
 
   public function ajax_allow_access() {

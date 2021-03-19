@@ -145,11 +145,9 @@
 
 <!-- 
 <?php
-	echo '<!-- ';
-	echo 'lab_classinfo<pre>'; print_r($lab_classinfo); echo '</pre>';
-	echo 'class_info<pre>'; print_r($class_info); echo '</pre>';
-	echo 'group_permission<pre>'; print_r($group_permission); echo '</pre>';
-	echo 'lab_data<pre>'; print_r($lab_data); echo '</pre>';
-	echo 'student_data<pre>'; print_r($student_data); echo '</pre>';
-	echo ' -->';
+	// echo 'lab_classinfo<pre>'; print_r($lab_classinfo); echo '</pre>';
+	// echo 'class_info<pre>'; print_r($class_info); echo '</pre>';
+	// echo 'group_permission<pre>'; print_r($group_permission); echo '</pre>';
+	// echo 'lab_data<pre>'; print_r($lab_data); echo '</pre>';
+	// echo 'student_data<pre>'; print_r($student_data); echo '</pre>';	
 ?> -->

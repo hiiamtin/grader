@@ -41,8 +41,12 @@
     /* Set gray background color and 100% height */
     .sidenav {
       padding-top: 20px;
+	  z-index: 1;
       background-color: #f1f1f1;
       height: 100%;
+	  
+      overflow-x: hidden;
+	  
     }
     
     /* Set black background color, white text and some padding */
@@ -82,5 +86,5 @@
 </head>
 
 
-<body>
+<body style="padding-top:90px;">
 <!-- end tag in footer -->

@@ -1,0 +1,19 @@
+/*เพิ่มลบโจทย์*/
+.back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    color:dodgerblue;
+ 
+    align-content: center;
+}
+label[name="goto"]{
+    margin-left: 20px;
+}
+.anchor{
+    display: block;
+    height: 92px;
+    margin-top: -92px;
+    visibility: hidden;
+}
