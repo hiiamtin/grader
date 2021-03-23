@@ -167,7 +167,8 @@ class Examroom_model extends CI_Model
       ->from('student_assigned_chapter_item')
       ->where('stu_id', $stuId)
       ->where('chapter_id',$chapterId)
-      ->where('exercise_id IS NOT NULL', null, false);
+      ->where('exercise_id IS NOT NULL', null, false)
+      ->order_by('item_id', 'ASC');
     $query = $this->db->get();
     return $query->result_array();
   }
