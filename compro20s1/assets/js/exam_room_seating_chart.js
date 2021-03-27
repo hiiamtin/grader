@@ -296,4 +296,11 @@ function refresh()
     refresh();
     }, 10000);
 }
+
+function openUrlByPopUp(relativePath) {
+    let url = baseurl + "index.php/ExamSupervisor/" + relativePath;
+    window.open(url,
+        "winname",
+        "directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,width=1200,height=700");
+}
 //<?php echo sizeof($seat_list);?> / <?php echo $num_of_student;?>

@@ -32,7 +32,9 @@
   }
   ?>
   
-  <a href="<?php echo site_url('ExamSupervisor/extra_student/');?><?php echo $accessible_room;?>" class="btn btn-primary">ย้ายนักศึกษาชั่วคราว</a>
+  <button type="button" onclick="openUrlByPopUp('extra_student/'+<?php echo $accessible_room;?>)" class="btn btn-primary">
+    ย้ายนักศึกษาชั่วคราว
+  </button>
   <label>Status : </label>
   <?php
   if ($chapter_data != NULL) {
