@@ -350,11 +350,9 @@ class ExamSupervisor extends MY_Controller {
             'supervisor' => $this->examroom_model->getSupervisor($classId)
         )
     );
-    $this->load->view('supervisor/head');
-    $this->load->view('supervisor/nav_fixtop');
-    $this->load->view('supervisor/nav_sideleft');
+    $this->load->view('supervisor/exam_room/window_pop_head');
     $this->load->view('supervisor/exam_room/display_score',$data);
-    $this->load->view('supervisor/footer');
+    $this->load->view('supervisor/exam_room/window_pop_foot');
   }
 
   private function fetch_exam_score($classId, $chapterId) {

@@ -178,7 +178,7 @@ function studentPreview(roomNum, seatNum) {
 }
 
 function codePreview(stuId, problemId) {
-    window.open(baseurl + "index.php/ExamSupervisor/stu_code_preview/" + stuId + "/" + problemId, "winname", "directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,width=1200,height=700");
+    window.open(baseurl + "index.php/ExamSupervisor/stu_code_preview/" + stuId + "/" + problemId, "winname", "directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,width=1100,height=600");
 }
 
 
@@ -202,4 +202,18 @@ function beautifyScoreTable() {
 
 function getGroupScore() {
     jQuery("#modalGroupSelectorScore").modal("show");
+}
+
+function openUrlByPopUp(relativePath, width, height) {
+    let url = baseurl + "index.php/ExamSupervisor/" + relativePath;
+    window.open(url,
+        "GetWindow",
+        "directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,width="+width+",height="+height);
+}
+
+function openUrlByPopUpPostForm(formId, width, height) {
+    window.open('',
+        "PostWindow",
+        "directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,width="+width+",height="+height);
+    document.getElementById(formId).submit();
 }
