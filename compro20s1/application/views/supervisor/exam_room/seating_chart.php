@@ -6,13 +6,69 @@
 </script>
 <?php date_default_timezone_set("Asia/Bangkok"); ?>
 <div id="seating-chart">
-  <ul>
+  <ul class="detail">
     <li>ห้องสอบ ECC: <a><?php echo $accessible_room;?></a></li>
     <li>กลุ่มที่สอบ: <a><?php echo $group_number; ?> - ภาควิชา<?php echo $department ?></a></li>
     <li>อาจารย์ผู้สอน: <a><?php echo $supervisor_info['supervisor_firstname']." ".$supervisor_info['supervisor_lastname']; ?></a></li>
     <li>จำนวนนักศึกษาเข้าสอบ: <a id="online_students"></a></li>
   </ul>
   <label id="timer" >Loading...</label><br>
+  <div class="flex-container">
+      <?php
+        echo '<div class="room-controller">';
+        // Allow Students to Login
+        echo '<div class="list-group-item d-flex justify-content-between align-items-center">Allow Login';
+        echo '<label class="badge switch">';
+        echo '<input type="checkbox" id="'
+                . $roomData['room_number']
+                . '-login" onclick="toggleAllowLogIn(this.id)" '
+                . ($allow_login == 'yes' ? 'checked' : 'unchecked')
+                . '>';
+        echo '<span class="slider round">';
+        echo '</span></label></div>';
+
+
+        // Allow Students to Check in
+        echo '<div class="list-group-item d-flex justify-content-between align-items-center">Allow Check in';
+        echo '<label class="badge switch">';
+        echo '<input type="checkbox" id="'
+                . $roomData['room_number']
+                . '-checkin" onclick="toggleAllowCheckIn(this.id)" '
+                . $roomData['allow_check_in']
+                . '>';
+        echo '<span class="slider round">';
+        echo '</span></label></div>';
+
+        // Allow Students to Access
+        echo '<div class="list-group-item d-flex justify-content-between align-items-center">Allow Access';
+        echo '<label class="badge switch">';
+        echo '<input type="checkbox" id="'
+                . $roomData['room_number']
+                . '-access" onclick="toggleAllowAccess(this.id)" '
+                . $roomData['allow_access']
+                . '>';
+        echo '<span class="slider round">';
+        echo '</span></label></div>';
+
+         // Social Distancing
+         echo '<div class="list-group-item">Social Distancing';
+        
+           echo '<label class="badge switch">';
+           echo '<input type="checkbox" id="'
+                   . $roomData['room_number']
+                   . '-social-distancing" onclick="toggleSocialDistancing_and_clear(this.id)" '
+                   . $roomData['in_social_distancing']
+                   . '>';
+         
+         echo '<span class="slider round">';
+         echo '</span></label></div>';
+
+        echo '</div>';
+      ?>
+      
+    </div>
+    
+  
   <button class="btn btn-success" id="btn-rotate" value="180deg" onclick="rotateScreen(this.value)">
     <span class="emoji">&#8635;</span> สลับมุมมองอาจารย์-นักศึกษา
   </button>

@@ -1,6 +1,6 @@
 <!-- nav_body -->
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/exam_select_for_group.css')?>">
-<div class="col-xl-0 col-lg-0 col-md-1 col-sm-1 col-xs-0"></div>
+<div class="col-xl-0 col-lg-0 col-md-1 col-sm-1 col-xs-2"></div>
 <main class="col-xl-10 col-lg-10 col-md-9 col-sm-9 col-xs-8" style="margin-top:10px;">
 	<?php
 		$group_no = $class_schedule['group_no'];
@@ -12,14 +12,14 @@
 
 	<!-- <div class="container-fulid" style="background-color:#ffb366;"> -->
 	<div class="container-fluid" style="width:100%;margin-left:0px;padding-right:10px;">
-		<div class="row" style="color:Blue;text-align:center;background-color:Khaki ;font-size:200%;padding-top:20px;padding-bottom:20px;margin-left:10px">
+		<div class="row" style="color:Blue;text-align:center;background-color:Khaki ;font-size:200%;padding-top:20px;padding-bottom:20px;margin-left:10px;">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">Lab <?php echo $lab_no.' '.$chapter_permission['chapter_name'] ?></div>
 			<div class="col-md-0"></div>
 			<div class="col-md-0"></div>
 			<div class="col-md-1"></div>
 		</div>
-		<div class="row" style="background-color:rgba(240, 230, 140,0.5);margin-left:10px">
+		<div class="row" style="background-color:rgba(240, 230, 140,0.5);margin-left:10px;">
 			<label name="goto">Goto :</label>
 			<a href="#level1" class="btn" role="button">ข้อ 1</a>
 			<a href="#level2" class="btn" role="button">ข้อ 2</a>
@@ -27,13 +27,13 @@
 			<a href="#level4" class="btn" role="button">ข้อ 4</a>
 			<a href="#level5" class="btn" role="button">ข้อ 5</a>
 		</div>
-		<div class="row" style="padding-top:20px;padding-bottom:20px;margin-left:10px">
+		<div class="row" style="padding-top:20px;padding-bottom:20px;margin-left:10px;">
 			<?php 
 				$no_of_items = sizeof($lab_list);
 				$level = 1;
 				foreach ($lab_list as $lab_level) {
 			?>
-			<div class="container">
+			<div class="container" style="width:100%;margin-left:0px;padding-right:10px;">
 				<span class="anchor" id="level<?php echo $level; ?>"></span>				
 				<div class="row panel panel-default" >
 					<?php $no_of_item_list = sizeof($lab_level); ?>

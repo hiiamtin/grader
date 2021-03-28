@@ -30,6 +30,18 @@ function ajaxSetAllowCheckIn(needToAllow, roomNumber) {
     );
 }
 
+function ajaxSetLogIn(value, roomNumber) {
+    jQuery.post(baseurl + "index.php/ExamSupervisor/ajax_allow_log_in",
+        {
+            roomNumber: roomNumber,
+            value: value
+        },
+        setTimeout(function () {
+            window.location = window.location
+        }, 800)
+    );
+}
+
 function ajaxSetSocialDistancing(value, roomNumber) {
     jQuery.post(baseurl + "index.php/ExamSupervisor/ajax_social_distancing",
         {
@@ -41,6 +53,20 @@ function ajaxSetSocialDistancing(value, roomNumber) {
         }, 800)
     );
 }
+
+function ajaxSetSocialDistancing_and_clear(value, roomNumber) {
+    jQuery.post(baseurl + "index.php/ExamSupervisor/ajax_social_distancing_and_clear",
+        {
+            roomNumber: roomNumber,
+            value: value
+        },
+        setTimeout(function () {
+            window.location = window.location
+        }, 800)
+    );
+}
+
+
 
 function toggleAllowCheckIn(id) {
     let toggleSwitch = document.getElementById(id);
@@ -54,6 +80,44 @@ function toggleAllowCheckIn(id) {
     } else {
         if (confirm(roomNumber + " : ห้ามนักศึกษา Check in ใช่หรือไม่?")) {
             ajaxSetAllowCheckIn("unchecked", roomNumber);
+        } else {
+            toggleSwitch.checked = true;
+        }
+    }
+}
+
+
+function toggleAllowLogIn(id) {
+    let toggleSwitch = document.getElementById(id);
+    let roomNumber = id.substr(0, 3);
+    if (toggleSwitch.checked) {
+        if (confirm(roomNumber + " : อนุญาตให้นักศึกษา Log in ใช่หรือไม่?")) {
+            ajaxSetLogIn("yes", roomNumber);
+        } else {
+            toggleSwitch.checked = false;
+        }
+    } else {
+        if (confirm(roomNumber + " : ห้ามนักศึกษา Login ใช่หรือไม่?")) {
+            ajaxSetLogIn("no", roomNumber);
+        } else {
+            toggleSwitch.checked = true;
+        }
+    }
+}
+
+function toggleSocialDistancing_and_clear(id) {
+    let toggleSwitch = document.getElementById(id);
+    let roomNumber = id.substr(0, 3);
+
+    if (toggleSwitch.checked) {
+        if (confirm(roomNumber + " : คำเตือน หากมีนักศึกษา check in อยู่จะถูกบังคับ check out\nต้องการ 'เปิด SocialDistancing' ใช่หรือไม่?")) {
+            ajaxSetSocialDistancing_and_clear("checked", roomNumber);
+        } else {
+            toggleSwitch.checked = false;
+        }
+    } else {
+        if (confirm(roomNumber + " : คำเตือน หากมีนักศึกษา check in อยู่จะถูกบังคับ check out\nต้องการ 'ปิด SocialDistancing' ใช่หรือไม่?")) {
+            ajaxSetSocialDistancing_and_clear("unchecked", roomNumber);
         } else {
             toggleSwitch.checked = true;
         }
@@ -92,7 +156,7 @@ function ajaxSetAllowAccess(needToAllow, classId) {
             classId: classId
         },
         setTimeout(function () {
-            window.location = window.location
+            window.location.replace(baseurl + "index.php/ExamSupervisor");
         }, 800)
     );
 }
@@ -105,7 +169,7 @@ function toggleAllowAccess(id) {
         toggleSwitch.checked = false;
         jQuery("#modalGroupSelector").modal("show");
     } else {
-        if (confirm(roomNumber + " : ห้ามนักศึกษาเข้าถึง ใช่หรือไม่?")) {
+        if (confirm(roomNumber + " : คำเตือน ตัวเลือกนี้จะเป็นการบังคับนักศึกษาทุกคนออกจากห้องสอบ และต้องทำการตั้งค่ากลุ่มที่จะเข้าสอบใหม่อีกครั้ง\nคุณต้องการ 'ยกเลิกการสอบ' ใช่หรือไม่?")) {
             ajaxSetAllowAccess("unchecked", "");
         } else {
             toggleSwitch.checked = true;

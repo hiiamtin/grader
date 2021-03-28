@@ -40,6 +40,8 @@ class ExamSupervisor extends MY_Controller {
     $class_id = $roomData["class_id"];
     $chapter_id = $roomData["chapter_id"];
     $group_permission = $this->lab_model->get_group_permission($class_id);
+    $class_schedule = $this->lab_model->get_class_schedule_by_group_id($class_id);
+    // print_r($class_schedule);
 
     if($chapter_id!=NULL){
       $chapter_data = $group_permission[$chapter_id];
@@ -51,8 +53,10 @@ class ExamSupervisor extends MY_Controller {
     }
     $seatData = array(
       //'seat_list' => $this->examroom_model->getAllSeatsData($roomNum),
+        'roomData' => $roomData,
         'accessible_room' => $roomNum,
         'chapter_data' => $chapter_data,
+        'allow_login' => $class_schedule['allow_login'],
       //'in_social_distancing' => $roomData["in_social_distancing"],
         'group_number' => substr($class_id, 6),
         'department' => $this->examroom_model->getDepartment($class_id),
@@ -67,6 +71,7 @@ class ExamSupervisor extends MY_Controller {
     $this->load->view('supervisor/head');
     $this->load->view('supervisor/nav_fixtop');
     $this->load->view('supervisor/exam_room/seating_chart',$seatData);
+    $this->load->view('supervisor/exam_room/popup_group_select');
     $this->load->view('supervisor/exam_room/popup_setting1',$roomData);
     $this->load->view('supervisor/exam_room/popup_setting2');
     $this->load->view('supervisor/exam_room/popup_stu_preview');
@@ -224,6 +229,17 @@ class ExamSupervisor extends MY_Controller {
     $this->examroom_model->setAllowCheckIn($needToAllow,$roomNumber);
   }
 
+  public function ajax_allow_log_in() {
+    /// JQuery เปิด-ปิด login
+
+    $roomNumber = intval($_POST['roomNumber']);
+    $roomData = $this->examroom_model->getRoomData($roomNumber);
+    $class_id = $roomData["class_id"];
+    $allow_login = $_POST['value'];
+		$this->load->model('lab_model');
+		$this->lab_model->set_allow_class_login($class_id,$allow_login);
+  }
+
   public function ajax_social_distancing() {
     /// JQuery เปิด-ปิด เว้นระยะห่าง
 
@@ -231,6 +247,16 @@ class ExamSupervisor extends MY_Controller {
     $distancing = $_POST['value'];
     $this->examroom_model->setSocialDistancing($distancing,$roomNumber);
   }
+
+  
+  public function ajax_social_distancing_and_clear() {
+    /// JQuery เปิด-ปิด เว้นระยะห่าง
+
+    $roomNumber = intval($_POST['roomNumber']);
+    $distancing = $_POST['value'];
+    $this->examroom_model->setSocialDistancing_and_clear($distancing,$roomNumber);
+  }
+
 
   public function ajax_stu_preview() {
     /// JQuery ดึงข้อมูลนักศึกษาตามที่นั่งที่กด
