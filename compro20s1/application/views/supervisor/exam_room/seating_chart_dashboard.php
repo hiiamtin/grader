@@ -5,9 +5,15 @@
     <div class="grid-room">
       <?php
       function printOnlineSeatHtml($seat) {
-        echo "<button class='grid-seat grid-seat-able btn' value='"
-                .$seat['seat_number']
-                ."' data-toggle='modal' data-target='#modalStuPreview' onclick='studentPreview(".$seat['room_number'].",this.value)'>";
+        if($seat['progress']==100) {
+          echo "<button class='grid-seat grid-seat-finished btn' value='"
+                  .$seat['seat_number']
+                  ."' data-toggle='modal' data-target='#modalStuPreview' onclick='studentPreview(".$seat['room_number'].",this.value)'>";
+        } else {
+          echo "<button class='grid-seat grid-seat-able btn' value='"
+                  .$seat['seat_number']
+                  ."' data-toggle='modal' data-target='#modalStuPreview' onclick='studentPreview(".$seat['room_number'].",this.value)'>";
+        }
         echo "<span class='seat-num'>"
                 .sprintf("%02d", $seat['seat_number'])
                 ."</span>";

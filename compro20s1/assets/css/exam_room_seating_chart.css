@@ -9,15 +9,30 @@
     padding: 4px;
 }
 #seating-chart .grid-seat-able {
-    margin: 2px;
+    margin: 1px;
     height: 64px;
     width: 96%;
     text-align: left;
     position: relative;
     display: grid;
-    grid-template-areas: 'num img text';
-    grid-template-columns: 28px 40px auto;
+    grid-template-areas:
+            'num img text'
+            'num img text';
+    grid-template-columns: 24px 40px auto;
     background-color: #efb45d;
+}
+#seating-chart .grid-seat-finished {
+    margin: 1px;
+    height: 64px;
+    width: 96%;
+    text-align: left;
+    position: relative;
+    display: grid;
+    grid-template-areas:
+            'num img text'
+            'num img text';
+    grid-template-columns: 24px 40px auto;
+    background-color: #6bc43a;
 }
 #seating-chart .grid-seat-unable {
     margin: 2px;

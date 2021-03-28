@@ -13,7 +13,7 @@
         </div>
         <div class="modal-body" id="group-selector">
           <div class="form-group">
-            <form action="<?php echo site_url("ExamSupervisor/display_score")?>" id="score-form" method="post">
+            <form action="<?php echo site_url("ExamSupervisor/display_score")?>" target="PostWindow" id="score-form" method="post">
               <label for="class-select">เลือกกลุ่ม:</label>
               <select class="form-control" name="group" id="class-select" form="score-form">
                 <?php
@@ -42,7 +42,7 @@
                 ?>
               </select>
               <h6></h6>
-              <input type="submit" value="ดูคะแนนนักศึกษา" class="btn btn-primary">
+              <input type="button" onclick="openUrlByPopUpPostForm(this.parentNode.id, 800, 700)" value="ดูคะแนนนักศึกษา" class="btn btn-primary">
             </form>
           </div>
         </div>

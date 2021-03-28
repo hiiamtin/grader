@@ -1,5 +1,4 @@
-<div class="col-12 col-lg-1 col-md-0 col-sm-1 col-xs-6"></div>
-<div id="exam-room-panel" class="col-12 col-lg-9 col-md-8 col-sm-8 col-xs-4">
+<div id="exam-room-score" class="col-12 col-lg-9 col-md-8 col-sm-8 col-xs-4">
   <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/exam_room_supervisor.css')?>">
   <script type="text/javascript" src="<?php echo base_url('assets/js/exam_room_supervisor.js')?>"></script>
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
@@ -13,7 +12,7 @@
           <form action="<?php echo site_url("ExamSupervisor/export_score_csv")?>" method="post">
             <input hidden type="text" name="exam" value="<?php echo $info['exam_list_id'] ?>">
             <input hidden type="text" name="group" value="<?php echo $info['class_id'] ?>">
-            <input type="submit" class="" value="Save as CSV">
+            <input type="submit" class="btn btn-warning btn-block active" value="Save as CSV">
           </form>
         </td>
       </tr>
@@ -27,7 +26,7 @@
           <form action="<?php echo site_url("ExamSupervisor/export_score_json")?>" method="post">
             <input hidden type="text" name="exam" value="<?php echo $info['exam_list_id'] ?>">
             <input hidden type="text" name="group" value="<?php echo $info['class_id'] ?>">
-            <input type="submit" class="" value="Save as JSON">
+            <input type="submit" class="btn btn-info btn-block active" value="Save as JSON">
           </form>
         </td>
       </tr>

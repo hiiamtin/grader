@@ -262,7 +262,7 @@ function update_online_student_exam() {
 function remove_navtop_style(e){
     document.getElementById(e).className = "navbar navbar-inverse";
     document.getElementsByTagName("body")[0].style.padding = null;
-  }
+}
 
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -296,4 +296,5 @@ function refresh()
     refresh();
     }, 10000);
 }
+
 //<?php echo sizeof($seat_list);?> / <?php echo $num_of_student;?>

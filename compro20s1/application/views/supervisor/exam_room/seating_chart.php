@@ -1,5 +1,6 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/exam_room_seating_chart.css')?>">
 <script type="text/javascript" src="<?php echo base_url('assets/js/exam_room_seating_chart.js')?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/exam_room_supervisor.js')?>"></script>
 <script>
    remove_navtop_style("nav-top");
 </script>
@@ -22,8 +23,8 @@
   if ($chapter_data != NULL) {
     echo '<input type="text" id="chapter_id" style="min-width:260px;margin-right:5px;"
             value="' . $chapter_data["chapter_id"] . ') ' . $chapter_data["chapter_name"] . '" disabled>';
-    echo '<form action="' . site_url('ExamSupervisor/set_level_allow_access') . '" id="toggle_allow_access" method="post" style="display:inline">';
-    echo '<input type="submit" class="btn btn-primary " value="เพิ่ม/ลบ โจทย์">';
+    echo '<form action="' . site_url('ExamSupervisor/set_level_allow_access') . '" id="exam_sheet" method="post" target="PostWindow" style="display:inline">';
+    echo '<input type="button" onclick="openUrlByPopUpPostForm(this.parentNode.id, 1200, 750)" class="btn btn-primary " value="เพิ่ม/ลบ โจทย์">';
     echo '<input type="text" name="class_id" value="' . $chapter_data["class_id"] . '" hidden>';
     echo '<input type="text" name="chapter_id" value="' . $chapter_data["chapter_id"] . '" hidden>';
     echo '</form>';
@@ -32,7 +33,9 @@
   }
   ?>
   
-  <a href="<?php echo site_url('ExamSupervisor/extra_student/');?><?php echo $accessible_room;?>" class="btn btn-primary">ย้ายนักศึกษาชั่วคราว</a>
+  <button type="button" onclick="openUrlByPopUp('extra_student/'+<?php echo $accessible_room;?>, 500, 600)" class="btn btn-primary">
+    ย้ายนักศึกษาชั่วคราว
+  </button>
   <label>Status : </label>
   <?php
   if ($chapter_data != NULL) {
