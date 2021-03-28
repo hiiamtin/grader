@@ -402,6 +402,11 @@ class ExamSupervisor extends MY_Controller {
     exit;
   }
 
+  public function check_student_out($room_number, $stu_id) {
+    $this->examroom_model->checkOut($stu_id);
+    redirect(site_url($this->MODULE_PATH.'seating_chart/'.$room_number));
+  }
+
 }
 
 ?>
