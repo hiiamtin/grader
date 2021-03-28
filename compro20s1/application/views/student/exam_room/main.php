@@ -36,7 +36,7 @@
 						$chapter_mark = 0;
 						$no_items = $chapter_data['no_items'];
 						echo '<h1>'.$chapter_name.'</h1>'; ?>
-						<button type="button" onclick="roomCheckOut()" class="btn btn-danger"
+						<button id="check-in-btn" type="button" onclick="roomCheckOut()" class="btn btn-danger"
 							style="margin-bottom:50px;">Check-out</button>
 						<tr>
 							<!-- <td style="text-align:center;">
@@ -55,13 +55,13 @@
 								$time_end = strtotime($chapter_data['time_end']);
 									if ($chapter_data['allow_access']=='yes'){
 										if($chapter_data['allow_submit']=='yes'){
-											echo '<button class="btn btn-success btn-sm" style="width:100%;">'.'Open : ส่งข้อสอบได้'.'</button>';
+											echo '<button id="status-btn" class="btn btn-success btn-sm" style="width:100%;">'.'Open : ส่งข้อสอบได้'.'</button>';
 										}else{
-											echo '<button class="btn btn-danger btn-sm" style="width:100%;">'.'Closed : หมดเวลาส่งข้อสอบ'.'</button>';
+											echo '<button id="status-btn" class="btn btn-danger btn-sm" style="width:100%;">'.'Closed : หมดเวลาส่งข้อสอบ'.'</button>';
 										}
 									}
 									else{
-										echo '<button class="btn btn-danger btn-sm" style="width:100%;">'.'Closed : ยังไม่เริ่มสอบ'.'</button>';
+										echo '<button id="status-btn" class="btn btn-danger btn-sm" style="width:100%;">'.'Closed : ยังไม่เริ่มสอบ'.'</button>';
 									}
 									echo '<div class="progress" id="timer_server_progress">
 											<div class="progress-bar progress-bar-striped active" role="progressbar" id="timer_server_bar"

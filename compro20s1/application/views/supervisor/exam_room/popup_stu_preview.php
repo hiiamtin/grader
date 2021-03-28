@@ -12,8 +12,9 @@
       <div class="modal-body" id="modal-body-status">
         <img class="image" id="info-img">
         <div class="information">
+          <p><input onclick="checkStudentOut()" class="btn btn-danger btn-xs " type="button" value="Check Out นักศึกษาคนนี้"></p>
+          <p>Room Number : <a id="info-roomnum"><?php echo $room_number; ?></a></p>
           <p>Seat Number : <a id="info-seatnum">0</a></p>
-          <p>Verified Mark : <a id="info-mark">0</a></p>
           <p>Progress : <a id="info-progress">0%</a></p>
           <table>
             <?php

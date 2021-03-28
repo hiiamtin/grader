@@ -158,7 +158,7 @@ function studentPreview(roomNum, seatNum) {
                             break;
                         }
                         default: {
-                            btn.setAttribute("class", "btn btn-danger");
+                            btn.setAttribute("class", "btn btn-warning");
                             btn.setAttribute("onclick", "codePreview(" + stuInfo.stuId + "," + stuInfo.examItems[0].exercise_id + ")");
                             break;
                         }
@@ -216,4 +216,14 @@ function openUrlByPopUpPostForm(formId, width, height) {
         "PostWindow",
         "directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,width="+width+",height="+height);
     document.getElementById(formId).submit();
+}
+
+function checkStudentOut() {
+    let stuId = document.getElementById("info-name").innerText.substring(3, 11);
+    let roomNumber = document.getElementById("info-roomnum").innerText;
+    if(confirm("ยืนยันการ Check Out ที่นั่งนักศึกษาคนนี้ใช่หรือไม่?")) {
+        setTimeout(function () {
+            window.location.href = baseurl + "index.php/ExamSupervisor/check_student_out/" + roomNumber + "/" + stuId;
+        }, 600)
+    }
 }
