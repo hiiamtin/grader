@@ -496,6 +496,278 @@ class Student extends MY_Controller {
 		}*/
 
 	}
+	public function exam_lab_exercise_action($chapter_id,$item_id) {
+		$stu_id = $_SESSION['stu_id'];
+		$group_id = $_SESSION['stu_group'];
+		$lab_data = $this->_lab_data;
+		$exercise_id = $lab_data[$chapter_id][$item_id]['stu_lab']['exercise_id'];
+		$this->load->model('lab_model');
+		if (empty($exercise_id)) {
+			//assign exercise to student from $lab_data[$chapter_id][$item_id]['exercise_id_list']
+			$exercise_list = unserialize($lab_data[$chapter_id][$item_id]['exercise_id_list']);
+			shuffle($exercise_list);
+			if( isset($exercise_list[0]) ) {
+				$exercise_id = $exercise_list[0];
+			} else {
+				echo "Lab : $chapter_id level : $item_id is NOT available.\n";
+				return ;
+			}
+
+			// update student table
+
+			$this->lab_model->update_student_exericse($stu_id,$chapter_id,$item_id,$exercise_id);
+			$this->update_student_data();
+			$lab_data = $this->_lab_data;
+		}
+
+		$lab_content = $this->lab_model->get_lab_content($exercise_id);
+		$sourcecode_content ='';
+
+		$number_of_testcase = $this->lab_model->get_num_testcase($exercise_id);
+
+		//echo '<h3>$lab_content : </h3><pre> testcase nubmer: ',$number_of_testcase,"<br>"; print_r($lab_content); echo "</pre>";
+		$submitted_count = $this->student_model->get_student_submission_times($stu_id,$exercise_id);
+
+	
+		require_once 'Exercise_test.php';
+		$exercise_test = new Exercise_test();
+		$output = '';
+
+		if($number_of_testcase <=0 ) {
+			// the exercise has no testcase
+
+			// run output from sample sourcecode for display and compare
+			$sourcecode_filename = $this->get_sourcecode_filename($exercise_id);
+			$output = $exercise_test->get_result_noinput($sourcecode_filename,'supervisor'); // raw output
+			$output = $exercise_test->unify_whitespace($output);	// change TAB and NEWLINE to single space
+			$output = $exercise_test->insert_newline($output); //insert newline after 80th character of each line
+			$output = rtrim($output);				//remove trailing spaces
+			$lab_name = $this->get_lab_name($exercise_id);
+			$full_mark = $this->get_fullmark_from_student_assigned_chapter_item($stu_id,$chapter_id,$item_id,$exercise_id);
+			//$marking = $this->get_marking_from_student_assigned_chapter_item($stu_id,$chapter_id,$item_id,$exercise_id);
+			$marking = $this->lab_model->get_max_marking_from_exercise_submission($stu_id,$exercise_id);
+
+			$_SESSION['lab_item']=$item_id;
+			//echo '<h3>$_SESSION : </h3><pre>'; print_r($_SESSION); echo "</pre>";
+			//echo '<h3>$output : </h3><pre>'; print_r($output); echo "</pre>";
+			//return ;
+			if( $submitted_count > 0 ) {
+				// the exercise has no testcase and there are some submissions
+				// take last_submit and do marking ==> update to exercise_submission table
+				$last_submit = $this->student_model->get_student_last_submission_record($stu_id,$exercise_id);
+				$submission_id = $last_submit['submission_id'];
+				$sourcecode_filename = $last_submit['sourcecode_filename'];  // ของนักศึกษา
+				$sourcecode_content = file_get_contents(STUDENT_CFILES_FOLDER.$sourcecode_filename);
+				//echo '<h3>$last_submit : </h3><pre>'; print_r($last_submit); echo "</pre>"; 
+
+				//run and get output
+				$output_student = $exercise_test->get_result_noinput($sourcecode_filename,'student');
+				$output_student = $exercise_test->unify_whitespace($output_student);
+
+				$sample_filename = $this->lab_model->get_lab_exercise_sourcecode_filename($exercise_id);
+				$output_sample = $exercise_test->get_result_noinput($sample_filename,'supervisor');
+				$output_sample = $exercise_test->unify_whitespace($output_sample);
+
+				//compare to exercise sample
+				$output_result = $exercise_test->output_compare($output_student,$output_sample);
+				if ($output_result == -1) {		// -1 means OK.
+					$output_student = $exercise_test->insert_newline($output_student);
+					//echo '<h2 style="color:red;">OK: </h2>';
+					$marking = $full_mark;
+					$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking);
+
+				} else {
+
+					$error_line = $output_result['error_line'];
+					$error_column = $output_result['error_column'];
+					$error_position = $output_result['error_position'];
+					echo '<h2 style="color:red;">unmatched_position : ',$error_position,"    line : ", $error_line,"    column : ",$error_column,"</h2>";
+
+					//	add a line to output showing where the first error occurs.
+					$output_student = $exercise_test->dispaly_error_in_output($output_student,$error_position);  // insert newline is embedded inside the function
+				}
+
+				$last_submit['sourcecode_content']	= $sourcecode_content;
+				$last_submit['sourcecode_output']	= $output_student;
+				$last_submit['submitted_count']	= $submitted_count;
+
+				//for icon displayed at top-right panel
+				if ($full_mark == $marking)
+					$last_submit['status']='passed';
+				else
+					$last_submit['status']='error';
+
+
+				//echo '<h3>$last submit : </h3><pre>'; print_r($last_submit); echo "</pre>";
+			}
+
+		} else {
+			/*
+			*
+			*	there are testcases because !($number_of_testcase <=0 )
+			*
+			*/
+
+			$testcase_array = $this->lab_model->get_testcase_array($exercise_id);
+			$num_of_testcase = $this->lab_model->get_num_testcase($exercise_id);
+			$output = ''; //reset output (no testcase)
+			$status ="first_enter";
+			//first time to do this exercise
+			if( $submitted_count <= 0) {
+				$data_testcase = $this->lab_model->get_testcase_array($exercise_id);
+			} else {
+				//there is last submit so run it and do marking
+				// from exercise_submission table
+				$last_submit = $this->student_model->get_student_last_submission_record($stu_id,$exercise_id);
+				
+				$submission_id = $last_submit['submission_id'];
+				$marking = $last_submit['marking'];
+				//echo '<!-- <h3>$last_submit : '.strlen($last_submit['output']).'</h3><pre>'; print_r($last_submit); echo "</pre> -->"; 
+				if ( empty($last_submit['output'])) {
+					$output = array (
+									array( "student" =>	"No output !!!")
+									);
+				} else if ( !is_null($last_submit['output']) ){
+					$output = unserialize($last_submit['output']);	
+				} else {
+					$output = array (
+										array("student"=>"Not Valid")
+										);
+				}	
+				//echo '<!-- <h3>output : '.sizeof($output).'</h3><pre>'; print_r($output); echo "</pre> -->";		
+				$sourcecode_filename = $last_submit['sourcecode_filename'];
+				$sourcecode_content = file_get_contents(STUDENT_CFILES_FOLDER.$sourcecode_filename);
+
+				$data_testcase = $this->lab_model->get_testcase_array($exercise_id); 
+				$number_of_testcase_stu = sizeof($output);
+				$number_of_testcase_sample = sizeof($data_testcase);
+				if ($number_of_testcase_stu <= $number_of_testcase_sample) {
+					$number_of_testcase = $number_of_testcase_stu;
+				}
+				
+				//run each testcase and compare result
+
+				// $chapter_pass = 'yes';
+				// each time testcase passes, $chapter_pass will be decreased.
+				// if all testcases pass, $chater_pass will be zero
+				$chapter_pass = sizeof($data_testcase);
+				$testcase_pass = 0;
+				//for ($i=0; $i<sizeof($data_testcase); $i++) {
+				for ($i=0; $i<$number_of_testcase_stu; $i++) {
+					$data_testcase["$i"]['item_pass'] = 'yes';
+					$testcase_content = $data_testcase["$i"]['testcase_content'];
+					//run output and store in $data_testcase
+					//$output_student_original = $exercise_test->get_result_student_testcase($sourcecode_filename, $testcase_content );
+					$output_student_original =$output[$i]['student'];
+					$output_student = $exercise_test->unify_whitespace($output_student_original);
+					$data_testcase["$i"]['testcase_student'] = $output_student;
+
+					$output_sample = $data_testcase["$i"]['testcase_output'];
+					$output_sample = $exercise_test->unify_whitespace($output_sample);
+
+					//compare to exercise sample
+					$output_result = $exercise_test->output_compare($output_student,$output_sample);
+
+					//calculate marking of testcase and put into $data_testcase
+					$item_pass='yes';
+					if ($output_result == -1) {		// -1 means OK.
+					//echo __METHOD__,'<h2 style="color:blue;"> your code is OK!</h2>';
+						//update fullmark to exercise_submission
+						//$marking = $this->get_fullmark_from_student_assigned_chapter_item($stu_id,$chapter_id,$item_id,$exercise_id);
+						//$this->update_marking_student_assigned_chapter_item($stu_id,$chapter_id,$item_id,$marking);
+						//$this->update_marking_exercise_submission($submission_id,$marking);
+						//$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking);
+						$testcase_pass++;
+					} else {
+
+						$error_line = $output_result['error_line'];
+						$error_column = $output_result['error_column'];
+						$error_position = $output_result['error_position'];
+						//echo '<h2 style="color:red;">unmatched_position : ',$error_position,"    line : ", $error_line,"    column : ",$error_column,"</h2>";
+
+						//	add a line to output showing where the first error occurs.
+						$output_student = $exercise_test->dispaly_error_in_output($output_student,$error_position);
+						$item_pass='no';
+						$data_testcase["$i"]['error_line'] = $error_line;
+						$data_testcase["$i"]['error_column'] = $error_column;
+						$data_testcase["$i"]['error_position'] = $error_position;
+
+
+
+					}
+					$data_testcase["$i"]['output_to_show']=$output_student_original;
+					$data_testcase["$i"]['item_pass']=$item_pass;
+				}
+				$status ="not_pass";
+
+
+				if($testcase_pass==sizeof($data_testcase)) {
+					$marking = $this->get_fullmark_from_student_assigned_chapter_item($stu_id,$chapter_id,$item_id,$exercise_id);
+					//$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking); 
+					$status = "passed";
+				} else {
+					$marking = 0;
+					//$this->lab_model->update_marking_exercise_submission($stu_id,$submission_id,$marking); 
+				}
+				
+				
+			}
+			$testcase_array = $data_testcase;
+			$data_for_testcase['exercise_id'] = $exercise_id;
+			$data_for_testcase['num_of_testcase'] = $num_of_testcase;
+			$data_for_testcase['testcase_array'] = $testcase_array;
+			//$data_for_testcase['infinite_loop_check'] = $infinite_loop_check;
+			if(isset($last_submit))
+				$data_for_testcase['last_submit'] = $last_submit;
+			$data_for_testcase['status'] = $status;
+		}
+		//echo "<!-- <pre>";print_r($data_for_testcase);echo "</pre> -->";
+		//echo "<!-- <pre>";print_r($output);echo "</pre> -->";
+		$this->load->model('time_model');
+		$chapter_data = $this->_group_permission[$chapter_id];
+		$result = $this->time_model->check_allow_access_and_submit($chapter_data['time_start'],$chapter_data['time_end']);
+		$chapter_data = $this->_group_permission;
+		$chapter_data[$chapter_id]["allow_access"] = $result[0];
+		$chapter_data[$chapter_id]["allow_submit"] = $result[1];
+
+		$data= array(
+					"lab_content"	=> $lab_content,
+					"output"		=> $output,
+					'lab_chapter'	=> $chapter_id,
+					'lab_item'		=> $item_id,
+					'exercise_id'	=> $exercise_id,
+					'lab_name'		=> $this->lab_model->get_lab_name($exercise_id),
+					'full_mark'		=> $this->lab_model->get_fullmark_from_student_assigned_chapter_item($stu_id,$chapter_id,$item_id,$exercise_id),
+					'marking'		=> $this->lab_model->get_max_marking_from_exercise_submission($stu_id,$exercise_id),
+					'submitted_count'	=> $submitted_count,
+					'sourcecode_content' => $sourcecode_content,
+					'group_permission'	=> $chapter_data
+					//'infinite_loop_check' => $infinite_loop_check
+				);
+
+
+		$this->load->view('student/stu_head');
+		$this->load->view('student/nav_fixtop');
+		$this->nav_sideleft();
+		$this->load->view('student/exam_room/exam_exercise_submission_header',$data); //show lab content and student's sourcecode
+
+		if($number_of_testcase <= 0 && $submitted_count <=0) {
+			// do nothing	ยังไม่เคยส่ง ไม่มีอินพุท
+		} else if($number_of_testcase <= 0 && $submitted_count > 0) {
+			// ไม่มีอินพุท เคยส่งแล้ว แสดงผล การส่งครั้งล่าสุด
+			$this->load->view('student/exercise_testrun',$last_submit);
+		} else if($number_of_testcase > 0 && $submitted_count <= 0) {
+			// มีอินพุท ไม่เคยส่ง
+			$this->load->view('student/exercise_output_testcase',$data_for_testcase);
+		} else {
+			// มีอินพุท เคยส่งแล้ว แสดงผล การส่งครั้งล่าสุด
+			$this->load->view('student/exercise_output_testcase_student',$data_for_testcase);
+		}
+
+		$this->load->view('student/stu_footer');
+
+
+	}
 
 	//private function lab_exercise_action_v2($chapter_id,$item_id) {
 	public function lab_exercise_action_v2($chapter_id,$item_id) {
@@ -807,9 +1079,6 @@ class Student extends MY_Controller {
 
 
 	}//public function lab_exercise_v2($chapter_id,$item_id)
-
-
-
 
 
 	private function lab_exercise_action_v1($chapter_id,$item_id) {
@@ -1806,7 +2075,7 @@ class Student extends MY_Controller {
   public function exam_room_student_main() {
 		$this->checkForInfiniteLoop();
 		$this->update_student_data();
-    $this->exam_room_check_status();
+    	$this->exam_room_check_status();
 		$this->load->model('examroom_model');
 
 		$seat_data = $this->examroom_model->getStudentData_exam_seat($_SESSION['stu_id']);
@@ -1830,6 +2099,8 @@ class Student extends MY_Controller {
 			$result = $this->time_model->check_allow_access_and_submit($chapter_data['time_start'],$chapter_data['time_end']);
 			$chapter_data["allow_access"] = $result[0];
 			$chapter_data["allow_submit"] = $result[1];
+			//random all level
+			$this->random_exercise($room_data['chapter_id']);
 		}
 		$data = array ('lab_data'		=>	$this->_lab_data,
 					'chapter_data'		=>	$chapter_data,
@@ -1845,6 +2116,32 @@ class Student extends MY_Controller {
         $this->load->view('student/exam_room/main',$data);
         $this->load->view('student/stu_footer');
 
+	}
+
+	private function random_exercise($chapter_id){
+		$stu_id = $_SESSION['stu_id'];
+		$group_id = $_SESSION['stu_group'];
+		$lab_data = $this->_lab_data;
+		$this->load->model('lab_model');
+		foreach( $lab_data[$chapter_id] as $level){
+			//print_r($level);
+			//echo '<br>';
+			$exercise_id = $level['stu_lab']['exercise_id'];
+			if (empty($exercise_id)) {
+				//assign exercise to student from $lab_data[$chapter_id][$item_id]['exercise_id_list']
+				$exercise_list = unserialize($level['exercise_id_list']);
+				shuffle($exercise_list);
+				if( isset($exercise_list[0]) ) {
+					$exercise_id = $exercise_list[0];
+				} else {
+					//echo "Exam :".$chapter_id.", level : ".$level['item_id']." is NOT available.\n";
+					return ;
+				}
+				$this->lab_model->update_student_exericse($stu_id,$chapter_id,$level['item_id'],$exercise_id);
+				$this->update_student_data();
+				$lab_data = $this->_lab_data;
+			}
+		}
 	}
 
 	public function exam_room_check_out() {
@@ -1872,27 +2169,27 @@ class Student extends MY_Controller {
 	}
 
 	public function exam_room_problem_select($chapterId, $level) {
-    $this->checkForInfiniteLoop();
-    $this->update_student_data();
-    $this->exam_room_check_status();
-    $this->load->model('time_model');
-    $this->load->model('examroom_model');
-    $chapter_data = $this->_group_permission[$chapterId];
-    $result = $this->time_model->check_allow_access_and_submit($chapter_data['time_start'],$chapter_data['time_end']);
-    $allow_access = $result[0];
-    if($allow_access=='no') {
-      $this->show_message("You are not allowed to do the exam.");
-    } else {
-      $examItemId = $this->lab_exercise_action_v2($chapterId, $level);
-      /*
-      if($this->examroom_model->notYetAssigned($_SESSION['stu_id'], $level)) {
-        // click for the first time
-        $this->examroom_model->assignProblem($_SESSION['stu_id'], $level, $examItemId);
-      }
-      */
+		$this->checkForInfiniteLoop();
+		$this->update_student_data();
+		$this->exam_room_check_status();
+		$this->load->model('time_model');
+		$this->load->model('examroom_model');
+		$chapter_data = $this->_group_permission[$chapterId];
+		$result = $this->time_model->check_allow_access_and_submit($chapter_data['time_start'],$chapter_data['time_end']);
+		$allow_access = $result[0];
+		if($allow_access=='no') {
+		$this->show_message("You are not allowed to do the exammmmm.");
+		} else {
+		$examItemId = $this->lab_exercise_action_v2($chapterId, $level);
+		/*
+		if($this->examroom_model->notYetAssigned($_SESSION['stu_id'], $level)) {
+			// click for the first time
+			$this->examroom_model->assignProblem($_SESSION['stu_id'], $level, $examItemId);
+		}
+		*/
 
-    }
-  }
+		}
+  	}
 
   public function exam_room_request_new_problem($chapterId, $level) {
     $this->checkForInfiniteLoop();

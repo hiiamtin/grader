@@ -53,6 +53,13 @@
 				<div class="panel-heading">
           <div class="grid-container">
 
+            <div class="item-random">
+              <?php
+                if($lab_chapter > 10) {
+                  echo '<button class="btn btn-success btn-lg" onclick="requestNewProblem()">⏪ ขอเปลี่ยนโจทย์</button>';
+                }
+              ?>
+            </div>
             <div class="item-chapter">
               <h3>Chapter: <?php echo $lab_chapter; ?> &nbsp; Level: <?php echo $lab_item ?></h3>
             </div>
@@ -167,6 +174,13 @@
 	var lab_item = <?php echo $lab_item;?>;
 
 
-	
+	function requestNewProblem() {
+    if (confirm("นักศึกษาต้องการใช้สิทธิ์เปลี่ยนโจทย์ใช่หรือไม่?")) {
+      let url = "<?php echo site_url($_SESSION['role'].'/exam_room_request_new_problem'); ?>";
+      let chapter = "<?php echo $lab_chapter;?>";
+      let level = "<?php echo $lab_item;?>";
+      window.location.assign(url+"/"+chapter+"/"+level);
+    }
+  }
 	
 	</script>

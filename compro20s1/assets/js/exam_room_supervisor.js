@@ -321,11 +321,31 @@ function ajaxSetAllowExercise(value, classId) {
 function toggleAllowExercise(id) {
     let toggleSwitch = document.getElementById(id);
     let classId = id.substr(0, 8);
-    console.log(classId);
+    //console.log(classId);
      if (toggleSwitch.checked) {
         ajaxSetAllowExercise('yes', classId);
      } else {
         ajaxSetAllowExercise('no', classId);
+     }
+}
+
+function toggleAllowExercise_with_alert(id) {
+    let toggleSwitch = document.getElementById(id);
+    let classId = id.substr(0, 8);
+    //console.log(classId);
+     if (toggleSwitch.checked) {
+        if (confirm(classId.substr(6, 8) + " : คุณต้องการ 'เปิด' ให้นักศึกษากลุ่มนี้เข้าหน้า Exercise ได้ใช่หรือไม่?")) {
+            ajaxSetAllowExercise('yes', classId);
+        } else {
+            toggleSwitch.checked = false;
+        }
+        
+     } else {
+        if (confirm(classId.substr(6, 8) + " : คุณต้องการ 'ปิด' ไม่ให้นักศึกษากลุ่มนี้เข้าหน้า Exercise ใช่หรือไม่?")) {
+            ajaxSetAllowExercise('no', classId);
+        } else {
+            toggleSwitch.checked = true;
+        }
      }
 }
 

@@ -58,8 +58,9 @@ class ExamSupervisor extends MY_Controller {
         'accessible_room' => $roomNum,
         'chapter_data' => $chapter_data,
         'allow_login' => $class_schedule['allow_login'],
+        'allow_exercise' => $class_schedule['allow_exercise'],
       //'in_social_distancing' => $roomData["in_social_distancing"],
-        'group_number' => substr($class_id, 6),
+        'group_number' => $class_id,
         'department' => $this->examroom_model->getDepartment($class_id),
         'supervisor_info' => $this->examroom_model->getSupervisor($class_id),
         'num_of_student' => $this->examroom_model->getNumberOfStudentInClass($class_id)

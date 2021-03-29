@@ -8,7 +8,7 @@
 <div id="seating-chart">
   <ul class="detail">
     <li>ห้องสอบ ECC: <a><?php echo $accessible_room;?></a></li>
-    <li>กลุ่มที่สอบ: <a><?php echo $group_number; ?> - ภาควิชา<?php echo $department ?></a></li>
+    <li>กลุ่มที่สอบ: <a><?php echo substr($group_number,6); ?> - ภาควิชา<?php echo $department ?></a></li>
     <li>อาจารย์ผู้สอน: <a><?php echo $supervisor_info['supervisor_firstname']." ".$supervisor_info['supervisor_lastname']; ?></a></li>
     <li>จำนวนนักศึกษาเข้าสอบ: <a id="online_students"></a></li>
   </ul>
@@ -16,6 +16,30 @@
   <div class="flex-container">
       <?php
         echo '<div class="room-controller">';
+
+        // Social Distancing
+        echo '<div class="list-group-item">Social Distancing';
+        echo '<label class="badge switch ">';
+        echo '<input type="checkbox" id="'
+                . $roomData['room_number']
+                . '-social-distancing" onclick="toggleSocialDistancing_and_clear(this.id)" '
+                . $roomData['in_social_distancing']
+                . '>';
+      
+      echo '<span class="slider round">';
+      echo '</span></label></div>';
+
+      // Allow Students to Access
+      echo '<div class="list-group-item d-flex justify-content-between align-items-center">Allow Access';
+      echo '<label class="badge switch">';
+      echo '<input type="checkbox" id="'
+              . $roomData['room_number']
+              . '-access" onclick="toggleAllowAccess(this.id)" '
+              . $roomData['allow_access']
+              . '>';
+      echo '<span class="slider round">';
+      echo '</span></label></div>';
+
         // Allow Students to Login
         echo '<div class="list-group-item d-flex justify-content-between align-items-center">Allow Login';
         echo '<label class="badge switch">';
@@ -39,29 +63,16 @@
         echo '<span class="slider round">';
         echo '</span></label></div>';
 
-        // Allow Students to Access
-        echo '<div class="list-group-item d-flex justify-content-between align-items-center">Allow Access';
-        echo '<label class="badge switch">';
-        echo '<input type="checkbox" id="'
-                . $roomData['room_number']
-                . '-access" onclick="toggleAllowAccess(this.id)" '
-                . $roomData['allow_access']
-                . '>';
-        echo '<span class="slider round">';
-        echo '</span></label></div>';
-
-         // Social Distancing
-         echo '<div class="list-group-item">Social Distancing';
-        
-           echo '<label class="badge switch">';
-           echo '<input type="checkbox" id="'
-                   . $roomData['room_number']
-                   . '-social-distancing" onclick="toggleSocialDistancing_and_clear(this.id)" '
-                   . $roomData['in_social_distancing']
-                   . '>';
-         
-         echo '<span class="slider round">';
-         echo '</span></label></div>';
+         //allow exercise
+         echo '<div class="list-group-item d-flex justify-content-between align-items-center">Allow Exercise';
+            echo '<label class="badge switch">';
+            echo '<input type="checkbox" id="'
+                  . $group_number
+                  . '-access" onclick="toggleAllowExercise_with_alert(this.id)" '
+                  . ($allow_exercise == 'yes' ? 'checked' : 'unchecked')
+                  . '>';
+            echo '<span class="slider round">';
+            echo '</span></label></div>';
 
         echo '</div>';
       ?>
