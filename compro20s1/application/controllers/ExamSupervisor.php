@@ -266,6 +266,17 @@ class ExamSupervisor extends MY_Controller {
     $this->examroom_model->set_class_schedule_allow_exercise($class_id,$value);
   }
 
+  public function ajax_allow_exercise_all() {
+    /// JQuery เปิด-ปิด exercise
+    $class_list = $this->examroom_model->getClassListAll();
+    $value = $_POST['value'];
+    foreach ($class_list as $class) {
+      $class_id = $class['group_id'];
+      $this->examroom_model->set_class_schedule_allow_exercise($class_id,$value);
+    }
+    
+  }
+
   public function ajax_stu_preview() {
     /// JQuery ดึงข้อมูลนักศึกษาตามที่นั่งที่กด
 

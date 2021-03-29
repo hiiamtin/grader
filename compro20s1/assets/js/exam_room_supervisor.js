@@ -329,3 +329,14 @@ function toggleAllowExercise(id) {
      }
 }
 
+function set_all_allow_exercise(value){
+    jQuery.post(baseurl + "index.php/ExamSupervisor/ajax_allow_exercise_all",
+        {
+            value: value
+        },
+        setTimeout(function () {
+            window.location.replace(baseurl + "index.php/ExamSupervisor");
+        }, 800)
+    );
+}
+

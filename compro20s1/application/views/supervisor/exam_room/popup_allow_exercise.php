@@ -8,8 +8,10 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">
-             ตั้งค่าการอนุญาต Page Exercise
-            <!-- <input type="button" id="room-number" disabled> -->
+             ตั้งค่าการอนุญาต Page Exercise : 
+             <?php json_encode($class_list); ?>
+            <input type="button" class="btn btn-success" onclick="set_all_allow_exercise('yes')" value="เปิดทั้งหมด">
+            <input type="button" class="btn btn-warning" onclick="set_all_allow_exercise('no')" value="ปิดทั้งหมด">
           </h4>
         </div>
         <div class="modal-body" id="allow-exercise-selector">

@@ -221,7 +221,7 @@
     border-radius: 50%;
 }
 #allow-exercise-selector input:checked + .slider {
-    background-color: #e98e05;
+    background-color: #5cb85c;
 }
 #allow-exercise-selector input:focus + .slider {
     box-shadow: 0 0 1px #e98e05;
