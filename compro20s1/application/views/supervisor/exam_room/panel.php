@@ -11,6 +11,10 @@
       <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
       Export Group Score
     </button>
+    <button class="btn btn-primary" onclick="setAllowExercise()">
+      <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+      Allow Exercise
+    </button>
   </div>
   <div class="flex-container">
     <?php

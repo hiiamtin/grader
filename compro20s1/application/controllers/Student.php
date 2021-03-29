@@ -198,6 +198,17 @@ class Student extends MY_Controller {
 
 	public function exercise_home() {
 
+	//class_schedule allow exercise
+	$this->load->model('examroom_model');
+	$class_schedule = $this->examroom_model->get_class_schedule_by_class_id($_SESSION['stu_group']);
+	  if($class_schedule['allow_exercise']=='no') {
+	    echo 'ขณะนี้ไม่อนุญาติให้เปิดแบบฝึกหัดดูนะครับ<br>';
+      echo '<a href="';
+      echo site_url("student/index");
+      echo '">Click ที่นี่ เพื่อกลับไปยังหน้าแรก</a>';
+	    die();
+    }
+
 	  // ถ้าอยู่ในการสอบ ไม่อนุญาติให้ทำแบบฝึกหัด
 	  $this->load->model('examroom_model');
 	  if($this->examroom_model->isThisGroupInExam($_SESSION['stu_group'])) {
@@ -1847,14 +1858,17 @@ class Student extends MY_Controller {
         $this->load->helper('url');
         $this->load->model('examroom_model');
         $canCheckIn = $this->examroom_model->checkIn($_POST['room_number'], $_POST['seat_number'], $_SESSION['stu_id'], $_SESSION['stu_group']);
-        if ($canCheckIn) {
+        if ($canCheckIn == ERR_NONE) {
             redirect('student/exam_room_student_main', 'refresh');
         }
-        else {
-            echo 'มีไรบางอย่างแปลกๆ น้า<br>';
-            echo 'เรากดผิด หรือเพื่อนกดผิดรึเปล่า<br>';
-            echo 'ยกมือเรียกอาจารย์ หรือ TA';
+        else if($canCheckIn == ERR_NOT_ALLOW_CHECK_IN){
+            echo 'ขณะยังไม่อนุญาตให้เช็คอิน<br>';
+            
         }
+		else{
+			echo 'ที่นั่งนี้มีคนนั่งอยู่แล้ว<br> เรากดผิด หรือเพื่อนกดผิดรึเปล่า<br>';
+            echo 'ยกมือเรียกอาจารย์ หรือ TA';
+		}
 	}
 
 	public function exam_room_problem_select($chapterId, $level) {

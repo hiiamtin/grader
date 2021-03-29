@@ -275,6 +275,19 @@ function openUrlByPopUp(relativePath, width, height) {
         "directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,width="+width+",height="+height);
 }
 
+function openUrlByNewTap(relativePath) {
+    let url = baseurl + "index.php/ExamSupervisor/" + relativePath;
+    window.open(url,
+        "GetWindow");
+}
+
+function openUrlByPopUpPostForm(formId, width, height) {
+    window.open('',
+        "PostWindow",
+        "directories=0,titlebar=0,toolbar=0,location=0,status=0,menubar=0,scrollbars=no,width="+width+",height="+height);
+    document.getElementById(formId).submit();
+}
+
 function openUrlByPopUpPostForm(formId, width, height) {
     window.open('',
         "PostWindow",
@@ -291,3 +304,28 @@ function checkStudentOut() {
         }, 600)
     }
 }
+
+function setAllowExercise(){
+    jQuery("#modalAllowExercise").modal("show");
+}
+
+function ajaxSetAllowExercise(value, classId) {
+    jQuery.post(baseurl + "index.php/ExamSupervisor/ajax_allow_exercise",
+        {
+            class_id: classId,
+            value: value
+        }
+    );
+}
+
+function toggleAllowExercise(id) {
+    let toggleSwitch = document.getElementById(id);
+    let classId = id.substr(0, 8);
+    console.log(classId);
+     if (toggleSwitch.checked) {
+        ajaxSetAllowExercise('yes', classId);
+     } else {
+        ajaxSetAllowExercise('no', classId);
+     }
+}
+

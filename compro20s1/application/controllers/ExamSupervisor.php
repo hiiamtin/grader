@@ -17,7 +17,7 @@ class ExamSupervisor extends MY_Controller {
     $data = array('supervisor_data'	=> $this->supervisor_model->get_supervisor_data());
     $exam_data = array(
         'exam_rooms' => $this->examroom_model->getAllExamRoom(),
-        'class_list' => $this->examroom_model->getClassListWithSupervisorName(),
+        'class_list' => $this->examroom_model->getClassListAll(),
         'group_permission' => $this->examroom_model->getAllExamChapter()
     );
     $this->load->view('supervisor/head');
@@ -26,6 +26,7 @@ class ExamSupervisor extends MY_Controller {
     $this->load->view('supervisor/exam_room/panel',$exam_data);
     $this->load->view('supervisor/exam_room/popup_group_select');
     $this->load->view('supervisor/exam_room/popup_group_select_score');
+    $this->load->view('supervisor/exam_room/popup_allow_exercise');
     $this->load->view('supervisor/footer');
   }
 
@@ -135,13 +136,14 @@ class ExamSupervisor extends MY_Controller {
     redirect(site_url($this->MODULE_PATH.'seating_chart/'.$room_number));
   }
 
-  public function set_level_allow_access() {
+  public function set_level_allow_access($roomNum) {
     $this->load->model('supervisor_model');
     $supervisor_data = array(
         'supervisor_data'	=> $this->supervisor_model->get_supervisor_data()
     );
-    $class_id = $_POST["class_id"];
-    $chapter_id = $_POST["chapter_id"];
+    $roomData = $this->examroom_model->getRoomData($roomNum);
+    $class_id = $roomData["class_id"];
+    $chapter_id = $roomData["chapter_id"];
     $this->load->model('lab_model');
     //echo "<h3>". __METHOD__ ." : _POST :</h3><pre>"; print_r($_POST); echo "</pre>";
     $group_permission = $this->lab_model->get_group_permission($class_id);
@@ -257,6 +259,12 @@ class ExamSupervisor extends MY_Controller {
     $this->examroom_model->setSocialDistancing_and_clear($distancing,$roomNumber);
   }
 
+  public function ajax_allow_exercise() {
+    /// JQuery เปิด-ปิด exercise
+    $class_id = intval($_POST['class_id']);
+    $value = $_POST['value'];
+    $this->examroom_model->set_class_schedule_allow_exercise($class_id,$value);
+  }
 
   public function ajax_stu_preview() {
     /// JQuery ดึงข้อมูลนักศึกษาตามที่นั่งที่กด

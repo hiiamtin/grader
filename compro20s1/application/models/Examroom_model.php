@@ -71,16 +71,20 @@ class Examroom_model extends CI_Model
   {
     $roomData = $this->getRoomData($roomNumber);
 
-    if ($roomData['allow_check_in'] == 'checked' and $this->isSeatAvailable($roomNumber, $seatNumber) and !$this->hasAlreadyCheckIn($stuId)) {
-      $data = array('room_number' => $roomNumber,
+    if ($roomData['allow_check_in'] == 'checked') {
+      if($this->isSeatAvailable($roomNumber, $seatNumber) and !$this->hasAlreadyCheckIn($stuId)){
+        $data = array('room_number' => $roomNumber,
           'seat_number' => $seatNumber,
           'stu_id' => $stuId,
           'helper' => EXAM_HELPER_CREDIT,
           'progress' => 0);
-      $this->db->insert($this->TABLE_SEAT, $data);
-      return true;
+        $this->db->insert($this->TABLE_SEAT, $data);
+        return ERR_NONE;
+      }else{
+        return ERR_SEAT_NOT_AVAILABLE;
+      }
     } else {
-      return false;
+      return ERR_NOT_ALLOW_CHECK_IN;
     }
 
   }
@@ -223,6 +227,23 @@ class Examroom_model extends CI_Model
 
   public function getClassListWithSupervisorName() {
     $this->db->select('group_id, lecturer')
+        ->from('class_schedule');
+    $query = $this->db->get();
+    $classList = $query->result_array();
+
+    for ($i=0; $i<sizeof($classList); $i++) {
+      $this->db->select('supervisor_firstname, supervisor_lastname')
+          ->from('user_supervisor')
+          ->where('supervisor_id', $classList[$i]['lecturer']);
+      $query = $this->db->get();
+      $name = $query->result_array()[0];
+      $classList[$i]['lecturer'] = $name['supervisor_firstname'].' '.$name['supervisor_lastname'];
+    }
+    return $classList;
+  }
+
+  public function getClassListAll() {
+    $this->db->select('*')
         ->from('class_schedule');
     $query = $this->db->get();
     $classList = $query->result_array();
@@ -397,6 +418,28 @@ class Examroom_model extends CI_Model
         .' WHERE class_id = '.$classId
     );
     return (sizeof($query->result_array())!=0);
+  }
+
+  public function get_class_schedule_by_class_id($class_id){
+    
+    $this->db->select('*')
+				->from('class_schedule')
+				->join('user_supervisor', 'class_schedule.lecturer = user_supervisor.supervisor_id') 
+				->join('department', 'class_schedule.department = department.dept_id') 
+				->where('group_id', $class_id);
+
+		$query = $this->db->get();
+		$result = $query->first_row('array');
+		
+
+		return $result;
+  }
+
+  public function set_class_schedule_allow_exercise($class_id, $value) {
+    $data = array('allow_exercise' => $value);
+    $this->db->where('group_id', $class_id);
+    $this->db->set($data);
+    return $this->db->update('class_schedule');
   }
 
   public function createNewRoom($roomNum) {

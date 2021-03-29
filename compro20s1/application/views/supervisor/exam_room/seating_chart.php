@@ -79,11 +79,10 @@
   if ($chapter_data != NULL) {
     echo '<input type="text" id="chapter_id" style="min-width:260px;margin-right:5px;"
             value="' . $chapter_data["chapter_id"] . ') ' . $chapter_data["chapter_name"] . '" disabled>';
-    echo '<form action="' . site_url('ExamSupervisor/set_level_allow_access') . '" id="exam_sheet" method="post" target="PostWindow" style="display:inline">';
-    echo '<input type="button" onclick="openUrlByPopUpPostForm(this.parentNode.id, 1200, 750)" class="btn btn-primary " value="เพิ่ม/ลบ โจทย์">';
-    echo '<input type="text" name="class_id" value="' . $chapter_data["class_id"] . '" hidden>';
-    echo '<input type="text" name="chapter_id" value="' . $chapter_data["chapter_id"] . '" hidden>';
-    echo '</form>';
+    ?> 
+    <button type="button" onclick="openUrlByNewTap('set_level_allow_access/'+<?php echo $accessible_room;?>)" class="btn btn-primary " >เพิ่ม/ลบ โจทย์</button>
+
+    <?php
   } else {
     echo '<input type="text" id="chapter_id" placeholder="Please select chapter" disabled>';
   }

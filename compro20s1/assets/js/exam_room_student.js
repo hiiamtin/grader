@@ -7,8 +7,8 @@ function roomCheckOut() {
 document.addEventListener("DOMContentLoaded", function() {
     let status = document.getElementById("status-btn");
     let word = status.innerText
-    console.log(word);
-    if(word != "Closed : ยังไม่เริ่มสอบ") {
-        document.getElementById("check-in-btn").setAttribute("disabled", "true");
-    }
+    //console.log(word);
+    // if(word != "Closed : ยังไม่เริ่มสอบ") {
+    //     document.getElementById("check-in-btn").setAttribute("disabled", "true");
+    // }
 });

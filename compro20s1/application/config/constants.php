@@ -108,6 +108,15 @@ defined('ERR_INVALID_TIME_START')	OR define('ERR_INVALID_TIME_START', 1);
 defined('ERR_INVALID_TIME_END')		OR define('ERR_INVALID_TIME_END', 2);
 defined('ERR_CANNOT_UPDATE_TIME')		OR define('ERR_CANNOT_UPDATE_TIME', 3);
 
+/* 
+ | 
+ | Use for Checkin
+ |
+ |
+*/
+defined('ERR_NONE')					OR define('ERR_NONE', 0);
+defined('ERR_NOT_ALLOW_CHECK_IN')		OR define('ERR_NOT_ALLOW_CHECK_IN', 1);
+defined('ERR_SEAT_NOT_AVAILABLE')		OR define('ERR_SEAT_NOT_AVAILABLE', 2);
 
 /* 
  | 

@@ -2,6 +2,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/exam_select_for_group.css')?>">
 <div class="col-xl-0 col-lg-0 col-md-1 col-sm-1 col-xs-2"></div>
 <main class="col-xl-10 col-lg-10 col-md-9 col-sm-9 col-xs-8" style="margin-top:10px;">
+
 	<?php
 		$group_no = $class_schedule['group_no'];
 		$lecturer_id = $class_schedule['supervisor_id'];
