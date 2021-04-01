@@ -277,8 +277,7 @@ function openUrlByPopUp(relativePath, width, height) {
 
 function openUrlByNewTap(relativePath) {
     let url = baseurl + "index.php/ExamSupervisor/" + relativePath;
-    window.open(url,
-        "GetWindow");
+    window.open(url,'_blank');
 }
 
 function openUrlByPopUpPostForm(formId, width, height) {

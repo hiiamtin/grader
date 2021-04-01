@@ -40,7 +40,7 @@
 					<?php $no_of_item_list = sizeof($lab_level); ?>
 					
 					<div class="panel-heading">
-						<from method="post" action="<?php echo site_url('supervisor/update_selected_exercise/'); ?>" style="display:inline">
+						<from method="post" action="<?php echo site_url('ExamSupervisor/update_selected_exam/'); ?>" style="display:inline">
 							<label><?php echo "ข้อ $level($no_of_item_list)"; ?></label>
 							<!-- <input type="submit" class="btn btn-primary" value="เปิด"> -->
 						</from>
@@ -48,7 +48,7 @@
 					
 					<div class="panel-body">
 						<?php
-							echo '<form method="post" action="'.site_url('supervisor/update_selected_exercise/').'">';
+							echo '<form method="post" action="'.site_url('ExamSupervisor/update_selected_exam/').'">';
 							
 							echo '<input type="text" name="user_id" value="'.$user_id.'" hidden >';
 							echo '<input type="text" name="group_id" value="'.$group_id.'" hidden >';

@@ -453,6 +453,131 @@ class ExamSupervisor extends MY_Controller {
     redirect(site_url($this->MODULE_PATH.'seating_chart/'.$room_number));
   }
 
-}
 
+
+  public function update_selected_exam() {
+    //echo '_POST : <pre>'; print_r($_POST); echo '</pre>';
+    //	$_POST Array (    [user_id] => 900001    [group_id] => 17010010    [chapter] => 5;    [level] => 1    
+    //	[selected_id_1] => 47   [selected_id_2] => 64)
+    $group_id = $_POST['group_id'];		unset($_POST['group_id']);
+    $user_id = $_POST['user_id'];		unset($_POST['user_id']);
+    $chapter = $_POST['chapter'];		unset($_POST['chapter']);
+    $level = $_POST['level'];			unset($_POST['level']);
+    if(sizeof($_POST) <= 0 ) {
+      $this->show_message("You must select at least ONE." );
+      return;
+    }
+
+    //ตรวจสอบสิทธิ ในการแก้ไข
+    $this->load->model('lab_model');
+    $class_schedule = $this->lab_model->get_class_schedule_by_group_id($group_id);
+
+    //echo '<pre>'; print_r($class_schedule) ; echo '</pre>';
+    $previledge = $this->check_previledge($group_id);
+    if ($previledge == "none") {
+      $this->show_message("You are not allow to select Exercises for student group : ".$class_schedule['group_no']);
+    } else {
+      //set selected exercise
+      //echo "updating . . . \n";
+      //echo '<pre>'; print_r($_POST); echo '</pre>';
+      $list = $_POST;
+      $this->lab_model->update_lab_class_item($group_id,$chapter,$level,$list);
+    }
+    $_POST['group_id'] = $group_id;
+    $_POST['lab_no'] = $chapter;
+    $this->select_exam_for_group();
+
+  }
+
+  public function select_exam_for_group() {
+		//echo "<h3>". __METHOD__ ." : _SESSION :</h3><pre>"; print_r($_SESSION); echo "</pre>";
+		//echo "<h3>". __METHOD__ ." : _POST :</h3><pre>"; print_r($_POST); echo "</pre>";
+		$group_id = $_POST['group_id'];
+		$chapter_id = $_POST['lab_no'];
+		
+		$this->load->model('lab_model');
+		$group_exercise_chapter = $this->lab_model->get_group_exercise_chapter($group_id,$chapter_id);
+		//echo "<h3>". __METHOD__ ." : _POST :</h3><pre>"; print_r($group_exercise_chapter); echo "</pre>";
+		$class_schedule = $this->lab_model->get_class_schedule_by_group_id($group_id);
+		$students_data = $this->lab_model->get_students_by_group_id($group_id); // array
+		$group_lab_list = array();
+		foreach($group_exercise_chapter as $row) {
+			$item = $row['item_id'];
+			$exercises = unserialize($row['exercise_id_list']);
+			for($i=1; $i<=sizeof($exercises); $i++) {
+				$group_lab_list[$item][$i]=$exercises[$i-1];
+			}
+		}
+
+		$lab_exercise = $this->lab_model->get_lab_exercise_by_chapter($chapter_id);
+		//echo '<h4>$lab_exercise <pre>'; print_r($lab_exercise); echo "</pre>";
+
+		$lab_list = array();
+		for ($i=0,$count=1; $i<sizeof($lab_exercise); $i++,$count++) {
+			$level = $lab_exercise[$i]['lab_level'];			;
+			$lab_list[$level][$count] = $lab_exercise[$i];
+			if (!empty($lab_exercise[$i+1]) && $level < $lab_exercise[$i+1]['lab_level'])
+				$count = 0;
+			
+		}
+		//echo '<h4>$lab_list <pre>'; print_r($lab_list); echo "</pre>";
+
+		
+
+
+
+		//echo '<h4>$group_exercise_chapter <pre>'; print_r($group_exercise_chapter); echo "</pre>";
+		//echo '<h4>$lab_exercise <pre>'; print_r($lab_exercise); echo "</pre>";
+		$chapter_permission = $this->lab_model->get_group_permission($group_id);
+		$chapter_permission = $chapter_permission[$chapter_id];
+		$this->load->model('time_model');
+		$chapter_data = $chapter_permission;
+		$result = $this->time_model->check_allow_access_and_submit($chapter_data['time_start'],$chapter_data['time_end']);
+		$chapter_data["allow_access"] = $result[0];
+		$chapter_data["allow_submit"] = $result[1];
+
+
+
+		$data = array(	
+					'group_exercise_chapter'	=>	$group_exercise_chapter,
+					'group_id'					=>	$group_id,
+					'lab_no'					=>	$chapter_id,
+					'group_lab_list'			=>	$group_lab_list,
+					'lab_list'					=>	$lab_list,
+					'class_schedule'			=>	$class_schedule,
+					'chapter_permission'		=>	$chapter_data,
+					'students_data'				=>	$students_data
+					
+				);
+		$this->load->view('supervisor/head');
+		$this->load->view('supervisor/nav_fixtop');
+		$this->load->view('supervisor/nav_sideleft');
+    $this->load->view('supervisor/exam_room/exam_select_for_group',$data);
+    $this->load->view('supervisor/exam_room/exam_footer_no_roomnum');
+		/* */
+		
+	}
+
+  private function check_previledge($group_id) {
+		$user_id = $_SESSION['id'];
+		$this->load->model('lab_model');
+		$class_schedule = $this->lab_model->get_class_schedule_by_group_id($group_id);
+    $previledge = "none";
+		if ($user_id == $class_schedule['lecturer']) {
+			//this user is lecturer of the group
+			$previledge = "lecturer";
+		} else {
+			foreach ( $class_schedule['lab_staff'] as $staff) {
+				//echo '$staff<pre>'; print_r($staff) ; echo '</pre>';
+				if($staff['staff_id'] == $user_id) {
+					//this user is staff of this group
+					$previledge = "staff";
+				}
+			}
+		}
+		//echo '$previledge : '.$previledge.'<br/>';
+		return $previledge;
+	}
+
+}
 ?>
