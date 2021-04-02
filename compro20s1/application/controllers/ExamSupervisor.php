@@ -579,5 +579,20 @@ class ExamSupervisor extends MY_Controller {
 		return $previledge;
 	}
 
+  public function show_all_student($roomNum) {
+    $this->load->model('examroom_model');
+    $this->load->model('lab_model');
+    $class_id = $this->examroom_model->getRoomData($roomNum)["class_id"];
+    $students_data = $this->lab_model->get_students_by_group_id($class_id);
+    $data = array(
+        'room_num' => $roomNum,
+        'temp_class_id' => $class_id,
+        'stu_list' => $this->examroom_model->getExtraStudentList($roomNum)
+    );
+    print_r($students_data);
+    // $this->load->view('supervisor/exam_room/window_pop_head');
+    // $this->load->view('supervisor/exam_room/extra_student',$data);
+    // $this->load->view('supervisor/exam_room/window_pop_foot');
+  }
 }
 ?>

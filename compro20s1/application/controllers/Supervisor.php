@@ -998,9 +998,9 @@ class Supervisor extends MY_Controller {
 			$result = $this->time_model->check_allow_access_and_submit($time_start,$time_end);
 			$allow_access = $result[0];
 			$allow_submit = $result[1];
-			/*
-			$this->lab_model->set_allow_access($class_id,$chapter_id,$allow_access);
-			$this->lab_model->set_allow_submit_class_chapter($class_id,$chapter_id,$allow_submit);*/
+			/* ยังไม่ใช้โมเดล time*/
+			// $this->lab_model->set_allow_access($class_id,$chapter_id,$allow_access);
+			// $this->lab_model->set_allow_submit_class_chapter($class_id,$chapter_id,$allow_submit);
 		}
 		redirect(site_url($_SESSION['role']).'/student_show/'.$class_id);
 	}
