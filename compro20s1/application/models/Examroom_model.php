@@ -476,6 +476,25 @@ class Examroom_model extends CI_Model
     return $allData;
   }
 
+  public function getStudentCheckedIN($roomNumber) {
+    $sql = 'SELECT stu_id'
+        .' FROM exam_seat'
+        .' WHERE room_number = '.$roomNumber;
+    $query = $this->db->query($sql);
+    $allData = $query->result_array();
+    return array_column($allData,'stu_id');
+  }
+
+  public function get_students_exam_by_group_id($stu_group_id) {
+		$this->db->select('stu_id,stu_firstname,stu_lastname,stu_nickname,stu_avatar,status')
+				->from('user_student')
+				->join('user', 'user.id = user_student.stu_id')
+				->where('stu_group', $stu_group_id);
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+
   public function getScoreFromExaminees($classId, $examListId) {
     $sql = 'SELECT a.stu_id, b.stu_firstname, b.stu_lastname, SUM(a.marking)'
         .' FROM exercise_submission a, user_student b'

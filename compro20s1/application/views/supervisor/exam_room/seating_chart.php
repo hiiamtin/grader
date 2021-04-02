@@ -102,7 +102,7 @@
   <button type="button" onclick="openUrlByPopUp('extra_student/'+<?php echo $accessible_room;?>, 500, 600)" class="btn btn-primary">
     ย้ายนักศึกษาชั่วคราว
   </button>
-  <button type="button" onclick="openUrlByPopUp('show_all_student/'+<?php echo $accessible_room;?>, 500, 600)" class="btn btn-primary">
+  <button type="button" onclick="openUrlByPopUp('show_all_student/'+<?php echo $accessible_room;?>, 1200, 800)" class="btn btn-primary">
     แสดงรายชื่อนักศึกษา
   </button>
   <label>Status : </label>

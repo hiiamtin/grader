@@ -378,7 +378,7 @@ class ExamSupervisor extends MY_Controller {
     $this->load->model('examroom_model');
     $check_in = $this->examroom_model->getAllStudentIDSeatsData($roomNum);
     $online_student = $this->examroom_model->get_online_student_exam($roomNum);
-    $check_in = 
+    //$check_in = 
     //echo "<pre/>"; print_r($online_student); echo "</pre>";
     $data = array('online_student' => $online_student,
                   'check_in' => $check_in);
@@ -580,19 +580,30 @@ class ExamSupervisor extends MY_Controller {
 	}
 
   public function show_all_student($roomNum) {
-    $this->load->model('examroom_model');
     $this->load->model('lab_model');
     $class_id = $this->examroom_model->getRoomData($roomNum)["class_id"];
-    $students_data = $this->lab_model->get_students_by_group_id($class_id);
+    $students_data = $this->examroom_model->get_students_exam_by_group_id($class_id);
+    $check_in_list = $this->examroom_model->getStudentCheckedIN($roomNum);
     $data = array(
         'room_num' => $roomNum,
         'temp_class_id' => $class_id,
-        'stu_list' => $this->examroom_model->getExtraStudentList($roomNum)
+        'students_data' => $students_data,
+        'check_in_list' => $check_in_list
     );
-    print_r($students_data);
-    // $this->load->view('supervisor/exam_room/window_pop_head');
-    // $this->load->view('supervisor/exam_room/extra_student',$data);
-    // $this->load->view('supervisor/exam_room/window_pop_foot');
+    $this->load->view('supervisor/exam_room/table_list_student',$data);
   }
+
+  public function exam_student_password_reset() {
+    $this->load->model('examroom_model');
+		$stu_id = $_POST['stu_id'];
+		$roomNumber = $_POST['roomNumber'];
+    $stu_group = $this->examroom_model->getRoomData($roomNumber)["class_id"];
+		echo 'stu_group : '.$stu_group.' stu_id :'.$stu_id;
+		$this->load->model('student_model');
+		$this->student_model->student_reset_password($stu_id);
+		$this->createLogfile(__METHOD__ ." stu_id : $stu_id");
+		
+	}
+
 }
 ?>
