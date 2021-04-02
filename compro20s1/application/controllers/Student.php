@@ -463,6 +463,28 @@ class Student extends MY_Controller {
 	}
 
 	public function lab_exercise($chapter_id,$item_id) {
+
+		//class_schedule allow exercise
+		$this->load->model('examroom_model');
+		$class_schedule = $this->examroom_model->get_class_schedule_by_class_id($_SESSION['stu_group']);
+		if($class_schedule['allow_exercise']=='no') {
+			echo 'ขณะนี้ไม่อนุญาติให้เปิดแบบฝึกหัดดูนะครับ<br>';
+		echo '<a href="';
+		echo site_url("student/index");
+		echo '">Click ที่นี่ เพื่อกลับไปยังหน้าแรก</a>';
+			die();
+		}
+
+		// ถ้าอยู่ในการสอบ ไม่อนุญาติให้ทำแบบฝึกหัด
+		$this->load->model('examroom_model');
+		if($this->examroom_model->isThisGroupInExam($_SESSION['stu_group'])) {
+			echo 'ในระหว่างการสอบไม่อนุญาติให้เปิดแบบฝึกหัดดูนะครับ<br>';
+		echo '<a href="';
+		echo site_url("student/index");
+		echo '">Click ที่นี่ เพื่อกลับไปยังหน้าแรก</a>';
+			die();
+		}
+
 		$this->checkForInfiniteLoop();
 		$this->update_student_data();
 		$stu_id = $_SESSION['stu_id'];
