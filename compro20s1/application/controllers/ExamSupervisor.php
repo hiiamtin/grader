@@ -587,12 +587,22 @@ class ExamSupervisor extends MY_Controller {
     $data = array(
         'room_num' => $roomNum,
         'temp_class_id' => $class_id,
-        'stu_list' => $this->examroom_model->getExtraStudentList($roomNum)
+        'students_data' => $students_data
     );
-    print_r($students_data);
-    // $this->load->view('supervisor/exam_room/window_pop_head');
-    // $this->load->view('supervisor/exam_room/extra_student',$data);
-    // $this->load->view('supervisor/exam_room/window_pop_foot');
+    $this->load->view('supervisor/exam_room/table_list_student',$data);
   }
+
+  public function exam_student_password_reset() {
+    $this->load->model('examroom_model');
+		$stu_id = $_POST['stu_id'];
+		$roomNumber = $_POST['roomNumber'];
+    $stu_group = $this->examroom_model->getRoomData($roomNumber)["class_id"];
+		echo 'stu_group : '.$stu_group.' stu_id :'.$stu_id;
+		$this->load->model('student_model');
+		$this->student_model->student_reset_password($stu_id);
+		$this->createLogfile(__METHOD__ ." stu_id : $stu_id");
+		
+	}
+
 }
 ?>
