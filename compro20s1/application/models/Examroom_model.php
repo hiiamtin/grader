@@ -494,6 +494,19 @@ class Examroom_model extends CI_Model
 		return $query->result_array();
 	}
 
+  public function getExamProblemList_and_lab_exercise($roomNum, $stuId) {
+    $chapterId= $this->getRoomData($roomNum)['chapter_id'];
+    $this->db->select('*')
+      ->from('student_assigned_chapter_item')
+      ->join('lab_exercise','lab_exercise.exercise_id = student_assigned_chapter_item.exercise_id')
+      ->where('stu_id', $stuId)
+      ->where('chapter_id',$chapterId)
+      ->where('student_assigned_chapter_item.exercise_id IS NOT NULL', null, false)
+      ->order_by('item_id', 'ASC');
+    $query = $this->db->get();
+    return $query->result_array();
+  }
+
 
   public function getScoreFromExaminees($classId, $examListId) {
     $sql = 'SELECT a.stu_id, b.stu_firstname, b.stu_lastname, SUM(a.marking)'

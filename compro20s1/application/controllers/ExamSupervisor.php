@@ -453,8 +453,6 @@ class ExamSupervisor extends MY_Controller {
     redirect(site_url($this->MODULE_PATH.'seating_chart/'.$room_number));
   }
 
-
-
   public function update_selected_exam() {
     //echo '_POST : <pre>'; print_r($_POST); echo '</pre>';
     //	$_POST Array (    [user_id] => 900001    [group_id] => 17010010    [chapter] => 5;    [level] => 1    
@@ -582,13 +580,16 @@ class ExamSupervisor extends MY_Controller {
   public function show_all_student($roomNum) {
     $this->load->model('lab_model');
     $class_id = $this->examroom_model->getRoomData($roomNum)["class_id"];
-    $students_data = $this->examroom_model->get_students_exam_by_group_id($class_id);
+    $examListId = $this->examroom_model->getRoomData($roomNum)["chapter_id"];
+    $students_data = $this->fetch_exam_list_level($class_id, $examListId,$roomNum);
     $check_in_list = $this->examroom_model->getStudentCheckedIN($roomNum);
+    
     $data = array(
         'room_num' => $roomNum,
         'temp_class_id' => $class_id,
         'students_data' => $students_data,
-        'check_in_list' => $check_in_list
+        'check_in_list' => $check_in_list,
+        'no_items' => $this->examroom_model->getAllExamChapter()[$examListId-1]['no_items']
     );
     $this->load->view('supervisor/exam_room/table_list_student',$data);
   }
@@ -604,6 +605,24 @@ class ExamSupervisor extends MY_Controller {
 		$this->createLogfile(__METHOD__ ." stu_id : $stu_id");
 		
 	}
+
+  private function fetch_exam_list_level($classId, $chapterId,$roomNum) {
+    $scoreList = $this->examroom_model->getScoreFromExaminees($classId, $chapterId);
+    $studentList = $this->examroom_model->get_students_exam_by_group_id($classId);
+    for($i=0; $i<sizeof($studentList); $i++) {
+      if(sizeof($scoreList)>0 &&  $studentList[$i]['stu_id']==$scoreList[0]['stu_id']) {
+        $studentList[$i]['score'] = $scoreList[0]['SUM(a.marking)'];
+        $list_item = $this->examroom_model->getExamProblemList_and_lab_exercise($roomNum, $studentList[$i]['stu_id']);
+        $studentList[$i]['list_item'] = array_column($list_item,'lab_name');
+        array_shift($scoreList);
+      } else {
+        $studentList[$i]['score'] = '0';
+        $list_item = $this->examroom_model->getExamProblemList_and_lab_exercise($roomNum, $studentList[$i]['stu_id']);
+        $studentList[$i]['list_item'] = array_column($list_item,'lab_name');
+      }
+    }
+    return $studentList;
+  }
 
 }
 ?>

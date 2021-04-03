@@ -27,14 +27,17 @@
                     <th>Avatar</th>
                     <th>Status</th>
                     <th>Check in</th>
+                    <?php
+                    for ($x = 1; $x <= $no_items; $x++) {
+                        echo "<th>Level ".$x."</th>";
+                      }
+                    ?>
                     
-                    <th>Score</th>
                 </tr>
             </thead>
 
             <tbody>
                 <?php
-                    // print_r($check_in_list);
                     foreach($students_data as $data){
                         echo "<tr>";
                         echo "<td>".$data['stu_id']."</td>";
@@ -64,8 +67,16 @@
 										echo 'btn-danger"> no'; 
 									echo '</div></td>';
                         
+                            for ($x = 0; $x < $no_items; $x++) {
+                                if (empty($data['list_item'])){
+                                    echo "<th>-</th>";
+                                }
+                                else{
+                                    echo "<th>".$data['list_item'][$x]."</th>";
+                                }
+                                    
+                                }
                         
-                        echo "<td>คะแนน</td>";
                         echo "</tr>";
                     }
                 ?>
