@@ -17,9 +17,9 @@
         echo "<span class='seat-num'>"
                 .sprintf("%02d", $seat['seat_number'])
                 ."</span>";
-        echo "<img src='";
-        echo $seat['stu_avatar'] ? base_url(STUDENT_AVATAR_FOLDER.$seat['stu_avatar']) : base_url(STUDENT_AVATAR_FOLDER.'user.png');
-        echo "'>";
+        ?><img src="<?php echo $seat['stu_avatar'] ? base_url(STUDENT_AVATAR_FOLDER.$seat['stu_avatar']) : base_url(STUDENT_AVATAR_FOLDER.'user.png');?>
+        " onerror="this.onerror=null;this.src='<?php echo base_url(STUDENT_AVATAR_FOLDER.'user.png'); ?>';" >
+        <?php
         echo "<span class='seat-text'>"
                 .$seat['stu_id']
                 .'<br>'
