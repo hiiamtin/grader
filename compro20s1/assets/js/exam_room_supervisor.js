@@ -13,6 +13,9 @@ function showSourceCode(id) {
         lineNumbers: true,
         readOnly: true
     });
+
+    /* for reject button */
+    document.getElementById("submissionId").setAttribute("value", id);
 }
 
 
@@ -213,16 +216,19 @@ function studentPreview(roomNum, seatNum) {
                 let problemName = document.getElementById("info-level" + i);
                 if (stuInfo.examItems.length === 0) {
                     btn.setAttribute("class", "btn");
+                    btn.disabled = true;
                     problemName.innerHTML = "<i>~ No Assignment</i>";
                 } else if (stuInfo.examItems[0].item_id == i) {
                     switch (stuInfo.examItems[0].marking) {
                         case "2": {
                             btn.setAttribute("class", "btn btn-success");
+                            btn.disabled = false;
                             btn.setAttribute("onclick", "codePreview(" + stuInfo.stuId + "," + stuInfo.examItems[0].exercise_id + ")");
                             break;
                         }
                         default: {
                             btn.setAttribute("class", "btn btn-warning");
+                            btn.disabled = false;
                             btn.setAttribute("onclick", "codePreview(" + stuInfo.stuId + "," + stuInfo.examItems[0].exercise_id + ")");
                             break;
                         }
