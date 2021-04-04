@@ -133,13 +133,15 @@ class Student_model extends CI_Model {
 	*
 	*/
 	public function update_student_profile() {
-		$student_id = $_SESSION['stu_id'];
+		$student_id = $_SESSION['id'];
 		//echo "<h2>".__FILE__." : ".$_SESSION['stu_id']."</h2>";
 		//echo "<h2>".__METHOD__." : ".$_SESSION['stu_id']."</h2>";
 
 		$this->db->where("stu_id",$student_id);
 		$query = $this->db->get('user_student');
 		$row = $query->first_row("array");
+		//echo $student_id;
+		//print_r($row);
 		if (empty($row))
 		{
 			//echo "cannot find data new record to TABLE user_student";
@@ -154,7 +156,7 @@ class Student_model extends CI_Model {
 				'stu_avatar'		=> '',
 				'stu_email'			=> '',
 				'stu_tel'			=> '',
-				'stu_department'	=> '',
+				'stu_dept_id'		=> '',
 				'stu_group'			=> '0',
 				'note'				=> ''				);
 			
