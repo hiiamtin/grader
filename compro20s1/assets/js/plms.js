@@ -109,6 +109,7 @@ function checkfilename(obj) {
         obj.value = "";
         return false;
     }
+    document.getElementById("exam_submit_bt").disabled = false;
     console.log(`${filename} ==> OK !!!`);
 
 }

@@ -109,7 +109,7 @@
 	<!--- --->
 	<div class="row">
 		<?php if ($mode=='supervisor') echo '<!-- '; ?>
-		<form action="<?php echo site_url('student/exercise_submission'); ?>" method="post" accept-charset="utf-8" id="exercise_submission" enctype="multipart/form-data"  onsubmit="return checkSourceCode()" <?php if($group_permission[$lab_chapter]['allow_submit']=='no')
+		<form action="<?php echo site_url('student/exam_submission'); ?>" method="post" accept-charset="utf-8" id="exercise_submission" enctype="multipart/form-data"  onsubmit="return checkSourceCode()" <?php if($group_permission[$lab_chapter]['allow_submit']=='no')
 										echo 'disabled';?> >
 			<input type="hidden"	name="stu_id"		value="<?php echo $stu_id;	?>" >
 			<input type="hidden"	name="chapter_id"	value="<?php echo $lab_chapter;			?>" >
@@ -121,8 +121,8 @@
 			<?php	if($group_permission[$lab_chapter]['allow_submit']=='no') {
 						echo '<button class="btn btn-warning btn-lg " readonly> Not allow to submit !!! </button>';
 					} else 	if($marking<$full_mark) {
-						echo '<input type="file" name="submitted_file" id="userfile" accept=".c" onchange="return checkfilename(this);">';
-						echo '<span><button type="button" onclick="form_submit(this)"   >Submit</button></span>';
+						echo '<input type="file" name="submitted_file" id="userfile" accept=".c" onchange="checkfilename(this)">';
+						echo '<span><button type="button" id="exam_submit_bt" onclick="form_submit(this)"  disabled>Submit</button></span>';
 					} else {
 						echo '<button class="btn btn-success btn-lg " readonly> You have got full mark !!! </button>';
 					}
