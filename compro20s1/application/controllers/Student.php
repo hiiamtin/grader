@@ -1427,9 +1427,9 @@ class Student extends MY_Controller {
 			$submission_id = $this->lab_model->exercise_submission_add($data);
 
 			/*
-			$num_testcase = $this->lab_model->get_num_testcase($exercise_id);
-			require_once 'exercise_test.php';
-			$exercise_test = new exercise_test();
+				$num_testcase = $this->lab_model->get_num_testcase($exercise_id);
+				require_once 'exercise_test.php';
+				$exercise_test = new exercise_test();
 
 			/*
 			if($num_testcase <= 0) {
