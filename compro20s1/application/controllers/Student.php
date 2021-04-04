@@ -11,7 +11,7 @@ class Student extends MY_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$_SESSION['stu_id'] = $_SESSION['username'];
+		$_SESSION['stu_id'] = $_SESSION['id'];
 		//unset($_SESSION['username']);
 		$this->createLogFile("logged in");
 		//$this->update_student_data();
@@ -2353,7 +2353,7 @@ class Student extends MY_Controller {
       $this->lab_model->update_student_exericse($stuId,$chapterId,$level,$newAssignment);
       $this->update_student_data();
       // redirect
-      $this->lab_exercise_action_v2($chapterId,$level);
+      $this->exam_lab_exercise_action($chapterId,$level);
     } else {
       $data = array(
           'chapter_id' => $chapterId,
