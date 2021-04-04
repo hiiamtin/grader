@@ -624,5 +624,10 @@ class ExamSupervisor extends MY_Controller {
     return $studentList;
   }
 
+  public function reject_submission() {
+    $submissionId = $_POST['submissionId'];
+    echo $submissionId;
+  }
+
 }
 ?>

@@ -15,6 +15,15 @@
         echo '">';
         echo $srcCode['source_code'];
         echo '</textarea>';
+
+        echo '<form method="post" action="';
+        echo site_url("ExamSupervisor/reject_submission");
+        echo '">';
+        echo '<input hidden name="submissionId" type="text" value="';
+        echo $srcCode['submission_id'];
+        echo '">';
+        echo '<input type="submit" value="Reject this Submission" class="btn btn-danger">';
+        echo '</form>';
       }
     } else {
       echo '<h2>นักศึกษายังไม่ได้ทำการ Submit Source Code</h2>';
