@@ -16,21 +16,21 @@
         echo $srcCode['source_code'];
         echo '</textarea>';
 
-        echo '<form method="post" action="';
-        echo site_url("ExamSupervisor/reject_submission");
-        echo '">';
-        echo '<input hidden name="submissionId" type="text" value="';
-        echo $srcCode['submission_id'];
-        echo '">';
-        echo '<input type="submit" value="Reject this Submission" class="btn btn-danger">';
-        echo '</form>';
+        // echo '<form method="post" action="';
+        // echo site_url("ExamSupervisor/reject_submission");
+        // echo '">';
+        // echo '<input hidden name="submissionId" type="text" value="';
+        // echo $srcCode['submission_id'];
+        // echo '">';
+        // echo '<input type="submit" value="Reject this Submission" class="btn btn-danger">';
+        // echo '</form>';
       }
     } else {
       echo '<h2>นักศึกษายังไม่ได้ทำการ Submit Source Code</h2>';
     }
     ?>
     <?php if($submissions!=null) {?>
-    <form method="post" action="http://localhost:41062/compro20s1/index.php/ExamSupervisor/reject_submission">
+    <form method="post" action="<?php echo site_url("ExamSupervisor/reject_submission"); ?>">
       <input hidden id="submissionId" name="submissionId" type="text" value="0">
       <input hidden name="stuId" type="text" value="<?php echo $stuId; ?>">
       <input hidden name="problemId" type="text" value="<?php echo $problemId; ?>">
