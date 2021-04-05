@@ -490,6 +490,16 @@ class ExamSupervisor extends MY_Controller {
 
   }
 
+  public function show_message($message) {
+
+		$data = array("message" => $message);
+		$this->load->view('supervisor/head');
+		$this->load->view('supervisor/nav_fixtop');
+		$this->load->view('supervisor/nav_sideleft');
+		$this->load->view('supervisor/show_message',$data);
+		$this->load->view('supervisor/footer');
+	}
+
   public function select_exam_for_group() {
 		//echo "<h3>". __METHOD__ ." : _SESSION :</h3><pre>"; print_r($_SESSION); echo "</pre>";
 		//echo "<h3>". __METHOD__ ." : _POST :</h3><pre>"; print_r($_POST); echo "</pre>";
