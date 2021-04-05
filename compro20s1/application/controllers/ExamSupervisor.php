@@ -324,7 +324,10 @@ class ExamSupervisor extends MY_Controller {
       }
     }
     $this->load->view('supervisor/exam_room/window_pop_head');
-    $this->load->view('supervisor/exam_room/code_preview', array('submissions' => $submissions));
+    $this->load->view('supervisor/exam_room/code_preview',
+        array('submissions' => $submissions,
+            'stuId' => $stuId,
+            'problemId' => $problemId));
     $this->load->view('supervisor/exam_room/window_pop_foot');
   }
 
@@ -626,7 +629,9 @@ class ExamSupervisor extends MY_Controller {
 
   public function reject_submission() {
     $submissionId = $_POST['submissionId'];
-    echo $submissionId;
+    $this->examroom_model->removeSubmissionById($submissionId);
+    redirect(site_url($this->MODULE_PATH."stu_code_preview/".$_POST['stuId']."/".$_POST['problemId']));
+    die();
   }
 
 }

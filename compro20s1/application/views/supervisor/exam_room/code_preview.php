@@ -29,6 +29,14 @@
       echo '<h2>นักศึกษายังไม่ได้ทำการ Submit Source Code</h2>';
     }
     ?>
+    <?php if($submissions!=null) {?>
+    <form method="post" action="http://localhost:41062/compro20s1/index.php/ExamSupervisor/reject_submission">
+      <input hidden id="submissionId" name="submissionId" type="text" value="0">
+      <input hidden name="stuId" type="text" value="<?php echo $stuId; ?>">
+      <input hidden name="problemId" type="text" value="<?php echo $problemId; ?>">
+      <input type="submit" value="Reject this Submission" class="btn btn-danger">
+    </form>
+    <?php } ?>
   </div>
   <ul class="nav nav-pills nav-stacked">
     <?php

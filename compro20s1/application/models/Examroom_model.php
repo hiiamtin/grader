@@ -542,4 +542,10 @@ class Examroom_model extends CI_Model
     return $query->result_array();
   }
 
+  public function removeSubmissionById($submissionId) {
+    $sql = 'DELETE'
+        .' FROM exercise_submission'
+        .' WHERE submission_id = '.$submissionId;
+    return $this->db->query($sql);
+  }
 }//class Examroom_model
