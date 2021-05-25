@@ -8,6 +8,7 @@
 		$lecturer_id = $class_schedule['supervisor_id'];
 		$user_id = $_SESSION['id'];
 		$class_id =  $class_schedule['group_id'];
+		$lab_level_tmp=1;
 		// $lab_no , $group_id passed from controller
 	?>
 
@@ -32,13 +33,14 @@
 			<?php 
 				$no_of_items = sizeof($lab_list);
 				$level = 1;
+				
 				foreach ($lab_list as $lab_level) {
 			?>
 			<div class="container" style="width:100%;margin-left:0px;padding-right:10px;">
 				<span class="anchor" id="level<?php echo $level; ?>"></span>				
 				<div class="row panel panel-default" >
-					<?php $no_of_item_list = sizeof($lab_level); ?>
-					
+					<?php $no_of_item_list = sizeof($lab_level); $lab_level_tmp=$level;?>
+
 					<div class="panel-heading">
 						<from method="post" action="<?php echo site_url('ExamSupervisor/update_selected_exam/'); ?>" style="display:inline">
 							<label><?php echo "ข้อ $level($no_of_item_list)"; ?></label>
@@ -92,7 +94,48 @@
 							<input type="text" name="lecturer_id" value="<?php echo $lecturer_id; ?>" hidden >
 							<input type="text" name="user_id" value="<?php echo $user_id; ?>" hidden >
 						</form>
+						<?php $modal_name="copyto"; $form_id="copyto_form"; ?>
+						<button type="button" class="btn btn-primary" data-toggle="modal" style="margin-left:5px;" data-target="<?php echo '#'.$modal_name.$level; ?>" >COPY FROM</button>
 					</div>
+					<div class="modal fade" role="dialog" id="<?php echo $modal_name.$level; ?>" >
+						<div class="modal-dialog w-auto">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h3 class="modal-title"><?php echo "Copy To : Chapter:".$lab_no." Level:".$lab_level_tmp."<br/>"?></h3>
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+								</div>
+								<form id="<?php echo $form_id; ?>" action="<?php echo site_url('ExamSupervisor/CopyFrom'); ?>" method="post" accept-charset="utf-8">
+									<div class="modal-body" style="display:flex;margin-left:10px;">                            
+										<div class="form-group">
+											<input  form="<?php echo $form_id; ?>" type="hidden" name="group_id" class="form-control" value="<?php echo $class_id; ?>" ></input>
+											<p >Copy From :</p>
+											<select class="custom-select" name="chapter_id">
+												<?php foreach ($lab_info as $lab) { ?>								
+												<option value=<?php echo '"'.$lab['chapter_id'].'" '; 
+													if ( $lab['chapter_id']==$lab_no) 
+														echo 'selected';?>><?php echo $lab['chapter_id']." ".$lab['chapter_name']; ?></option><?php }	?>
+											</select>
+											<select class="custom-select" name="level">
+												<?php foreach ($levels as $row) { 
+													$row_id = $row['level_id'];
+													$row_name = $row['level_name'];?>								
+												<option value=<?php echo '"'.$row_id.'" '; 
+													if ( $row_id==$lab_level_tmp) 
+														echo 'selected';?>><?php echo $row_id.". ".$row_name; ?></option>
+												<?php }	?>
+											</select> 
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button form="<?php echo $form_id; ?>" type="submit"  class="btn btn-success">submit</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
+
+
 				</div>
 			</div>
 			<?php $level++; } ?>			
@@ -100,7 +143,10 @@
 		<a id="back-to-top" href="#" class="btn btn-light btn-lg back-to-top" role="button"><i class="glyphicon glyphicon-chevron-up"></i></a>
 	</div>	
 </main>
+
 <div class="col-xl-0 col-lg-0 col-md-0 col-sm-1 col-xs-0"></div>
+
+
 <script>
 $(document).ready(function(){
 	$(window).scroll(function () {

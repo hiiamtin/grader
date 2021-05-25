@@ -199,7 +199,8 @@ class ExamSupervisor extends MY_Controller {
         'lab_list'					=>	$lab_list,
         'class_schedule'			=>	$class_schedule,
         'chapter_permission'		=>	$chapter_data,
-
+        'lab_info'		=>	$this->lab_model->get_lab_info(),
+				'levels'	 	=> 	$this->lab_model->get_level()
     );
     $this->load->view('supervisor/head');
     $this->load->view('supervisor/nav_fixtop');
@@ -557,8 +558,9 @@ class ExamSupervisor extends MY_Controller {
 					'lab_list'					=>	$lab_list,
 					'class_schedule'			=>	$class_schedule,
 					'chapter_permission'		=>	$chapter_data,
-					'students_data'				=>	$students_data
-					
+					'students_data'				=>	$students_data,
+					'lab_info'		=>	$this->lab_model->get_lab_info(),
+					'levels'	 	=> 	$this->lab_model->get_level()
 				);
 		$this->load->view('supervisor/head');
 		$this->load->view('supervisor/nav_fixtop');
@@ -643,6 +645,57 @@ class ExamSupervisor extends MY_Controller {
     redirect(site_url($this->MODULE_PATH."stu_code_preview/".$_POST['stuId']."/".$_POST['problemId']));
     die();
   }
+
+  public function CopyFrom() {
+		$group_id = $_POST['group_id'];
+		// $chapter_id = $_POST['lab_no'];
+		print_r($_POST);
+	}
+
+  public function copyTo() {
+		//echo "<h1 style='color:darkblue'>".__METHOD__."</h1>";
+		// echo "<h2 style='color:blue'>Post variable </h2><br/><pre>"; print_r($_POST); echo "</pre><br/>";
+		// echo "<h2 style='color:blue'>Environment</h2><br/><pre>"; print_r($_ENV); echo "</pre><br/>";
+		// echo "<h2 style='color:blue'>Cookie </h2><br/><pre>"; print_r($_COOKIE); echo "</pre><br/>";
+		// echo "<h2 style='color:blue'>Server </h2><br/><pre>"; print_r($_SERVER); echo "</pre><br/>";
+		// //echo "<h2 style='color:blue'>FILE </h2><br/><pre>"; print_r($_FILE); echo "</pre><br/>";
+		// echo "<h2 style='color:blue'>FILES </h2><br/><pre>"; print_r($_FILES); echo "</pre><br/>";
+		$source_exercise_id = $this->input->post('exercise_id');
+		$target_chapter_id = $this->input->post('chapter_id');
+		$target_level = $this->input->post('level');
+		$this->load->model('lab_model');
+
+		// add a row in lab_exercise table
+		$clone_exercise_id = $this->lab_model->cloneExercise($source_exercise_id, $target_chapter_id, $target_level);
+		
+		// clone all testcases in exercise_testcase table from $source_exercise_id to $clone_exercise_id
+		// $source_exercise_id=63; $clone_exercise_id=  1301125;
+		$this->lab_model->cloneTestcase($source_exercise_id, $clone_exercise_id);
+
+
+
+		$source_lab_exercise = $this->lab_model->get_lab_exercise_by_id($source_exercise_id);
+		//echo "<h2 style='color:blue'>Exercise ID: $source_exercise_id</h2><br/><pre>"; print_r($source_lab_exercise); echo "</pre><br/>";
+		
+		$sourcecode_filename = $source_lab_exercise['sourcecode'];
+		$clone_filename = "exercise_".$clone_exercise_id.".c";
+		if (file_exists(SUPERVISOR_CFILES_FOLDER.$sourcecode_filename)) {
+			// echo "The file $sourcecode_filename ==> OK.\n";
+			// echo "target = $clone_filename \n";
+			$status = copy(SUPERVISOR_CFILES_FOLDER.$sourcecode_filename , SUPERVISOR_CFILES_FOLDER.$clone_filename);
+			// if ($status) {
+			// 	echo "copy ok";
+			// } else {
+			// 	echo "copy NG.";
+			// }
+		}
+
+		$_POST = array();
+		$_POST['exercise_id']= $clone_exercise_id;
+		$this->exercise_edit();
+		
+	}
+  
 
 }
 ?>
